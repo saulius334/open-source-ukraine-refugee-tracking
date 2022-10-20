@@ -1,0 +1,14 @@
+parameters:
+  paths:
+    - app
+    - tests
+
+  level: 8
+
+  excludePaths:
+    - ./*/vendor/*
+    - ./app/Http/Controllers/Auth/
+    - ./app\Http\Middleware\RedirectIfAuthenticated.php
+    - ./app\Http\Middleware\Authenticate.php
+
+  checkMissingIterableValueType: false
