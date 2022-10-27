@@ -15,7 +15,9 @@ class RefugeeCampController extends Controller
      */
     public function index()
     {
-        //
+        return view('camp.index', [
+            'camps' => RefugeeCamp::orderBy('updated_at', 'desc')->paginate(5)
+        ]);
     }
 
     /**
@@ -25,7 +27,9 @@ class RefugeeCampController extends Controller
      */
     public function create()
     {
-        //
+        return view('camp.create', [
+            // 'camps' => RefugeeCamp::orderBy('title')->get()
+        ]);
     }
 
     /**
