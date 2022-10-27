@@ -8,7 +8,7 @@
                     <h2>Refugee Camp {{ $camp->name }}</h2>
                 </div>
                 <div class="card-body">
-                    <div class="movie-show">
+                    <div class="camp-show">
                         <div class="line"><small>Capacity:</small>
                             <h5>{{$camp->capacity}}</h5>
                         </div>

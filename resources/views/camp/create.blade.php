@@ -9,7 +9,7 @@
                     <h2>New Refugee Camp</h2>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('c_store')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('c_store')}}" method="post">
                         <div class="input-group mb-3">
                             <span class="input-group-text">Camp name</span>
                             <input type="text" name="name" class="form-control" value="{{old('name')}}">

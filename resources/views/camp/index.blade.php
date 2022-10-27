@@ -11,7 +11,7 @@
                     <ul class="list-group">
                         @forelse($camps as $camp)
                         <li class="list-group-item">
-                            <div class="movies-list">
+                            <div class="camp-list">
                                 <div class="content">
                                     <h2><span>Camp name: </span>{{$camp->name}}</h2>
                                     <h4><span>Capacity: </span>{{$camp->capacity}}</h4>
