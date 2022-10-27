@@ -37,7 +37,9 @@
             @endif
 
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-                
+                <h4>Hello!</h4>
+                <a href="{{ route('')}}"></a>
+
                
             </div>
         </div>
