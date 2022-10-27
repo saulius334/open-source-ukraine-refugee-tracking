@@ -37,6 +37,11 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
+                        @if (Route::has('c_index'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('c_index') }}">Refugee Camps</a>
+                        </li>
+                        @endif
                             @if (Route::has('login'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -47,8 +52,26 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
-                            @endif
+                                @endif
                         @else
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                Refugee Camps
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('c_index') }}">
+                                    View all refugee camps
+                                </a>
+                                @if(Auth::user()->role === 1)
+                                <a class="dropdown-item" href="{{ route('c_create') }}">
+                                    Add new refugee camp
+                                </a>
+                                <a class="dropdown-item" href="{{ route('c_index') }}">
+                                    Your camps
+                                </a>
+                                @endif
+                            </div>
+                        </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}

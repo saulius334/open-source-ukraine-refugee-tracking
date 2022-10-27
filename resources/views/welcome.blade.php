@@ -27,7 +27,10 @@
                     @auth
                         <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+                    <a href="{{ route('c_index') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Refugee Camps</a>
+
+
+                        <a href="{{ route('login') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
 
                         @if (Route::has('register'))
                             <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
@@ -38,7 +41,7 @@
 
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
                 <h4>Hello!</h4>
-                <a href="{{ route('')}}"></a>
+                {{-- something bla bla bla --}}
 
                
             </div>
