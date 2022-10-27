@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedbigInteger('capacity');
             $table->unsignedbigInteger('rooms');
-            $table->unsignedbigInteger('volunteers');
+            $table->unsignedbigInteger('volunteers')->default(0);
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\RefugeeCamp;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreRefugeeCampRequest;
 use App\Http\Requests\UpdateRefugeeCampRequest;
+use Illuminate\Support\Facades\Auth;
 
 class RefugeeCampController extends Controller
 {
@@ -27,9 +29,7 @@ class RefugeeCampController extends Controller
      */
     public function create()
     {
-        return view('camp.create', [
-            // 'camps' => RefugeeCamp::orderBy('title')->get()
-        ]);
+        return view('camp.create');
     }
 
     /**
@@ -38,9 +38,28 @@ class RefugeeCampController extends Controller
      * @param  \App\Http\Requests\StoreRefugeeCampRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRefugeeCampRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|min:3|max:30',
+            'capacity' => 'required|numeric|min:1|max:100',
+            'rooms' => 'required|numeric|min:1|max:100',
+            'volunteers' => 'numeric|min:0|max:100',
+        ],
+        [
+            'name.required' => 'Please add a name of the camp.',
+            'capacity.required' => 'Please enter how many people you can take in.',
+            'rooms.required' => 'Please specify how many rooms.'
+        ]);
+        RefugeeCamp::create([
+            'name' => $request->name,
+            'capacity' => $request->capacity,
+            'rooms' => $request->rooms,
+            'volunteers' => $request->volunteers,
+            'user_id' => Auth::id()
+        ]);
+
+        return redirect()->route('u_index')->with('ok', 'Success');
     }
 
     /**
@@ -49,9 +68,11 @@ class RefugeeCampController extends Controller
      * @param  \App\Models\RefugeeCamp  $refugeeCamp
      * @return \Illuminate\Http\Response
      */
-    public function show(RefugeeCamp $refugeeCamp)
+    public function show(RefugeeCamp $camp)
     {
-        //
+        return view('camp.show', [
+            'camp' => $camp
+        ]);
     }
 
     /**

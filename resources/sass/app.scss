@@ -80,4 +80,22 @@
             }
         }
     }
+    .buttons {
+        display: flex;
+        align-items: center;
+        button,
+        form,
+        a {
+            margin: 5px 10px;
+            display: block;
+        }
+        form {
+            display: flex;
+            align-items: center;
+            margin: 0;
+        }
+        button {
+            transform: rotate(1deg);
+        }
+    }
 }

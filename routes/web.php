@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RefugeeCampController as campCon;
+use App\Http\Controllers\UserController as userCon;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,9 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::prefix('user')->name('u_')->group(function () {
+    Route::get('/', [userCon::class, 'index'])->name('index');
+});
 Route::prefix('camp')->name('c_')->group(function () {
     Route::get('/', [campCon::class, 'index'])->name('index');
     Route::get('/create', [campCon::class, 'create'])->name('create');

@@ -66,7 +66,7 @@
                                 <a class="dropdown-item" href="{{ route('c_create') }}">
                                     Add new refugee camp
                                 </a>
-                                <a class="dropdown-item" href="{{ route('c_index') }}">
+                                <a class="dropdown-item" href="{{ route('u_index') }}">
                                     Your camps
                                 </a>
                                 @endif
