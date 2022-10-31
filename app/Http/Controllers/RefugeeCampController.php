@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\RefugeeCamp;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreRefugeeCampRequest;
-use App\Http\Requests\UpdateRefugeeCampRequest;
 use Illuminate\Support\Facades\Auth;
 
 class RefugeeCampController extends Controller
@@ -18,7 +16,7 @@ class RefugeeCampController extends Controller
     public function index()
     {
         return view('camp.index', [
-            'camps' => RefugeeCamp::orderBy('updated_at', 'desc')->paginate(5)
+            'camps' => RefugeeCamp::orderBy('updated_at', 'desc')->paginate(15)
         ]);
     }
 
@@ -59,7 +57,7 @@ class RefugeeCampController extends Controller
             'user_id' => Auth::id()
         ]);
 
-        return redirect()->route('u_index')->with('ok', 'Success');
+        return redirect()->route('u_index');
     }
 
     /**
@@ -93,7 +91,7 @@ class RefugeeCampController extends Controller
      * @param  \App\Models\RefugeeCamp  $refugeeCamp
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRefugeeCampRequest $request, RefugeeCamp $refugeeCamp)
+    public function update(Request $request, RefugeeCamp $refugeeCamp)
     {
         //
     }

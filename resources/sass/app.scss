@@ -99,3 +99,26 @@
         }
     }
 }
+.welcomeText {
+    display: flex;
+    justify-content: center;
+}
+.welcomeLinks {
+    display: flex;
+    gap: 20px;
+    a {
+        text-decoration: none;
+        color: black;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #FFDD00;
+        border: 1px solid black;
+        border-radius: 2px;
+        padding: 15px;
+        transition: 1s all;
+    }
+    a:hover {
+        color: white;
+        background-color: #0057B7;
+    }
+}

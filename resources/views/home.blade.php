@@ -8,11 +8,6 @@
                 <div class="card-header">Ukraine Refugee Tracking</div>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
                     <p>You are logged in! What would you like to do ?</p>
                 </div>
             </div>
