@@ -23,11 +23,11 @@ class RefugeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(RefugeeCamp $camp)
+    public function create(RefugeeCamp $campID)
     {
         return view('refugee.create', [
-            'camp' => $camp,
-            'allCamps' => RefugeeCamp::all()
+            'camps' => RefugeeCamp::all(),
+            'campID' => $campID
         ]);
     }
 
@@ -42,19 +42,17 @@ class RefugeeController extends Controller
         $validated = $request->validate([
             'name' => 'required|min:3|max:30',
             'surname' => 'required|numeric|min:1|max:100',
-            'camp' => 'required',
             'bedsTaken' => 'required',
         ],
         [
             'name.required' => 'Please add your name.',
             'surname.required' => 'Please add your surname.',
-            'camp.required' => 'Please specify your camp.',
             'bedsTaken' => 'Please specify how many beds will you take.'
         ]);
         Refugee::create([
             'name' => $request->name,
             'surname' => $request->surname,
-            'camp' => $request->camp,
+            'refugee_camp_id' => $request->refugee_camp_id,
             'photo' => $request->photo,
             'pets' => $request->pets,
             'destination' => $request->destination,

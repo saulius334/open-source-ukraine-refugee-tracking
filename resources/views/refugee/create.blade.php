@@ -19,10 +19,10 @@
                             <input type="text" name="surname" class="form-control" value="{{old('name')}}">
                         </div>
                         <div class="input-group mb-3">
-                            <select name="sort" class="form-select mt-1">
-                                <option value="{{$camp->id}}" selected>{{$camp->name}}</option>
-                                @foreach($allCamps as $option)
-                                <option value="{{$option->id}}">{{$option->name}}</option>
+                            <span class="input-group-text">Camp</span>
+                            <select class="form-select" name="foreign_camp_id">
+                                @foreach ($camps as $camp)
+                                <option value="{{$camp->id}}"@if($camp->id === $campID) selected @endif>{{$camp->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -51,7 +51,7 @@
                             <input type="text" name="healthCondition" class="form-control" value="{{old('healthCondition')}}">
                         </div>
                         @csrf
-                        <button type="submit" class="btn btn-secondary mt-4">Register refugee</button>
+                        <button id="--submit" type="submit" class="btn btn-secondary mt-4">Register refugee</button>
                     </form>
                 </div>
             </div>

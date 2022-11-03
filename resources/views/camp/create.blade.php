@@ -27,7 +27,7 @@
                             <input type="text" name="volunteers" class="form-control" value="{{old('volunteers')}}">
                         </div>
                         @csrf
-                        <button type="submit" class="btn btn-secondary mt-4">Create camp</button>
+                        <button type="submit" class="btn btn-secondary mt-4 --submit">Create camp</button>
                     </form>
 
                 </div>

@@ -29,7 +29,7 @@ Route::prefix('camp')->name('c_')->group(function () {
 
 Route::prefix('refugee')->name('r_')->group(function () {
     Route::get('/', [refugeeCon::class, 'index'])->name('index');
-    Route::get('/create', [refugeeCon::class, 'create'])->name('create');
+    Route::get('/create/{camp}', [refugeeCon::class, 'create'])->name('create');
     Route::post('/create', [refugeeCon::class, 'store'])->name('store');
     Route::get('/show/{camp}', [refugeeCon::class, 'show'])->name('show');
     Route::delete('/delete/{camp}', [refugeeCon::class, 'destroy'])->name('delete')->middleware('auth');
