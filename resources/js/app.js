@@ -1,11 +1,15 @@
 import './bootstrap';
 
-const submitcontent = document.querySelector('.--submit');
+const submitButton = document.querySelector('.--submit');
+const formContent = document.querySelector('.--form');
 
-if(submitcontent) {
-    submitcontent.addEventListener('click', () => {
-        // submitcontent.submit()
-        submitcontent.disabled = true;
-    })
+    function submitForm() {
+        formContent.submit();
     }
-    // mainform.prop('disabled', true)
+
+if(submitButton) {
+    submitButton.addEventListener('click', () => {
+        submitForm();
+        submitButton.disabled = true;
+    })
+}
