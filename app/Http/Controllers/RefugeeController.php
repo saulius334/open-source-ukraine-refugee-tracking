@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Refugee;
-use App\Http\Requests\StoreRefugeeRequest;
-use App\Http\Requests\UpdateRefugeeRequest;
+use App\Models\RefugeeCamp;
+use Illuminate\Http\Request;
 
 class RefugeeController extends Controller
 {
@@ -15,7 +15,7 @@ class RefugeeController extends Controller
      */
     public function index()
     {
-        //
+       
     }
 
     /**
@@ -23,9 +23,12 @@ class RefugeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(RefugeeCamp $camp)
     {
-        //
+        return view('refugee.create', [
+            'camp' => $camp,
+            'allCamps' => RefugeeCamp::all()
+        ]);
     }
 
     /**
@@ -34,9 +37,33 @@ class RefugeeController extends Controller
      * @param  \App\Http\Requests\StoreRefugeeRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRefugeeRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|min:3|max:30',
+            'surname' => 'required|numeric|min:1|max:100',
+            'camp' => 'required',
+            'bedsTaken' => 'required',
+        ],
+        [
+            'name.required' => 'Please add your name.',
+            'surname.required' => 'Please add your surname.',
+            'camp.required' => 'Please specify your camp.',
+            'bedsTaken' => 'Please specify how many beds will you take.'
+        ]);
+        Refugee::create([
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'camp' => $request->camp,
+            'photo' => $request->photo,
+            'pets' => $request->pets,
+            'destination' => $request->destination,
+            'aidReceived' => $request->aidReceived,
+            'healthCondition' => $request->healthCondition,
+            'bedsTaken' => $request->bedsTaken,
+        ]);
+
+        return redirect()->route('c_index');
     }
 
     /**
@@ -68,7 +95,7 @@ class RefugeeController extends Controller
      * @param  \App\Models\Refugee  $refugee
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRefugeeRequest $request, Refugee $refugee)
+    public function update(Request $request, Refugee $refugee)
     {
         //
     }

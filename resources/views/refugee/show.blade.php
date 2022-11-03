@@ -5,7 +5,7 @@
         <div class="col-9">
             <div class="card">
                 <div class="card-header">
-                    <h2>{{$camp->name}}</h2>
+                    <h2>Refugee Camp XXXXXXXXx</h2>
                 </div>
                 <div class="card-body">
                     <div class="camp-show">
@@ -17,9 +17,6 @@
                         </div>
                         <div class="line"><small>Number of Volunteers:</small>
                             <h5>{{ $camp->volunteers }}</h5>
-                        </div>
-                        <div class="buttons">
-                            <a href="{{route('r_create', $camp)}}" class="btn btn-info">Register refugee</a>
                         </div>
                     </div>
                 </div>
