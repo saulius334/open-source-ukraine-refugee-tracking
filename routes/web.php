@@ -31,8 +31,8 @@ Route::prefix('refugee')->name('r_')->group(function () {
     Route::get('/', [refugeeCon::class, 'index'])->name('index');
     Route::get('/create/{camp}', [refugeeCon::class, 'create'])->name('create');
     Route::post('/create', [refugeeCon::class, 'store'])->name('store');
-    Route::get('/show/{camp}', [refugeeCon::class, 'show'])->name('show');
-    Route::delete('/delete/{camp}', [refugeeCon::class, 'destroy'])->name('delete')->middleware('auth');
-    Route::get('/edit/{camp}', [refugeeCon::class, 'edit'])->name('edit')->middleware('auth');
-    Route::put('/edit/{camp}', [refugeeCon::class, 'update'])->name('update')->middleware('auth');
+    Route::get('/show/{refugee}', [refugeeCon::class, 'show'])->name('show');
+    Route::delete('/delete/{refugee}', [refugeeCon::class, 'destroy'])->name('delete')->middleware('auth');
+    Route::get('/edit/{refugee}', [refugeeCon::class, 'edit'])->name('edit')->middleware('auth');
+    Route::put('/edit/{refugee}', [refugeeCon::class, 'update'])->name('update')->middleware('auth');
 });

@@ -42,7 +42,7 @@ class RefugeeCampController extends Controller
             'name' => 'required|min:3|max:30',
             'capacity' => 'required|numeric|min:1|max:100',
             'rooms' => 'required|numeric|min:1|max:100',
-            'volunteers' => 'numeric|min:0|max:100',
+            'volunteers' => 'numeric|min:0|max:1000',
         ],
         [
             'name.required' => 'Please add a name of the camp.',

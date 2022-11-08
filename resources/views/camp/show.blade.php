@@ -19,7 +19,7 @@
                             <h5>{{ $camp->volunteers }}</h5>
                         </div>
                         <div class="buttons">
-                            <a href="{{route('r_create', $camp->id)}}" class="btn btn-info">Register refugee</a>
+                            <a href="{{route('r_create', $camp)}}" class="btn btn-info">Register refugee</a>
                         </div>
                     </div>
                 </div>

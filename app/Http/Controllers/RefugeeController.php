@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Refugee;
 use App\Models\RefugeeCamp;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RefugeeController extends Controller
 {
@@ -15,7 +16,9 @@ class RefugeeController extends Controller
      */
     public function index()
     {
-       
+       return view('refugee.index', [
+        'refugees' => Refugee::orderBy('updated_at', 'desc')->paginate(15)
+       ]);
     }
 
     /**
@@ -23,11 +26,11 @@ class RefugeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(RefugeeCamp $campID)
+    public function create(RefugeeCamp $camp)
     {
         return view('refugee.create', [
             'camps' => RefugeeCamp::all(),
-            'campID' => $campID
+            'campID' => $camp->id
         ]);
     }
 
@@ -41,19 +44,25 @@ class RefugeeController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|min:3|max:30',
-            'surname' => 'required|numeric|min:1|max:100',
+            'surname' => 'required|min:2|max:30',
+            'IDnumber' => 'required|min:10|max:10|unique:refugees,IDnumber',
             'bedsTaken' => 'required',
+            'refugee_camp_id' => 'required'
         ],
         [
             'name.required' => 'Please add your name.',
             'surname.required' => 'Please add your surname.',
+            'IDnumber.required' => 'Please enter valid Ukrainian ID number',
+            'IDnumber.unique' => 'This ID number is already register. Check in with the camp you registered in.',
             'bedsTaken' => 'Please specify how many beds will you take.'
         ]);
+        $photo = $request->file('photo')->store('public/images');
         Refugee::create([
             'name' => $request->name,
             'surname' => $request->surname,
+            'IDnumber' => $request->IDnumber,
             'refugee_camp_id' => $request->refugee_camp_id,
-            'photo' => $request->photo,
+            'photo' => $photo,
             'pets' => $request->pets,
             'destination' => $request->destination,
             'aidReceived' => $request->aidReceived,
@@ -72,7 +81,9 @@ class RefugeeController extends Controller
      */
     public function show(Refugee $refugee)
     {
-        //
+        return view('refugee.show', [
+            'refugee' => $refugee
+        ]);
     }
 
     /**

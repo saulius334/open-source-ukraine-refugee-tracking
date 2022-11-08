@@ -26,6 +26,7 @@
                 <div class="welcomeText"><h4>Hello!</h4></div> 
                 <div class="welcomeLinks">
                     <a href="{{ route('c_index')}}">View All Refugee Camps</a>
+                    <a href="{{ route('r_index')}}">View All Refugees</a>
                     <a href="{{ route('login')}}">Login</a>
                     <a href="{{ route('register')}}">Register</a>
                 </div>

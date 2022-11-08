@@ -10,4 +10,5 @@ class RefugeeCamp extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'capacity', 'rooms', 'volunteers', 'user_id'];
+
 }

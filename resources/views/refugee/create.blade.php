@@ -9,18 +9,22 @@
                     <h2>Refugee Registration</h2>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('r_store')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('r_store')}}" method="post" enctype="multipart/form-data" class="--form">
                         <div class="input-group mb-3">
                             <span class="input-group-text">Name</span>
                             <input type="text" name="name" class="form-control" value="{{old('name')}}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Surname</span>
-                            <input type="text" name="surname" class="form-control" value="{{old('name')}}">
+                            <input type="text" name="surname" class="form-control" value="{{old('surname')}}">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">ID number</span>
+                            <input type="text" name="IDnumber" class="form-control" value="{{old('IDnumber')}}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Camp</span>
-                            <select class="form-select" name="foreign_camp_id">
+                            <select class="form-select" name="refugee_camp_id">
                                 @foreach ($camps as $camp)
                                 <option value="{{$camp->id}}"@if($camp->id === $campID) selected @endif>{{$camp->name}}</option>
                                 @endforeach
@@ -51,7 +55,7 @@
                             <input type="text" name="healthCondition" class="form-control" value="{{old('healthCondition')}}">
                         </div>
                         @csrf
-                        <button id="--submit" type="submit" class="btn btn-secondary mt-4">Register refugee</button>
+                        <button type="submit" class="btn btn-secondary mt-4 --submit">Register refugee</button>
                     </form>
                 </div>
             </div>

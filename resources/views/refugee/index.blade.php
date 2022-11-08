@@ -5,19 +5,19 @@
         <div class="col-9">
             <div class="card">
                 <div class="card-header">
-                    <h2>Refugee Camps</h2>
+                    <h2>Refugees</h2>
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
-                        @forelse($camps as $camp)
+                        @forelse($refugees as $refugee)
                         <li class="list-group-item">
                             <div class="camp-list">
                                 <div class="content">
-                                    <h2><span>Camp name: </span>{{$camp->name}}</h2>
-                                    <h4><span>Capacity: </span>{{$camp->capacity}}</h4>
+                                    <h2>{{$refugee->name}} {{$refugee->surname}}</h2>
+                                    {{-- <h4><span>Capacity: </span>{{$refugee->}}</h4> --}}
                                 </div>
                                 <div class="buttons">
-                                    <a href="{{route('c_show', $camp)}}" class="btn btn-info">Show</a>
+                                    <a href="{{route('r_show', $refugee)}}" class="btn btn-info">Show</a>
                                     {{-- @if(!Auth::user() == null)
                                     <a href="{{route('c_edit', $camp)}}" class="btn btn-success">Edit</a>
                                     <form action="{{route('c_delete', $camp)}}" method="post">
@@ -30,12 +30,12 @@
                             </div>
                         </li>
                         @empty
-                        <li class="list-group-item">No refugee camps found</li>
+                        <li class="list-group-item">No refugees</li>
                         @endforelse
                     </ul>
                 </div>
                 <div class="me-3 mx-3">
-                    {{ $camps->links() }}
+                    {{ $refugees->links() }}
                 </div>
             </div>
         </div>
