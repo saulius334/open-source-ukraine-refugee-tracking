@@ -9,8 +9,14 @@
                 </div>
                 <div class="card-body">
                     <div class="camp-show">
-                        <div class="line">
-                            <h5>{{ $refugee->photo }}</h5>
+                        <div class="img-small-ch mt-3">
+                            @if($refugee->photo)
+                            <div class="img">
+                                <img class="w-25 mb-3" src="/storage/{{ $refugee->photo }}" alt="Refugee Photo" />
+                            </div>
+                            @else
+                            <h2>No photos</h2>
+                            @endif
                         </div>
                         <div class="line"><small>Current Camp: </small>
                             <h5>{{ $refugee->getCamp->name }}</h5>

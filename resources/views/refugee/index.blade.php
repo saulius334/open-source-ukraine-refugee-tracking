@@ -14,18 +14,18 @@
                             <div class="camp-list">
                                 <div class="content">
                                     <h2>{{$refugee->name}} {{$refugee->surname}}</h2>
-                                    {{-- <h4><span>Capacity: </span>{{$refugee->}}</h4> --}}
+                                    <h4><span>Camp: </span>{{$refugee->getCamp->name}}</h4>
                                 </div>
                                 <div class="buttons">
                                     <a href="{{route('r_show', $refugee)}}" class="btn btn-info">Show</a>
-                                    {{-- @if(!Auth::user() == null)
-                                    <a href="{{route('c_edit', $camp)}}" class="btn btn-success">Edit</a>
-                                    <form action="{{route('c_delete', $camp)}}" method="post">
+                                    @if(!Auth::user() == null)
+                                    <a href="{{route('r_edit', $refugee)}}" class="btn btn-success">Edit</a>
+                                    <form action="{{route('r_delete', $refugee)}}" method="post">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
-                                    @endif --}}
+                                    @endif
                                 </div>
                             </div>
                         </li>

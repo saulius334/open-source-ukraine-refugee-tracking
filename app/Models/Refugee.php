@@ -9,7 +9,7 @@ class Refugee extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'surname', 'IDnumber', 'refugee_camp_id', 'family', 'pets', 'destination', 'aidReceived', 'healthCondition', 'moodUponArrival', 'bedsTaken'];
+    protected $fillable = ['name', 'surname', 'photo', 'IDnumber', 'refugee_camp_id', 'family', 'pets', 'destination', 'aidReceived', 'healthCondition', 'moodUponArrival', 'bedsTaken'];
 
     public function getCamp() {
         return $this->belongsTo(RefugeeCamp::class, 'refugee_camp_id', 'id');

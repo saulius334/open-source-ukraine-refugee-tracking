@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Refugee;
 use App\Models\RefugeeCamp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,7 +82,10 @@ class RefugeeCampController extends Controller
      */
     public function edit(RefugeeCamp $refugeeCamp)
     {
-        //
+        return view('camp.edit', [
+            'camp' => $refugeeCamp,
+            'refugees' => Refugee::all(),
+            ]);
     }
 
     /**
@@ -93,7 +97,25 @@ class RefugeeCampController extends Controller
      */
     public function update(Request $request, RefugeeCamp $refugeeCamp)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|min:3|max:30',
+            'capacity' => 'required|numeric|min:1|max:100',
+            'rooms' => 'required|numeric|min:1|max:100',
+            'volunteers' => 'numeric|min:0|max:1000',
+        ],
+        [
+            'name.required' => 'Please add a name of the camp.',
+            'capacity.required' => 'Please enter how many people you can take in.',
+            'rooms.required' => 'Please specify how many rooms.'
+        ]);
+        $refugeeCamp->update([
+            'name' => $request->name,
+            'capacity' => $request->capacity,
+            'rooms' => $request->rooms,
+            'volunteers' => $request->volunteers,
+        ]);
+
+        return redirect()->route('c_index');
     }
 
     /**
@@ -104,6 +126,7 @@ class RefugeeCampController extends Controller
      */
     public function destroy(RefugeeCamp $refugeeCamp)
     {
-        //
+        $refugeeCamp->delete();
+        return redirect()->route('c_index');
     }
 }
