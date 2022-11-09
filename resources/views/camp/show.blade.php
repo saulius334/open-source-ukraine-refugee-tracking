@@ -18,6 +18,9 @@
                         <div class="line"><small>Number of Volunteers:</small>
                             <h5>{{ $camp->volunteers }}</h5>
                         </div>
+                        <div class="line"><small>Number of Refugees:</small>
+                            <h5>{{ $camp->getRefugees->count() }}</h5>
+                        </div>
                         <div class="buttons">
                             <a href="{{route('r_create', $camp)}}" class="btn btn-info">Register refugee</a>
                         </div>

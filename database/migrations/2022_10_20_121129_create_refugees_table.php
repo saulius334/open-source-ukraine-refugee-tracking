@@ -26,8 +26,8 @@ return new class extends Migration
             $table->string('healthCondition')->nullable();
             $table->string('moodUponArrival')->nullable();
             $table->unsignedBigInteger('bedsTaken');
-            $table->unsignedBigInteger('refugee_camp_id');
-            $table->foreign('refugee_camp_id')->references('id')->on('refugee_camps')->onDelete('cascade');
+            $table->unsignedBigInteger('current_refugee_camp_id');
+            $table->foreign('current_refugee_camp_id')->references('id')->on('refugee_camps')->onDelete('cascade');
             $table->timestamps();
         });
     }

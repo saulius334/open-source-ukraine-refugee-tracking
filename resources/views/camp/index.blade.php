@@ -18,14 +18,14 @@
                                 </div>
                                 <div class="buttons">
                                     <a href="{{route('c_show', $camp)}}" class="btn btn-info">Show</a>
-                                    {{-- @if(!Auth::user() == null)
+                                    @if(!Auth::user() == null)
                                     <a href="{{route('c_edit', $camp)}}" class="btn btn-success">Edit</a>
                                     <form action="{{route('c_delete', $camp)}}" method="post">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
-                                    @endif --}}
+                                    @endif
                                 </div>
                             </div>
                         </li>

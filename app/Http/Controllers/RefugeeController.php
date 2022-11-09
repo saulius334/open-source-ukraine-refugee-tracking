@@ -50,7 +50,7 @@ class RefugeeController extends Controller
             'surname' => 'required|min:2|max:30',
             'IDnumber' => 'required|min:10|max:10|unique:refugees,IDnumber',
             'bedsTaken' => 'required',
-            'refugee_camp_id' => 'required'
+            'current_refugee_camp_id' => 'required'
         ],
         [
             'name.required' => 'Please add your name.',
@@ -67,7 +67,7 @@ class RefugeeController extends Controller
             'name' => $request->name,
             'surname' => $request->surname,
             'IDnumber' => $request->IDnumber,
-            'refugee_camp_id' => $request->refugee_camp_id,
+            'current_refugee_camp_id' => $request->current_refugee_camp_id,
             'photo' => $imagePath,
             'pets' => $request->pets,
             'destination' => $request->destination,
@@ -103,7 +103,7 @@ class RefugeeController extends Controller
         return view('refugee.edit', [
             'refugee' => $refugee,
             'camps' => RefugeeCamp::all(),
-            'campID' => $refugee->refugee_camp_id
+            'campID' => $refugee->current_refugee_camp_id
             ]);
     }
 
@@ -122,7 +122,7 @@ class RefugeeController extends Controller
             'IDnumber' => 'required|min:10|max:10|',
             Rule::unique('refugees', 'IDnumber')->ignore($refugee->IDnumber),
             'bedsTaken' => 'required',
-            'refugee_camp_id' => 'required'
+            'current_refugee_camp_id' => 'required'
         ],
         [
             'name.required' => 'Please add name.',
@@ -142,7 +142,7 @@ class RefugeeController extends Controller
             'name' => $request->name,
             'surname' => $request->surname,
             'IDnumber' => $request->IDnumber,
-            'refugee_camp_id' => $request->refugee_camp_id,
+            'current_refugee_camp_id' => $request->current_refugee_camp_id,
             'photo' => $imagePath,
             'pets' => $request->pets,
             'destination' => $request->destination,

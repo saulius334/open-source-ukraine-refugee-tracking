@@ -80,11 +80,11 @@ class RefugeeCampController extends Controller
      * @param  \App\Models\RefugeeCamp  $refugeeCamp
      * @return \Illuminate\Http\Response
      */
-    public function edit(RefugeeCamp $refugeeCamp)
+    public function edit(RefugeeCamp $camp)
     {
         return view('camp.edit', [
-            'camp' => $refugeeCamp,
-            'refugees' => Refugee::all(),
+            'camp' => $camp,
+            'refugees' => Refugee::all(),   
             ]);
     }
 

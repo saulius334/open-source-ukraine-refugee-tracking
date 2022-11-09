@@ -11,4 +11,7 @@ class RefugeeCamp extends Model
 
     protected $fillable = ['name', 'capacity', 'rooms', 'volunteers', 'user_id'];
 
+    public function getRefugees() {
+        return $this->hasMany(Refugee::class, 'current_refugee_camp_id', 'id');
+    }
 }
