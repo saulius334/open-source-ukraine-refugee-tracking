@@ -47,12 +47,23 @@
                             <input type="text" name="destination" class="form-control" value="{{old('destination')}}">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Aid Received</span>
-                            <input type="text" name="aidReceived" class="form-control" value="{{old('aidReceived')}}">
+                            <span class="input-group-text">Aid Received?</span>
+                            <div class="form-check form-check-inline m-2">
+                                <input class="form-check-input" type="radio" name="aidReceived" id="aidReceived1" value="option1">
+                                <label class="form-check-label" for="aidReceived1">Yes</label>
+                              </div>
+                              <div class="form-check form-check-inline m-2">
+                                <input class="form-check-input" type="radio" name="aidReceived" id="aidReceived2" value="option2">
+                                <label class="form-check-label" for="aidReceived2">No</label>
+                              </div>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Health Condition</span>
-                            <input type="text" name="healthCondition" class="form-control" value="{{old('healthCondition')}}">
+                            <select class="form-select" name="healthCondition">
+                                <option value="Good">Good</option>
+                                <option value="Normal" selected>Normal</option>
+                                <option value="Bad">Bad</option>
+                            </select>
                         </div>
                         @csrf
                         <button type="submit" class="btn btn-secondary mt-4 --submit">Register refugee</button>
