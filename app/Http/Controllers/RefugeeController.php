@@ -50,14 +50,16 @@ class RefugeeController extends Controller
             'surname' => 'required|min:2|max:30',
             'IDnumber' => 'required|min:10|max:10|unique:refugees,IDnumber',
             'bedsTaken' => 'required',
-            'current_refugee_camp_id' => 'required'
+            'current_refugee_camp_id' => 'required',
+            'photo' => 'sometimes|required|mimes:jpg|max:3000'
         ],
         [
             'name.required' => 'Please add your name.',
             'surname.required' => 'Please add your surname.',
             'IDnumber.required' => 'Please enter valid Ukrainian ID number',
             'IDnumber.unique' => 'This ID number is already register. Check in with the camp you registered in.',
-            'bedsTaken' => 'Please specify how many beds will you take.'
+            'bedsTaken' => 'Please specify how many beds will you take.',
+            'photo.max' => 'file exceeds 3MB'
         ]);
         $imagePath = request('photo')->store('uploads', 'public');
         // dd($imagePath);
