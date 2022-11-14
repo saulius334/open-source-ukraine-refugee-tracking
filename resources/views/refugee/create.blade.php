@@ -26,7 +26,7 @@
                             <span class="input-group-text">Camp</span>
                             <select class="form-select" name="current_refugee_camp_id">
                                 @foreach ($camps as $camp)
-                                <option value="{{$camp->id}}"@if($camp->id === $campID) selected @endif>{{$camp->name}}</option>
+                                <option value="">{{$camp->name}}</option>
                                 @endforeach
                             </select>
                         </div>

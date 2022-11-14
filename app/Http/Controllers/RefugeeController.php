@@ -30,10 +30,17 @@ class RefugeeController extends Controller
      */
     public function create(RefugeeCamp $camp)
     {
-        return view('refugee.create', [
+        // dd($camp->id);
+        if ($camp->id == null) {
+            return redirect()->back()->with('message', 'Please Create Camp first');
+        } else {
+             return view('refugee.create', [
+            'camp' => $camp,
             'camps' => RefugeeCamp::all(),
             'campID' => $camp->id
         ]);
+        }
+       
     }
 
     /**
@@ -61,10 +68,15 @@ class RefugeeController extends Controller
             'bedsTaken' => 'Please specify how many beds will you take.',
             'photo.max' => 'file exceeds 3MB'
         ]);
-        $imagePath = request('photo')->store('uploads', 'public');
-        // dd($imagePath);
-        $image = Image::make(public_path("storage/{$imagePath}"))->fit(600,600);
-        $image->save();
+        if ($request->photo)
+        {
+            $imagePath = request('photo')->store('uploads', 'public');
+            $image = Image::make(public_path("storage/{$imagePath}"))->fit(600,600);
+            $image->save();
+        } else {
+            $imagePath = '';
+        }
+        // dd($request->);
         Refugee::create([
             'name' => $request->name,
             'surname' => $request->surname,
@@ -77,10 +89,17 @@ class RefugeeController extends Controller
             'healthCondition' => $request->healthCondition,
             'bedsTaken' => $request->bedsTaken,
         ]);
+        $camp = $this->getCampById($request->current_refugee_camp_id);
+        $camp[1]->update([
+            'capacity' => $camp[1]->capacity - $request->bedsTaken
+        ]);
 
         return redirect()->route('r_index');
     }
-
+    public function getCampById(int $id)
+    {
+        return RefugeeCamp::all()->where('id', '=', $id);
+    }
     /**
      * Display the specified resource.
      *
@@ -164,7 +183,9 @@ class RefugeeController extends Controller
      */
     public function destroy(Refugee $refugee)
     {
-        unlink(public_path().'/storage/'. $refugee->photo);
+        if($refugee->photo !== '') {
+            unlink(public_path().'/storage/'. $refugee->photo);
+        }
         $refugee->delete();
         return redirect()->route('r_index');
     }

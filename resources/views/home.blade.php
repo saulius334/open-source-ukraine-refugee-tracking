@@ -8,7 +8,7 @@
                 <div class="card-header">Ukraine Refugee Tracking</div>
 
                 <div class="card-body">
-                    <p>You are logged in! What would you like to do ?</p>
+                    <p>You are logged in! Slava Ukraine</p>
                 </div>
             </div>
         </div>

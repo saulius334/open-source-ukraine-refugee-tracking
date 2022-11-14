@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('refugee_camps', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedbigInteger('capacity');
-            $table->unsignedbigInteger('rooms');
-            $table->unsignedbigInteger('volunteers')->default(0);
+            $table->bigInteger('capacity');
+            $table->unsignedbigInteger('rooms')->nullable();
+            $table->unsignedbigInteger('volunteers')->default(0)->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

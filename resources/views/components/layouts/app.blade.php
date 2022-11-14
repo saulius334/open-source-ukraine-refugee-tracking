@@ -81,7 +81,7 @@
                                     View all refugees
                                 </a>
                                 @if(Auth::user()->role === 1)
-                                <a class="dropdown-item" href="{{ route('r_create', 1) }}">
+                                <a class="dropdown-item" href="{{ route('r_create') }}">
                                     Add new refugee
                                 </a>
                                 @endif
