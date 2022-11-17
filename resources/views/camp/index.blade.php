@@ -14,7 +14,7 @@
                             <div class="camp-list">
                                 <div class="content">
                                     <h2><span>Camp name: </span>{{$camp->name}}</h2>
-                                    <h4><span>Capacity: </span>{{$camp->capacity}}</h4>
+                                    <h4><span>Capacity: </span>{{ $camp->currentCapacity }}/{{ $camp->originalCapacity }}</h4>
                                 </div>
                                 <div class="buttons">
                                     <a href="{{route('c_show', $camp)}}" class="btn btn-info">Show</a>

@@ -41,7 +41,7 @@ class RefugeeCampController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|min:3|max:30',
-            'capacity' => 'required|numeric|min:1|max:100',
+            'capacity' => 'required|numeric|min:1|max:10000',
         ],
         [
             'name.required' => 'Please add a name of the camp.',
@@ -49,7 +49,8 @@ class RefugeeCampController extends Controller
         ]);
         RefugeeCamp::create([
             'name' => $request->name,
-            'capacity' => $request->capacity,
+            'originalCapacity' => $request->capacity,
+            'currentCapacity' => $request->capacity,
             'rooms' => $request->rooms,
             'volunteers' => $request->volunteers,
             'user_id' => Auth::id()

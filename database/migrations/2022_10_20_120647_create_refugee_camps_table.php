@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('refugee_camps', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->bigInteger('capacity');
+            $table->bigInteger('originalCapacity');
+            $table->bigInteger('currentCapacity');
             $table->unsignedbigInteger('rooms')->nullable();
             $table->unsignedbigInteger('volunteers')->default(0)->nullable();
             $table->unsignedBigInteger('user_id');

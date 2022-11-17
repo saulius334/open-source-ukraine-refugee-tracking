@@ -10,14 +10,18 @@
                 <div class="card-body">
                     <div class="camp-show">
                         <div class="line"><small>Capacity:</small>
-                            <h5>{{ $camp->capacity }}</h5>
+                            <h5>{{ $camp->currentCapacity }}/{{ $camp->originalCapacity }}</h5>
                         </div>
+                        @if ($camp->rooms)
                         <div class="line"><small>Number of Rooms:</small>
                             <h5>{{ $camp->rooms }}</h5>
                         </div>
+                        @endif
+                        @if ($camp->volunteers)
                         <div class="line"><small>Number of Volunteers:</small>
                             <h5>{{ $camp->volunteers }}</h5>
                         </div>
+                        @endif
                         <div class="line"><small>Number of Refugees:</small>
                             <h5>{{ $camp->getRefugees->count() }}</h5>
                         </div>

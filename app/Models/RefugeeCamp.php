@@ -9,7 +9,7 @@ class RefugeeCamp extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'capacity', 'rooms', 'volunteers', 'user_id'];
+    protected $fillable = ['name', 'originalCapacity', 'currentCapacity', 'rooms', 'volunteers', 'user_id'];
 
     public function getRefugees() {
         return $this->hasMany(Refugee::class, 'current_refugee_camp_id', 'id');

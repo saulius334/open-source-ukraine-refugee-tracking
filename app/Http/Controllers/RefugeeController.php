@@ -7,15 +7,9 @@ use App\Models\RefugeeCamp;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
 
 class RefugeeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
        return view('refugee.index', [
@@ -23,11 +17,6 @@ class RefugeeController extends Controller
        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(RefugeeCamp $camp)
     {
         // dd($camp->id);
@@ -43,12 +32,6 @@ class RefugeeController extends Controller
        
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreRefugeeRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
  
@@ -89,23 +72,14 @@ class RefugeeController extends Controller
             'healthCondition' => $request->healthCondition,
             'bedsTaken' => $request->bedsTaken,
         ]);
-        $camp = $this->getCampById($request->current_refugee_camp_id);
+        $camp = RefugeeCamp::all()->where('id', '=', $request->current_refugee_camp_id);
         $camp[1]->update([
-            'capacity' => $camp[1]->capacity - $request->bedsTaken
+            'currentCapacity' => $camp[1]->originalCapacity - $request->bedsTaken
         ]);
 
         return redirect()->route('r_index');
     }
-    public function getCampById(int $id)
-    {
-        return RefugeeCamp::all()->where('id', '=', $id);
-    }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Refugee  $refugee
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Refugee $refugee)
     {
         return view('refugee.show', [
@@ -113,12 +87,6 @@ class RefugeeController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Refugee  $refugee
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Refugee $refugee)
     {
         return view('refugee.edit', [
@@ -128,13 +96,6 @@ class RefugeeController extends Controller
             ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateRefugeeRequest  $request
-     * @param  \App\Models\Refugee  $refugee
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Refugee $refugee)
     {
         $validated = $request->validate([
@@ -175,12 +136,6 @@ class RefugeeController extends Controller
         return redirect()->route('r_index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Refugee  $refugee
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Refugee $refugee)
     {
         if($refugee->photo !== '') {
