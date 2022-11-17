@@ -14,4 +14,5 @@ class Refugee extends Model
     public function getCamp() {
         return $this->belongsTo(RefugeeCamp::class, 'current_refugee_camp_id', 'id');
     }
+
 }

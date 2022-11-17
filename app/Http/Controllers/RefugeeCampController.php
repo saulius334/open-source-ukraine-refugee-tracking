@@ -116,15 +116,9 @@ class RefugeeCampController extends Controller
         return redirect()->route('c_index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\RefugeeCamp  $refugeeCamp
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(RefugeeCamp $refugeeCamp)
+    public function destroy(RefugeeCamp $camp)
     {
-        $refugeeCamp->delete();
+        $camp->delete();
         return redirect()->route('c_index');
     }
 }

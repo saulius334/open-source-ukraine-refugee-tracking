@@ -59,7 +59,7 @@ class RefugeeController extends Controller
         } else {
             $imagePath = '';
         }
-        // dd($request->);
+        // dd($camp);
         Refugee::create([
             'name' => $request->name,
             'surname' => $request->surname,
@@ -73,8 +73,8 @@ class RefugeeController extends Controller
             'bedsTaken' => $request->bedsTaken,
         ]);
         $camp = RefugeeCamp::all()->where('id', '=', $request->current_refugee_camp_id);
-        $camp[1]->update([
-            'currentCapacity' => $camp[1]->originalCapacity - $request->bedsTaken
+        $camp[0]->update([
+            'currentCapacity' => $camp[0]->originalCapacity - $request->bedsTaken
         ]);
 
         return redirect()->route('r_index');
@@ -141,6 +141,10 @@ class RefugeeController extends Controller
         if($refugee->photo !== '') {
             unlink(public_path().'/storage/'. $refugee->photo);
         }
+        $camp = RefugeeCamp::all()->where('id', '=', $refugee->current_refugee_camp_id);
+        $camp[0]->update([
+            'currentCapacity' => $camp[0]->originalCapacity - $refugee->bedsTaken
+        ]);
         $refugee->delete();
         return redirect()->route('r_index');
     }
