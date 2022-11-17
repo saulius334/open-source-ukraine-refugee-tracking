@@ -25,7 +25,7 @@
                         <div class="line"><small>Number of Refugees:</small>
                             <h5>{{ $camp->getRefugees->count() }}</h5>
                         </div>
-                        @if(Auth::user() == null || $camp->id === Auth::id())
+                        @if($camp->user_id === Auth::id())
                         <div class="buttons">
                             <a href="{{route('r_create', $camp)}}" class="btn btn-info">Register refugee</a>
                         </div>
