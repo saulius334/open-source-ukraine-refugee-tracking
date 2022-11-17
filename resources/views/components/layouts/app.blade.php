@@ -42,6 +42,11 @@
                             <a class="nav-link" href="{{ route('c_index') }}">Refugee Camps</a>
                         </li>
                         @endif
+                        @if (Route::has('r_index'))
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('r_index') }}">Refugees</a>
+                        </li>
+                        @endif
                         @if (Route::has('login'))
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
