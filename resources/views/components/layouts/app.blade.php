@@ -125,17 +125,16 @@
                 </div>
             </div>
             @endif
-            @if (Session::has('ok'))
+            @if (Session::has('message'))
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-6 m-4">
-                        <div class="alert alert-success">
-                            {{Session::get('ok')}}
+                        <div class="alert alert-info">
+                            {{Session::get('message')}}
                         </div>
                     </div>
                 </div>
             </div>
-
             @endif
             @yield('content')
         </main>

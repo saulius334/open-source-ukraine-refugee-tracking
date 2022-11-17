@@ -32,7 +32,7 @@ class RefugeeController extends Controller
     {
         // dd($camp->id);
         if ($camp->id == null) {
-            return redirect()->back()->with('message', 'Please Create Camp first');
+            return redirect()->back()->with('message', 'Create a refugee camp first before adding refugees!');
         } else {
              return view('refugee.create', [
             'camp' => $camp,
