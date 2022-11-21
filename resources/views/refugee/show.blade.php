@@ -24,7 +24,7 @@
                         <div class="line"><small>Destination:</small>
                             <h5>{{ $refugee->destination }}</h5>
                         </div>
-                        @if(Auth::user()->role === 1)
+                        @if(!Auth::guest())
                         <div class="line"><small>ID number:</small>
                             <h5>{{ $refugee->IDnumber }}</h5>
                         </div>
@@ -35,7 +35,7 @@
                             <h5>{{ $refugee->pets }}</h5>
                         </div>
                         <div class="line"><small>Aid Received:</small>
-                            <h5>{{ $refugee->aidReceived }}</h5>
+                            <h5>{{ $refugee->aidReceived ? 'Yes' : 'No' }}</h5>
                         </div>
                         <div class="line"><small>Health Condition:</small>
                             <h5>{{ $refugee->healthCondition }}</h5>
