@@ -3,8 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Refugee;
-use App\Models\RefugeeCamp;
-use App\Services\CampRefugeeCountService;
+use App\Services\CampRefugeeCount\CampRefugeeCreateAndDeleteCountService;
 
 class RefugeeObserver
 {
@@ -16,7 +15,7 @@ class RefugeeObserver
      */
     public function created(Refugee $refugee)
     {
-        $countService = new CampRefugeeCountService($refugee);
+        $countService = new CampRefugeeCreateAndDeleteCountService($refugee);
         $countService->updateCount('-');
     }
 
@@ -41,7 +40,7 @@ class RefugeeObserver
         if($refugee->photo !== '') {
             unlink(public_path().'/storage/'. $refugee->photo);
         }
-        $countService = new CampRefugeeCountService($refugee);
+        $countService = new CampRefugeeCreateAndDeleteCountService($refugee);
         $countService->updateCount('+');
     }
 

@@ -7,7 +7,7 @@ use App\Models\RefugeeCamp;
 use App\Services\ImagePathService;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
-use App\Services\CampRefugeeCountService;
+use App\Services\CampRefugeeCount\CampRefugeeUpdateCountService;
 
 class RefugeeController extends Controller
 {
@@ -69,11 +69,10 @@ class RefugeeController extends Controller
         UpdateRefugeeRequest $request,
         Refugee $refugee,
         ImagePathService $imagePathService,
-        CampRefugeeCountService $countService
+        CampRefugeeUpdateCountService $countService
       )
     {
         $imagePath = $imagePathService->saveOrReturnOldPath($refugee, $request->photo);
-        $countService->updateCountRefugeeUpdated($refugee, $request);
         $refugee->update([
             'name' => $request->name,
             'surname' => $request->surname,
@@ -86,6 +85,7 @@ class RefugeeController extends Controller
             'healthCondition' => $request->healthCondition,
             'bedsTaken' => $request->bedsTaken,
         ]);
+        $countService->updateCount($refugee, $request);
         return redirect()->route('r_index');
     }
 
