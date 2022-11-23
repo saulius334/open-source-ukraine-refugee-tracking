@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Refugee;
+use App\Observers\RefugeeObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Refugee::observe(RefugeeObserver::class);
         Paginator::useBootstrapFive();
         Paginator::useBootstrapFour();
     }

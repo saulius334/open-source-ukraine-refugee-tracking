@@ -6,7 +6,9 @@ use App\Models\Refugee;
 use App\Models\RefugeeCamp;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Services\ImagePathService;
 use Intervention\Image\Facades\Image;
+use App\Http\Requests\StoreRefugeeRequest;
 
 class RefugeeController extends Controller
 {
@@ -19,47 +21,21 @@ class RefugeeController extends Controller
 
     public function create(RefugeeCamp $camp)
     {
-        // dd($camp->id);
         if ($camp->id == null) {
             return redirect()->back()->with('message', 'Create a refugee camp first before adding refugees!');
         } else {
              return view('refugee.create', [
             'camp' => $camp,
             'camps' => RefugeeCamp::all(),
-            'campID' => $camp->id
+            'campId' => $camp->id
         ]);
         }
        
     }
 
-    public function store(Request $request)
+    public function store(StoreRefugeeRequest $request, ImagePathService $imagePathService)
     {
- 
-        $validated = $request->validate([
-            'name' => 'required|min:3|max:30',
-            'surname' => 'required|min:2|max:30',
-            'IdNumber' => 'required|numeric|digits:10|unique:refugees,IdNumber',
-            'bedsTaken' => 'required',
-            'current_refugee_camp_id' => 'required',
-            'photo' => 'sometimes|required|mimes:jpg|max:3000'
-        ],
-        [
-            'name.required' => 'Please add your name.',
-            'surname.required' => 'Please add your surname.',
-            'IdNumber.required' => 'Please enter valid Ukrainian ID number',
-            'IdNumber.unique' => 'This ID number is already register. Check in with the camp you registered in.',
-            'bedsTaken' => 'Please specify how many beds will you take.',
-            'photo.max' => 'file exceeds 3MB'
-        ]);
-        if ($request->photo)
-        {
-            $imagePath = request('photo')->store('uploads', 'public');
-            $image = Image::make(public_path("storage/{$imagePath}"))->fit(600,600);
-            $image->save();
-        } else {
-            $imagePath = '';
-        }
-        // dd($camp);
+        $imagePath = $imagePathService->generatePath($request->photo);
         Refugee::create([
             'name' => $request->name,
             'surname' => $request->surname,
@@ -72,11 +48,7 @@ class RefugeeController extends Controller
             'healthCondition' => $request->healthCondition,
             'bedsTaken' => $request->bedsTaken,
         ]);
-        $camp = RefugeeCamp::all()->where('id', '=', $request->current_refugee_camp_id);
-        $camp[0]->update([
-            'currentCapacity' => $camp[0]->originalCapacity - $request->bedsTaken
-        ]);
-
+       
         return redirect()->route('r_index');
     }
 
@@ -98,7 +70,7 @@ class RefugeeController extends Controller
 
     public function update(Request $request, Refugee $refugee)
     {
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|min:3|max:30',
             'surname' => 'required|min:2|max:30',
             'IdNumber' => 'required|numeric|digits:10',
