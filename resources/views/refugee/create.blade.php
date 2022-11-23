@@ -20,7 +20,7 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">ID number</span>
-                            <input type="text" name="IDnumber" class="form-control" value="{{old('IDnumber')}}">
+                            <input type="text" name="IdNumber" class="form-control" value="{{old('IdNumber')}}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Camp</span>
@@ -49,11 +49,11 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text">Aid Received?</span>
                             <div class="form-check form-check-inline m-2">
-                                <input class="form-check-input" type="radio" name="aidReceived" id="aidReceived1" value="option1">
+                                <input class="form-check-input" type="radio" name="aidReceived" id="aidReceived1" value="Yes">
                                 <label class="form-check-label" for="aidReceived1">Yes</label>
                               </div>
                               <div class="form-check form-check-inline m-2">
-                                <input class="form-check-input" type="radio" name="aidReceived" id="aidReceived2" value="option2">
+                                <input class="form-check-input" type="radio" name="aidReceived" id="aidReceived2" value="No">
                                 <label class="form-check-label" for="aidReceived2">No</label>
                               </div>
                         </div>

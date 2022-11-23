@@ -17,8 +17,8 @@
                                     <h4><span>Request to camp: </span>{{$outsideRequest->getCamp->name}}</h4>
                                 </div>
                                 <div class="buttons">
-                                    <a href="{{route('req_show', $request)}}" class="btn btn-success">View</a>
-                                    <form action="{{route('req_delete', $refugee)}}" method="post">
+                                    <a href="{{route('req_show', $outsideRequest)}}" class="btn btn-success">View</a>
+                                    <form action="{{route('req_delete', $outsideRequest)}}" method="post">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger">Dismiss</button>

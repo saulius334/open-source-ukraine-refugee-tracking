@@ -8,8 +8,8 @@
                     <h2>{{$outsideRequest->name}} {{$outsideRequest->surname}}</h2>
                 </div>
                 <div class="card-body">
-                    <div class="camp-show">
-                        <div class="img-small-ch mt-3">
+                    <form action="{{route('r_store')}}" method="post" enctype="multipart/form-data" class="--form">
+                        <div class="img-small-ch mb-3">
                             @if($outsideRequest->photo)
                             <div class="img">
                                 <img class="w-25 mb-3" src="/storage/{{ $outsideRequest->photo }}" alt="Refugee Photo" />
@@ -18,33 +18,59 @@
                             <h2>No photo</h2>
                             @endif
                         </div>
-                        <div class="line"><small>Requested Camp: </small>
-                            <h5>{{ $outsideRequest->getCamp->name }}</h5>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Name</span>
+                            <input type="text" name="name" class="form-control" value="{{old('name', $outsideRequest->name)}}">
                         </div>
-                        <div class="line"><small>Destination:</small>
-                            <h5>{{ $outsideRequest->destination ?? '-'}}</h5>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Surname</span>
+                            <input type="text" name="surname" class="form-control" value="{{old('surname', $outsideRequest->surname)}}">
                         </div>
-                        <div class="line"><small>ID number:</small>
-                            <h5>{{ $outsideRequest->IDnumber }}</h5>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">ID number</span>
+                            <input type="text" name="IdNumber" class="form-control" value="{{old('IdNumber', $outsideRequest->IdNumber)}}">
                         </div>
-                        <div class="line"><small>Beds wanted:</small>
-                            <h5>{{ $outsideRequest->bedsTaken }}</h5>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Request to Camp</span>
+                            <select class="form-select" name="current_refugee_camp_id">
+                                @foreach ($camps as $camp)
+                                <option value="{{$camp->id}}"@if($camp->id === $outsideRequest->current_refugee_camp_id) selected @endif>{{$camp->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="line"><small>Pets:</small>
-                            <h5>{{ $outsideRequest->pets ?? '-'}}</h5>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Beds taken</span>
+                            <input type="text" name="bedsTaken" class="form-control" value="{{old('bedsTaken', $outsideRequest->bedsTaken)}}">
                         </div>
-                        <div class="line"><small>Aid Received:</small>
-                            <h5>{{ $outsideRequest->aidReceived ?? '-'}}</h5>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Photo</span>
+                            <input type="file" name="photo" multiple class="form-control">
                         </div>
-                        <div class="line"><small>Health Condition:</small>
-                            <h5>{{ $outsideRequest->healthCondition ?? '-' }}</h5>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Pets</span>
+                            <input type="text" name="pets" class="form-control" value="{{old('pets', $outsideRequest->pets)}}">
                         </div>
-                        <form action="{{route('req_create', $outsideRequest)}}" method="post">
-                            <button type="submit" class="btn btn-success">Accept</button>
-                        </form>
-                        <form action="{{route('req_delete', $outsideRequest)}}" method="post">
-                            <button type="submit" class="btn btn-danger">Dismiss</button>
-                        </form>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Destination</span>
+                            <input type="text" name="destination" class="form-control" value="{{old('destination', $outsideRequest->destination)}}">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Aid Received?</span>
+                            <input type="text" class="form-control" name="aidReceived" value="{{old('aidReceived', $outsideRequest->aidReceived)}}">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Health Condition</span>
+                            <input type="text" class="form-control" name="healthCondition" disabled value="{{old('healthCondition', $outsideRequest->healthCondition)}}">
+                        </div>
+                        @csrf
+                        <button type="submit" class="btn btn-success mb-4 --submit">Accept</button>
+                    </form>
+                    <form action="{{route('req_delete', $outsideRequest)}}" method="post">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="btn btn-danger">Dismiss</button>
+                    </form>
+                </div>
                     </div>
                 </div>
             </div>

@@ -17,10 +17,10 @@ class OutsideRequestController extends Controller
         ]);
     }
 
-    public function create(RefugeeCamp $campId)
+    public function create(RefugeeCamp $camp)
     {
         return view('request.create',[
-            'campId' => $campId,
+            'campId' => $camp->id,
             'camps' => RefugeeCamp::all(),
         ]);
     }
@@ -30,7 +30,7 @@ class OutsideRequestController extends Controller
         $validated = $request->validate([
             'name' => 'required|min:3|max:30',
             'surname' => 'required|min:2|max:30',
-            'IDnumber' => 'required|min:10|max:10|unique:refugees,IDnumber',
+            'IdNumber' => 'required|min:10|max:10|unique:refugees,IdNumber',
             'bedsTaken' => 'required',
             'current_refugee_camp_id' => 'required',
             'photo' => 'sometimes|required|mimes:jpg|max:3000'
@@ -38,8 +38,8 @@ class OutsideRequestController extends Controller
         [
             'name.required' => 'Please add your name.',
             'surname.required' => 'Please add your surname.',
-            'IDnumber.required' => 'Please enter valid Ukrainian ID number',
-            'IDnumber.unique' => 'This ID number is already register. Check in with the camp you registered in.',
+            'IdNumber.required' => 'Please enter valid Ukrainian ID number',
+            'IdNumber.unique' => 'This ID number is already register. Check in with the camp you registered in.',
             'bedsTaken' => 'Please specify how many beds will you take.',
             'photo.max' => 'file exceeds 3MB'
         ]);
@@ -54,8 +54,8 @@ class OutsideRequestController extends Controller
         OutsideRequest::create([
             'name' => $request->name,
             'surname' => $request->surname,
-            'IDnumber' => $request->IDnumber,
-            'campOfRequest' => $request->campOfRequest,
+            'IdNumber' => $request->IDnumber,
+            'current_refugee_camp_id' => $request->current_refugee_camp_id,
             'photo' => $imagePath,
             'pets' => $request->pets,
             'destination' => $request->destination,
@@ -63,18 +63,20 @@ class OutsideRequestController extends Controller
             'healthCondition' => $request->healthCondition,
             'bedsTaken' => $request->bedsTaken,
         ]);
-
-        return redirect()->route('req_index')->with('message', 'Request sent');
+        return redirect()->route('c_index')->with('message', 'Request sent');
     }
 
     public function show(OutsideRequest $outsideRequest)
     {
-        
+        return view('request.show',[
+            'outsideRequest' => $outsideRequest,
+            'camps' => RefugeeCamp::all()
+        ]);
     }
 
     public function destroy(OutsideRequest $outsideRequest)
     {
         $outsideRequest->delete();
-        return redirect()->route('c_index');
+        return redirect()->route('req_index');
     }
 }

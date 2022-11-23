@@ -38,7 +38,7 @@ class RefugeeController extends Controller
         $validated = $request->validate([
             'name' => 'required|min:3|max:30',
             'surname' => 'required|min:2|max:30',
-            'IDnumber' => 'required|min:10|max:10|unique:refugees,IDnumber',
+            'IdNumber' => 'required|numeric|digits:10|unique:refugees,IdNumber',
             'bedsTaken' => 'required',
             'current_refugee_camp_id' => 'required',
             'photo' => 'sometimes|required|mimes:jpg|max:3000'
@@ -46,8 +46,8 @@ class RefugeeController extends Controller
         [
             'name.required' => 'Please add your name.',
             'surname.required' => 'Please add your surname.',
-            'IDnumber.required' => 'Please enter valid Ukrainian ID number',
-            'IDnumber.unique' => 'This ID number is already register. Check in with the camp you registered in.',
+            'IdNumber.required' => 'Please enter valid Ukrainian ID number',
+            'IdNumber.unique' => 'This ID number is already register. Check in with the camp you registered in.',
             'bedsTaken' => 'Please specify how many beds will you take.',
             'photo.max' => 'file exceeds 3MB'
         ]);
@@ -63,7 +63,7 @@ class RefugeeController extends Controller
         Refugee::create([
             'name' => $request->name,
             'surname' => $request->surname,
-            'IDnumber' => $request->IDnumber,
+            'IdNumber' => $request->IdNumber,
             'current_refugee_camp_id' => $request->current_refugee_camp_id,
             'photo' => $imagePath,
             'pets' => $request->pets,
@@ -101,16 +101,16 @@ class RefugeeController extends Controller
         $validated = $request->validate([
             'name' => 'required|min:3|max:30',
             'surname' => 'required|min:2|max:30',
-            'IDnumber' => 'required|min:10|max:10|',
-            Rule::unique('refugees', 'IDnumber')->ignore($refugee->IDnumber),
+            'IdNumber' => 'required|numeric|digits:10',
+            Rule::unique('refugees', 'IdNumber')->ignore($refugee->IDnumber),
             'bedsTaken' => 'required',
             'current_refugee_camp_id' => 'required'
         ],
         [
             'name.required' => 'Please add name.',
             'surname.required' => 'Please add surname.',
-            'IDnumber.required' => 'Please enter valid Ukrainian ID number',
-            'IDnumber.unique' => 'This ID number is already register. Check in with the camp you registered in.',
+            'IdNumber.required' => 'Please enter valid Ukrainian ID number',
+            'IdNumber.unique' => 'This ID number is already register. Check in with the camp you registered in.',
             'bedsTaken' => 'Please specify how many beds will you take.'
         ]);
         if($request->hasFile('photo')) {
@@ -123,7 +123,7 @@ class RefugeeController extends Controller
         $refugee->update([
             'name' => $request->name,
             'surname' => $request->surname,
-            'IDnumber' => $request->IDnumber,
+            'IdNumber' => $request->IdNumber,
             'current_refugee_camp_id' => $request->current_refugee_camp_id,
             'photo' => $imagePath,
             'pets' => $request->pets,

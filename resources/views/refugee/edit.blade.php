@@ -29,7 +29,7 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">ID number</span>
-                            <input type="text" name="IDnumber" class="form-control" value="{{old('IDnumber', $refugee->IDnumber)}}">
+                            <input type="text" name="IdNumber" class="form-control" value="{{old('IdNumber', $refugee->IdNumber)}}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Camp</span>

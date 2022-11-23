@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class OutsideRequest extends Model
 {
-    protected $fillable = ['name', 'surname', 'photo', 'IDnumber', 'campOfRequest', 'family', 'pets', 'destination', 'aidReceived', 'healthCondition', 'moodUponArrival', 'bedsTaken'];
+    protected $fillable = ['name', 'surname', 'photo', 'IdNumber', 'current_refugee_camp_id', 'family', 'pets', 'destination', 'aidReceived', 'healthCondition', 'moodUponArrival', 'bedsTaken'];
 
     use HasFactory;
 
     public function getCamp() {
-        return $this->belongsTo(RefugeeCamp::class, 'campOfRequest', 'id');
+        return $this->belongsTo(RefugeeCamp::class, 'current_refugee_camp_id', 'id');
     }
 }

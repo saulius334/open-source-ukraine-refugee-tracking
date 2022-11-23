@@ -26,7 +26,7 @@
                         </div>
                         @if(!Auth::guest())
                         <div class="line"><small>ID number:</small>
-                            <h5>{{ $refugee->IDnumber }}</h5>
+                            <h5>{{ $refugee->IdNumber }}</h5>
                         </div>
                         <div class="line"><small>Beds taken:</small>
                             <h5>{{ $refugee->bedsTaken }}</h5>
@@ -35,7 +35,7 @@
                             <h5>{{ $refugee->pets }}</h5>
                         </div>
                         <div class="line"><small>Aid Received:</small>
-                            <h5>{{ $refugee->aidReceived ? 'Yes' : 'No' }}</h5>
+                            <h5>{{ $refugee->aidReceived }}</h5>
                         </div>
                         <div class="line"><small>Health Condition:</small>
                             <h5>{{ $refugee->healthCondition }}</h5>
