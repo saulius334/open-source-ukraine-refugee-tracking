@@ -27,7 +27,7 @@ class StoreRefugeeRequest extends FormRequest
                 'name' => 'required|min:3|max:30',
                 'surname' => 'required|min:2|max:30',
                 'IdNumber' => 'required|numeric|digits:10|unique:refugees,IdNumber',
-                'bedsTaken' => 'required',
+                'bedsTaken' => 'required|min:0',
                 'current_refugee_camp_id' => 'required',
                 'photo' => 'sometimes|required|mimes:jpg|max:3000',
 

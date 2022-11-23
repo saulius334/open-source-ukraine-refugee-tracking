@@ -14,9 +14,10 @@ class RefugeeObserver
      * @param  \App\Models\Refugee  $refugee
      * @return void
      */
-    public function created(Refugee $refugee, CampRefugeeCountService $countService)
+    public function created(Refugee $refugee)
     {
-        $countService->updateCount($refugee);
+        $countService = new CampRefugeeCountService($refugee);
+        $countService->updateCount('-');
     }
 
     /**
@@ -27,7 +28,6 @@ class RefugeeObserver
      */
     public function updated(Refugee $refugee)
     {
-        //
     }
 
     /**
@@ -38,7 +38,11 @@ class RefugeeObserver
      */
     public function deleted(Refugee $refugee)
     {
-        //
+        if($refugee->photo !== '') {
+            unlink(public_path().'/storage/'. $refugee->photo);
+        }
+        $countService = new CampRefugeeCountService($refugee);
+        $countService->updateCount('+');
     }
 
     /**
