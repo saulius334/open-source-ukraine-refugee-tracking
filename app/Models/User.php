@@ -47,7 +47,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(RefugeeCamp::class, 'user_id', 'id');
     }
-    public function getAllAssignedCampOutsideRequests()
+    public function getAllAssignedCampOutsideRequests(): int
     {
         $camps = $this->hasMany(RefugeeCamp::class, 'user_id', 'id')->get();
         $count = 0;

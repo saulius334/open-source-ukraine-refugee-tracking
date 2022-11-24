@@ -37,7 +37,7 @@ class RefugeeController extends Controller
     }
     public function store(StoreRefugeeRequest $request): RedirectResponse
     {
-        $imagePath = $this->imagePathService->saveAndGeneratePath($request->photo);
+        $imagePath = $this->imagePathService->saveAndGeneratePathOrReturnOldPath($request->photo);
 
         Refugee::create([
             'name' => $request->name,
@@ -70,7 +70,7 @@ class RefugeeController extends Controller
     }
     public function update(UpdateRefugeeRequest $request, Refugee $refugee): RedirectResponse
     {
-        $imagePath = $this->imagePathService->saveOrReturnOldPath($refugee, $request->photo);
+        $imagePath = $this->imagePathService->saveAndGeneratePathOrReturnOldPath($request->photo, $refugee);
         $countService = new CampRefugeeUpdateCountService($refugee);
         $countService->updateCount($request);
         $refugee->update([

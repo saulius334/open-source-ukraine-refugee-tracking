@@ -31,7 +31,7 @@ class OutsideRequestController extends Controller
 
     public function store(Request $request)
     {
-        $imagePath = $this->imagePathService->saveAndGeneratePath($request->photo);
+        $imagePath = $this->imagePathService->saveAndGeneratePathOrReturnOldPath($request->photo);
 
         OutsideRequest::create([
             'name' => $request->name,

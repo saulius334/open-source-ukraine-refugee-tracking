@@ -7,20 +7,11 @@ use Intervention\Image\Facades\Image;
 
 class ImagePathService
 {
-    public function saveAndGeneratePath($photo = null)
+    public function saveAndGeneratePathOrReturnOldPath($photo = null, ?Refugee $refugee = null)
     {
-        if (!$photo) {
+        if (!$photo && !$refugee) {
             return '';
-        } else {
-            $imagePath = $photo->store('uploads', 'public');
-            $image = Image::make(public_path("storage/{$imagePath}"))->fit(600,600);
-            $image->save();
-            return $imagePath;
-        }
-    }
-    public function saveOrReturnOldPath(Refugee $refugee, $photo = null)
-    {
-        if (!$photo) {
+        } else if (!$photo && $refugee) {
             return $refugee->photo;
         } else {
             $imagePath = $photo->store('uploads', 'public');
