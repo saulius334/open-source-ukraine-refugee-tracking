@@ -9,11 +9,10 @@ use App\Http\Requests\StoreOutsideRequestRequest;
 
 class OutsideRequestController extends Controller
 {
-    private ImagePathService $imagePathService;
-    public function __construct()
+    public function __construct(private ImagePathService $imagePathService)
     {
-        $this->imagePathService = new ImagePathService();
     }
+    
     public function index()
     {
         return view('request.index', [
@@ -31,7 +30,7 @@ class OutsideRequestController extends Controller
 
     public function store(StoreOutsideRequestRequest $request)
     {
-        $imagePath = $this->imagePathService->saveAndGeneratePathOrReturnOldPath($request->photo);
+        $imagePath = $this->imagePathService->saveImage($request->photo);
 
         OutsideRequest::create([
             'name' => $request->name,

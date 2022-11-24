@@ -7,7 +7,7 @@ use Intervention\Image\Facades\Image;
 
 class ImagePathService
 {
-    public function saveAndGeneratePathOrReturnOldPath($photo = null, ?Refugee $refugee = null)
+    public function saveImage($photo = null, ?Refugee $refugee = null)
     {
         if (!$photo && !$refugee) {
             return '';

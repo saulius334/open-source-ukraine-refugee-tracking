@@ -12,11 +12,10 @@ use Illuminate\Http\RedirectResponse;
 
 class RefugeeController extends Controller
 {
-    private ImagePathService $imagePathService;
-    public function __construct()
+    public function __construct(private ImagePathService $imagePathService)
     {
-        $this->imagePathService = new ImagePathService();
     }
+
     public function index()
     {
         return view('refugee.index', [
@@ -37,7 +36,7 @@ class RefugeeController extends Controller
     }
     public function store(StoreRefugeeRequest $request): RedirectResponse
     {
-        $imagePath = $this->imagePathService->saveAndGeneratePathOrReturnOldPath($request->photo);
+        $imagePath = $this->imagePathService->saveImage($request->photo);
 
         Refugee::create([
             'name' => $request->name,
@@ -70,7 +69,7 @@ class RefugeeController extends Controller
     }
     public function update(UpdateRefugeeRequest $request, Refugee $refugee): RedirectResponse
     {
-        $imagePath = $this->imagePathService->saveAndGeneratePathOrReturnOldPath($request->photo, $refugee);
+        $imagePath = $this->imagePathService->saveImage($request->photo, $refugee);
         $countService = new CampRefugeeUpdateCountService($refugee);
         $countService->updateCount($request);
         $refugee->update([
