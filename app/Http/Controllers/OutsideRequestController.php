@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\RefugeeCamp;
-use Illuminate\Http\Request;
 use App\Models\OutsideRequest;
 use App\Services\ImageServices\ImagePathService;
+use App\Http\Requests\StoreOutsideRequestRequest;
 
 class OutsideRequestController extends Controller
 {
@@ -29,7 +29,7 @@ class OutsideRequestController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreOutsideRequestRequest $request)
     {
         $imagePath = $this->imagePathService->saveAndGeneratePathOrReturnOldPath($request->photo);
 
