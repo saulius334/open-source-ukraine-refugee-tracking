@@ -14,4 +14,8 @@ class RefugeeCamp extends Model
     public function getRefugees() {
         return $this->hasMany(Refugee::class, 'current_refugee_camp_id', 'id');
     }
+
+    public function getOutsideRequests() {
+        return $this->hasMany(OutsideRequest::class, 'current_refugee_camp_id', 'id');
+    }
 }

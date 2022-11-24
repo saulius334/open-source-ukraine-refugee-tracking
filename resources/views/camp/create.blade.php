@@ -16,7 +16,7 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Capacity</span>
-                            <input type="text" name="capacity" class="form-control" value="{{old('capacity')}}">
+                            <input type="text" name="originalCapacity" class="form-control" value="{{old('originalCapacity')}}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Number of Rooms</span>

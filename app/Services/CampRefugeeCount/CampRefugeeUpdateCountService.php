@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services\CampRefugeeCount;
 
@@ -10,15 +10,15 @@ use App\Services\CampRefugeeCount\CampRefugeeCountValidator;
 class CampRefugeeUpdateCountService
 {
     private RefugeeCamp $camp;
+    private CampRefugeeCountValidator $validator;
     public function __construct(private Refugee $refugee)
     {
-        dd(RefugeeCamp::where('id', '=', $refugee->current_refugee_camp_id));
-        $this->camp = RefugeeCamp::all()->where('id', '=', $refugee->current_refugee_camp_id)->first();
+        $this->camp = RefugeeCamp::where('id', '=', $this->refugee->current_refugee_camp_id)->first();
         $this->validator = new CampRefugeeCountValidator();
     }
-    public function updateCount(Refugee $refugee, UpdateRefugeeRequest $request): void
+    public function updateCount(UpdateRefugeeRequest $request): void
     {
-        $difference = $this->validator->checkCountLogic($refugee->bedsTaken - $request->bedsTaken, $this->camp); 
+        $difference = $this->validator->checkCountLogic($this->refugee->bedsTaken - (int)$request->bedsTaken, $this->camp);
         $this->camp->update([
             'currentCapacity' => $this->camp->currentCapacity + $difference
         ]);

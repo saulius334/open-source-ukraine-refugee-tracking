@@ -11,12 +11,12 @@
                 <div class="card-body">
                     <form action="{{route('c_update', $camp)}}" method="post" enctype="multipart/form-data">
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Title</span>
-                            <input type="text" name="title" class="form-control" value="{{old('title', $camp->name)}}">
+                            <span class="input-group-text">Camp name</span>
+                            <input type="text" name="name" class="form-control" value="{{old('name', $camp->name)}}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Capacity</span>
-                            <input type="text" name="capacity" class="form-control" value="{{old('capacity', $camp->capacity)}}">
+                            <input type="text" name="originalCapacity" class="form-control" value="{{old('originalCapacity', $camp->originalCapacity)}}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Number of Rooms</span>

@@ -13,7 +13,7 @@ class StoreRefugeeCampRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class StoreRefugeeCampRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|min:3|max:30',
+            'capacity' => 'required|numeric|min:1|max:10000',
+            // [
+            //     'name.required' => 'Please add a name of the camp.',
+            //     'capacity.required' => 'Please enter how many people you can take in.',
+            // ]
         ];
     }
 }

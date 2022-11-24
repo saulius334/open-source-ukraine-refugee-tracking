@@ -39,18 +39,10 @@ class RefugeeCampController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|min:3|max:30',
-            'capacity' => 'required|numeric|min:1|max:10000',
-        ],
-        [
-            'name.required' => 'Please add a name of the camp.',
-            'capacity.required' => 'Please enter how many people you can take in.',
-        ]);
         RefugeeCamp::create([
             'name' => $request->name,
-            'originalCapacity' => $request->capacity,
-            'currentCapacity' => $request->capacity,
+            'originalCapacity' => $request->originalCapacity,
+            'currentCapacity' => $request->originalCapacity,
             'rooms' => $request->rooms,
             'volunteers' => $request->volunteers,
             'user_id' => Auth::id()
@@ -93,22 +85,12 @@ class RefugeeCampController extends Controller
      * @param  \App\Models\RefugeeCamp  $refugeeCamp
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RefugeeCamp $refugeeCamp)
+    public function update(Request $request, RefugeeCamp $camp)
     {
-        $validated = $request->validate([
-            'name' => 'required|min:3|max:30',
-            'capacity' => 'required|numeric|min:1|max:100',
-            'rooms' => 'required|numeric|min:1|max:100',
-            'volunteers' => 'numeric|min:0|max:1000',
-        ],
-        [
-            'name.required' => 'Please add a name of the camp.',
-            'capacity.required' => 'Please enter how many people you can take in.',
-            'rooms.required' => 'Please specify how many rooms.'
-        ]);
-        $refugeeCamp->update([
+        $camp->update([
             'name' => $request->name,
-            'capacity' => $request->capacity,
+            'currentCapacity' => $request->originalCapacity - $camp->originalCapacity + $camp->currentCapacity,
+            'originalCapacity' => $request->originalCapacity,
             'rooms' => $request->rooms,
             'volunteers' => $request->volunteers,
         ]);
