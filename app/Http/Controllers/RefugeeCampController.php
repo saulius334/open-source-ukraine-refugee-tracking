@@ -9,34 +9,16 @@ use Illuminate\Support\Facades\Auth;
 
 class RefugeeCampController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         return view('camp.index', [
             'camps' => RefugeeCamp::latest()->paginate(15)
         ]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('camp.create');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreRefugeeCampRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         RefugeeCamp::create([
@@ -51,12 +33,6 @@ class RefugeeCampController extends Controller
         return redirect()->route('u_index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\RefugeeCamp  $refugeeCamp
-     * @return \Illuminate\Http\Response
-     */
     public function show(RefugeeCamp $camp)
     {
         return view('camp.show', [
@@ -64,12 +40,6 @@ class RefugeeCampController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\RefugeeCamp  $refugeeCamp
-     * @return \Illuminate\Http\Response
-     */
     public function edit(RefugeeCamp $camp)
     {
         return view('camp.edit', [
@@ -78,13 +48,6 @@ class RefugeeCampController extends Controller
             ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateRefugeeCampRequest  $request
-     * @param  \App\Models\RefugeeCamp  $refugeeCamp
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, RefugeeCamp $camp)
     {
         $camp->update([
