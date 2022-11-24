@@ -16,8 +16,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
 
-Route::prefix('user')->name('u_')->group(function () {
-    Route::get('/', [userCon::class, 'index'])->name('index')->middleware('auth');
+Route::middleware('auth')->prefix('user')->name('u_')->group(function () {
+    Route::get('/', [userCon::class, 'index'])->name('index');
 });
 Route::prefix('camp')->name('c_')->group(function () {
     Route::get('/', [campCon::class, 'index'])->name('index');
