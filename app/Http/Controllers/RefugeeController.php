@@ -52,7 +52,7 @@ class RefugeeController extends Controller
             'bedsTaken' => $request->bedsTaken,
         ]);
 
-        return redirect()->route('r_index');
+        return redirect()->route('r_index')->with('message', 'Refugee created successfully!');
     }
     public function show(Refugee $refugee)
     {
@@ -85,7 +85,7 @@ class RefugeeController extends Controller
             'healthCondition' => $request->healthCondition,
             'bedsTaken' => $request->bedsTaken,
         ]);
-        return redirect()->route('r_index');
+        return redirect()->route('r_index')->with('message', 'Refugee updated successfully!');
     }
     public function destroy(Refugee $refugee)
     {

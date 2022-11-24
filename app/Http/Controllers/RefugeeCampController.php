@@ -30,7 +30,7 @@ class RefugeeCampController extends Controller
             'user_id' => Auth::id()
         ]);
 
-        return redirect()->route('u_index');
+        return redirect()->route('u_index')->with('message', 'Camp created successfully!');
     }
 
     public function show(RefugeeCamp $camp)
@@ -58,12 +58,12 @@ class RefugeeCampController extends Controller
             'volunteers' => $request->volunteers,
         ]);
 
-        return redirect()->route('c_index');
+        return redirect()->route('c_index')->with('message', 'Refugee updated successfully!');
     }
 
     public function destroy(RefugeeCamp $camp)
     {
         $camp->delete();
-        return redirect()->route('c_index');
+        return redirect()->route('c_index')->with('message', 'Camp deleted!');
     }
 }
