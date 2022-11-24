@@ -14,20 +14,10 @@ class RefugeeObserver
      * @param  \App\Models\Refugee  $refugee
      * @return void
      */
-    public function created(Refugee $refugee)
+    public function created(Refugee $refugee): void
     {
         $countService = new CampRefugeeCreateAndDeleteCountService($refugee);
         $countService->updateCount('-');
-    }
-
-    /**
-     * Handle the Refugee "updated" event.
-     *
-     * @param  \App\Models\Refugee  $refugee
-     * @return void
-     */
-    public function updated(Refugee $refugee)
-    {
     }
 
     /**
@@ -36,7 +26,7 @@ class RefugeeObserver
      * @param  \App\Models\Refugee  $refugee
      * @return void
      */
-    public function deleted(Refugee $refugee)
+    public function deleted(Refugee $refugee): void
     {
         $unlinkService = new ImageUnlink();
         $unlinkService->unlink($refugee);
@@ -45,25 +35,4 @@ class RefugeeObserver
         $countService->updateCount('+');
     }
 
-    /**
-     * Handle the Refugee "restored" event.
-     *
-     * @param  \App\Models\Refugee  $refugee
-     * @return void
-     */
-    public function restored(Refugee $refugee)
-    {
-        //
-    }
-
-    /**
-     * Handle the Refugee "force deleted" event.
-     *
-     * @param  \App\Models\Refugee  $refugee
-     * @return void
-     */
-    public function forceDeleted(Refugee $refugee)
-    {
-        //
-    }
 }

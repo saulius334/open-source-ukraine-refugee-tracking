@@ -7,7 +7,13 @@ use App\Services\ImageServices\ImageUnlink;
 
 class OutsideRequestObserver
 {
-    public function deleted(OutsideRequest $outsideRequest)
+    /**
+     * Handle the OutsideRequest "deleted" event.
+     *
+     * @param  \App\Models\OutsideRequest  $outsideRequest
+     * @return void
+     */
+    public function deleted(OutsideRequest $outsideRequest): void
     {
         $unlinkService = new ImageUnlink();
         $unlinkService->unlink($outsideRequest);
