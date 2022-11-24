@@ -9,13 +9,22 @@ class RefugeeCamp extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'originalCapacity', 'currentCapacity', 'rooms', 'volunteers', 'user_id'];
+    protected $fillable = [
+        'name',
+        'originalCapacity',
+        'currentCapacity',
+        'rooms',
+        'volunteers',
+        'user_id'
+    ];
 
-    public function getRefugees() {
+    public function getRefugees()
+    {
         return $this->hasMany(Refugee::class, 'current_refugee_camp_id', 'id');
     }
 
-    public function getOutsideRequests() {
+    public function getOutsideRequests()
+    {
         return $this->hasMany(OutsideRequest::class, 'current_refugee_camp_id', 'id');
     }
 }

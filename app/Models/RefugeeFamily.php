@@ -9,5 +9,8 @@ class RefugeeFamily extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'surname'];
+    protected $fillable = [
+        'name',
+        'surname'
+    ];
 }
