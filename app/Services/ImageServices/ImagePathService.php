@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Services;
+namespace App\Services\ImageServices;
 
 use App\Models\Refugee;
 use Intervention\Image\Facades\Image;

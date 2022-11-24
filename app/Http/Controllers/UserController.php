@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index()
     {
         return view('user.index', [
-            'camps' => RefugeeCamp::where('user_id', '=', Auth::id())->paginate(5)
+            'camps' => RefugeeCamp::where('user_id', Auth::id())->paginate(5)
         ]);
     }
 }

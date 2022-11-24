@@ -10,7 +10,7 @@ class CampRefugeeCreateAndDeleteCountService
     private RefugeeCamp $camp;
     public function __construct(private Refugee $refugee)
     {
-        $this->camp = RefugeeCamp::where('id', '=', $refugee->current_refugee_camp_id)->first();
+        $this->camp = RefugeeCamp::where('id', $refugee->current_refugee_camp_id)->first();
         $this->validator = new CampRefugeeCountValidator();
     }
     public function updateCount(string $param): void

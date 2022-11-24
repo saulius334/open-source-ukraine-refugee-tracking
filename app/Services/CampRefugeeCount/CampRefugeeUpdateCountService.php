@@ -13,7 +13,7 @@ class CampRefugeeUpdateCountService
     private CampRefugeeCountValidator $validator;
     public function __construct(private Refugee $refugee)
     {
-        $this->camp = RefugeeCamp::where('id', '=', $this->refugee->current_refugee_camp_id)->first();
+        $this->camp = RefugeeCamp::where('id', $this->refugee->current_refugee_camp_id)->first();
         $this->validator = new CampRefugeeCountValidator();
     }
     public function updateCount(UpdateRefugeeRequest $request): void

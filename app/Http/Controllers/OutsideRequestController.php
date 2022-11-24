@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\RefugeeCamp;
 use Illuminate\Http\Request;
 use App\Models\OutsideRequest;
-use App\Services\ImagePathService;
-use Intervention\Image\Facades\Image;
+use App\Services\ImageServices\ImagePathService;
 
 class OutsideRequestController extends Controller
 {
-
+    private ImagePathService $imagePathService;
+    public function __construct()
+    {
+        $this->imagePathService = new ImagePathService();
+    }
     public function index()
     {
         return view('request.index', [
-            'outsideRequests' => OutsideRequest::orderBy('updated_at', 'desc')->paginate(15),
+            'outsideRequests' => OutsideRequest::latest()->paginate(15),
         ]);
     }
 
@@ -26,9 +29,9 @@ class OutsideRequestController extends Controller
         ]);
     }
 
-    public function store(Request $request, ImagePathService $imagePathService)
+    public function store(Request $request)
     {
-        $imagePath = $imagePathService->saveAndGeneratePath($request->photo);
+        $imagePath = $this->imagePathService->saveAndGeneratePath($request->photo);
 
         OutsideRequest::create([
             'name' => $request->name,
