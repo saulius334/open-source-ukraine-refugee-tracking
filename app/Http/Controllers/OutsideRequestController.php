@@ -33,7 +33,7 @@ class OutsideRequestController extends Controller
 
     public function store(StoreOutsideRequestRequest $request): RedirectResponse
     {
-        $imagePath = $this->imagePathService->saveImageAndGetPath($request->photo);
+        $imagePath = $this->imagePathService->storeImageAndGetPath($request->photo);
 
         OutsideRequest::create([
             'name' => $request->name,
