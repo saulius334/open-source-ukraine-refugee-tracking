@@ -4,9 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OutsideRequest extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'name',
         'surname',
@@ -22,9 +25,8 @@ class OutsideRequest extends Model
         'bedsTaken'
     ];
 
-    use HasFactory;
 
-    public function getCamp()
+    public function getCamp(): BelongsTo
     {
         return $this->belongsTo(RefugeeCamp::class, 'current_refugee_camp_id', 'id');
     }

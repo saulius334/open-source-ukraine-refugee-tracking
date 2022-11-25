@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Refugee extends Model
 {
@@ -24,7 +25,7 @@ class Refugee extends Model
         'bedsTaken'
     ];
 
-    public function getCamp()
+    public function getCamp(): BelongsTo
     {
         return $this->belongsTo(RefugeeCamp::class, 'current_refugee_camp_id', 'id');
     }

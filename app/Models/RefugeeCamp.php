@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RefugeeCamp extends Model
 {
@@ -18,7 +19,7 @@ class RefugeeCamp extends Model
         'user_id'
     ];
 
-    public function getRefugees()
+    public function getRefugees(): HasMany
     {
         return $this->hasMany(Refugee::class, 'current_refugee_camp_id', 'id');
     }

@@ -18,9 +18,10 @@ class CampRefugeeUpdateCountService
     }
     public function updateCount(UpdateRefugeeRequest $request): void
     {
-        $difference = $this->validator->checkCountLogic($this->refugee->bedsTaken - (int)$request->bedsTaken, $this->camp);
+        $difference = $this->refugee->bedsTaken - (int)$request->bedsTaken;
+        $actual = $this->validator->checkCountLogic($difference, $this->camp);
         $this->camp->update([
-            'currentCapacity' => $this->camp->currentCapacity + $difference
+            'currentCapacity' => $this->camp->currentCapacity + $actual
         ]);
     }
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Services\ImageServices;
 
@@ -7,17 +7,27 @@ use Intervention\Image\Facades\Image;
 
 class ImagePathService
 {
-    public function saveImage($photo = null, ?Refugee $refugee = null)
+    public function saveImageAndGetPath($photo = null, ?Refugee $refugee = null)
     {
         if (!$photo && !$refugee) {
             return '';
-        } else if (!$photo && $refugee) {
+        } elseif (!$photo && $refugee) {
             return $refugee->photo;
         } else {
             $imagePath = $photo->store('uploads', 'public');
-            $image = Image::make(public_path("storage/{$imagePath}"))->fit(600,600);
-            $image->save();
+            $this->saveImage($imagePath);
             return $imagePath;
         }
+    }
+    public function unlink($subject)
+    {
+        if ($subject->photo !== '') {
+            unlink(public_path() . '/storage/' . $subject->photo);
+        }
+    }
+    private function saveImage($imagePath)
+    {
+        $image = Image::make(public_path("storage/{$imagePath}"))->fit(600, 600);
+        $image->save();
     }
 }

@@ -3,8 +3,8 @@
 namespace App\Observers;
 
 use App\Models\Refugee;
-use App\Services\ImageServices\ImageUnlink;
 use App\Services\CampRefugeeCount\CampRefugeeCreateAndDeleteCountService;
+use App\Services\ImageServices\ImagePathService;
 
 class RefugeeObserver
 {
@@ -16,11 +16,10 @@ class RefugeeObserver
 
     public function deleted(Refugee $refugee): void
     {
-        $unlinkService = new ImageUnlink();
+        $unlinkService = new ImagePathService();
         $unlinkService->unlink($refugee);
-        
+
         $countService = new CampRefugeeCreateAndDeleteCountService($refugee);
         $countService->updateCount('+');
     }
-
 }

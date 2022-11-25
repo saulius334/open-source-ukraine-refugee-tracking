@@ -17,7 +17,11 @@ class RefugeeCampController extends Controller
     }
     public function create()
     {
-        return view('camp.create');
+        if (Auth::user()->getCamps->count() !== 0) {
+            return redirect()->back()->with('message', 'You already have a camp!');
+        } else {
+            return view('camp.create');
+        }
     }
     public function store(Request $request)
     {
@@ -44,7 +48,7 @@ class RefugeeCampController extends Controller
     {
         return view('camp.edit', [
             'camp' => $camp,
-            'refugees' => Refugee::all(),   
+            'refugees' => Refugee::all(),
             ]);
     }
 
