@@ -15,14 +15,12 @@ class RefugeeCampController extends Controller
             'camps' => RefugeeCamp::latest()->paginate(15)
         ]);
     }
+
     public function create()
     {
-        if (Auth::user()->getCamps->count() !== 0) {
-            return redirect()->back()->with('message', 'You already have a camp!');
-        } else {
-            return view('camp.create');
-        }
+        return view('camp.create');
     }
+
     public function store(Request $request)
     {
         RefugeeCamp::create([
@@ -49,7 +47,7 @@ class RefugeeCampController extends Controller
         return view('camp.edit', [
             'camp' => $camp,
             'refugees' => Refugee::all(),
-            ]);
+        ]);
     }
 
     public function update(Request $request, RefugeeCamp $camp)

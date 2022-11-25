@@ -3,47 +3,39 @@
 namespace App\Services\ImageServices;
 
 use App\Models\Refugee;
+use Illuminate\Http\UploadedFile;
 use Intervention\Image\Facades\Image;
 
 class ImagePathService
 {
-    public function storeImageAndGetPath($photo = null)
+    public function storeImageAndGetPath(?UploadedFile $photo = null): mixed
     {
         if (!$photo) {
-            return;
+            return null;
         }
         return $this->saveImage($photo);
     }
-    public function updateImageAndGetPath(Refugee $refugee, $photo = null)
+
+    public function updateImageAndGetPath(Refugee $refugee, ?UploadedFile $photo = null): mixed
     {
         if (!$photo) {
             return $refugee->photo;
         }
         return $this->saveImage($photo);
     }
-    public function saveImageAndGetPath($photo = null, ?Refugee $refugee = null)
-    {
-        if (!$photo && !$refugee) {
-            return;
-        } elseif (!$photo && $refugee) {
-            return $refugee->photo;
-        } else {
-            $imagePath = $photo->store('uploads', 'public');
-            $this->saveImage($imagePath);
-            return $imagePath;
-        }
-    }
-    private function saveImage($photo)
+
+    private function saveImage(UploadedFile $photo): string
     {
         $imagePath = $photo->store('uploads', 'public');
         $image = Image::make(public_path("storage/{$imagePath}"))->fit(600, 600);
         $image->save();
         return $imagePath;
     }
-    public function unlink($subject): void
+
+    public function unlink(?UploadedFile $photo = null): void
     {
-        if ($subject->photo) {
-            unlink(public_path() . '/storage/' . $subject->photo);
+        if ($photo) {
+            unlink(public_path() . '/storage/' . $photo);
         }
     }
 }

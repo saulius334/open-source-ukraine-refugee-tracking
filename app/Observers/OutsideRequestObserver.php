@@ -9,7 +9,9 @@ class OutsideRequestObserver
 {
     public function deleted(OutsideRequest $outsideRequest): void
     {
-        $unlinkService = new ImagePathService();
-        $unlinkService->unlink($outsideRequest);
+        if ($outsideRequest->photo) {
+            $unlinkService = new ImagePathService();
+            $unlinkService->unlink($outsideRequest->photo);
+        }
     }
 }

@@ -8,6 +8,10 @@ use App\Services\ImageServices\ImagePathService;
 
 class RefugeeObserver
 {
+    public function __construct()
+    {
+        
+    }
     public function created(Refugee $refugee): void
     {
         $countService = new CampRefugeeCreateAndDeleteCountService($refugee);
@@ -16,8 +20,10 @@ class RefugeeObserver
 
     public function deleted(Refugee $refugee): void
     {
-        $unlinkService = new ImagePathService();
-        $unlinkService->unlink($refugee);
+        if ($refugee->photo) {
+            $unlinkService = new ImagePathService();
+            $unlinkService->unlink($refugee->photo);
+        }
 
         $countService = new CampRefugeeCreateAndDeleteCountService($refugee);
         $countService->updateCount('+');

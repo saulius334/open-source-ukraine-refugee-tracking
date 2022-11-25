@@ -8,6 +8,8 @@ use App\Models\RefugeeCamp;
 class CampRefugeeCreateAndDeleteCountService
 {
     private RefugeeCamp $camp;
+    private CampRefugeeCountValidator $validator;
+
     public function __construct(private Refugee $refugee)
     {
         $this->camp = RefugeeCamp::where('id', $refugee->current_refugee_camp_id)->first();
@@ -26,5 +28,17 @@ class CampRefugeeCreateAndDeleteCountService
             '+' => $this->camp->currentCapacity + $this->refugee->bedsTaken
         };
         return $this->validator->checkCountLogic($difference, $this->camp);
+    }
+    public function minusCount()
+    {
+        $this->camp->update([
+            'currentCapacity' => $this->camp->currentCapacity + $this->refugee->bedsTaken
+        ]);
+    }
+    public function addCount()
+    {
+        $this->camp->update([
+            'currentCapacity' => $this->camp->currentCapacity + $this->refugee->bedsTaken
+        ]);
     }
 }

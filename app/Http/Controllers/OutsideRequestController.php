@@ -19,7 +19,7 @@ class OutsideRequestController extends Controller
     public function index(): View
     {
         return view('request.index', [
-            'outsideRequests' => OutsideRequest::where('current_refugee_camp_id', Auth::user()->getCamps->first()->id)->paginate(15),
+            'outsideRequests' => OutsideRequest::latest()->paginate(15),
         ]);
     }
 

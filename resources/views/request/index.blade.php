@@ -10,6 +10,7 @@
                 <div class="card-body">
                     <ul class="list-group">
                         @forelse($outsideRequests as $outsideRequest)
+                        @if (Auth::user()->id == $outsideRequest->getCamp->getUser->id)
                         <li class="list-group-item">
                             <div class="camp-list">
                                 <div class="content">
@@ -26,6 +27,7 @@
                                 </div>
                             </div>
                         </li>
+                        @endif
                         @empty
                         <li class="list-group-item">No requests</li>
                         @endforelse
