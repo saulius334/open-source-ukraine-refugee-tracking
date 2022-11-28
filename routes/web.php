@@ -8,13 +8,11 @@ use App\Http\Controllers\UserController as userCon;
 use App\Http\Controllers\OutsideRequestController as reqCon;
 
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware('guest')->name('welcome');
+Route::view('/', 'welcome')->middleware('guest')->name('welcome');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->prefix('user')->name('u_')->group(function () {
     Route::get('/', [userCon::class, 'index'])->name('index');

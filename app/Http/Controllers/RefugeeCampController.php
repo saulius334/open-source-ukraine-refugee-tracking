@@ -6,6 +6,8 @@ use App\Models\Refugee;
 use App\Models\RefugeeCamp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreRefugeeCampRequest;
+use App\Http\Requests\UpdateRefugeeCampRequest;
 
 class RefugeeCampController extends Controller
 {
@@ -21,14 +23,9 @@ class RefugeeCampController extends Controller
         return view('camp.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreRefugeeCampRequest $request)
     {
-        RefugeeCamp::create([
-            'name' => $request->name,
-            'originalCapacity' => $request->originalCapacity,
-            'currentCapacity' => $request->originalCapacity,
-            'rooms' => $request->rooms,
-            'volunteers' => $request->volunteers,
+        RefugeeCamp::create($request->validated() + [
             'user_id' => Auth::id()
         ]);
 
@@ -50,14 +47,10 @@ class RefugeeCampController extends Controller
         ]);
     }
 
-    public function update(Request $request, RefugeeCamp $camp)
+    public function update(UpdateRefugeeCampRequest $request, RefugeeCamp $camp)
     {
-        $camp->update([
-            'name' => $request->name,
+        $camp->update($request->validated() + [
             'currentCapacity' => $request->originalCapacity - $camp->originalCapacity + $camp->currentCapacity,
-            'originalCapacity' => $request->originalCapacity,
-            'rooms' => $request->rooms,
-            'volunteers' => $request->volunteers,
         ]);
 
         return redirect()->route('c_index')->with('message', 'Refugee updated successfully!');

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Services\ImageServices\ImagePathService;
 
 class StoreOutsideRequestRequest extends FormRequest
 {
@@ -20,6 +21,10 @@ class StoreOutsideRequestRequest extends FormRequest
             'bedsTaken' => 'required',
             'current_refugee_camp_id' => 'required',
             'photo' => 'sometimes|required|mimes:jpg|max:3000',
+            'pets' => '',
+            'destination' => '',
+            'aidReceived' => 'string',
+            'healthCondition' => 'string',
 
             // 'name.required' => 'Please add your name.',
             // 'surname.required' => 'Please add your surname.',
@@ -29,4 +34,14 @@ class StoreOutsideRequestRequest extends FormRequest
             // 'photo.max' => 'file exceeds 3MB'
         ];
     }
+    // public function prepareForValidation()
+    // {
+    //     $imagePathService = new ImagePathService();
+    //     $imagePath = $imagePathService->storeImageAndGetPath($this->photo);
+        
+    //     $this->merge([
+    //         'photo' => $imagePath
+    //     ]);
+    //     dd($this->photo);
+    // }
 }
