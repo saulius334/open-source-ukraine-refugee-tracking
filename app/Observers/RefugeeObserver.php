@@ -2,9 +2,11 @@
 
 namespace App\Observers;
 
+use App\Models\OutsideRequest;
 use App\Models\Refugee;
 use App\Services\CampRefugeeCount\CampRefugeeCreateAndDeleteCountService;
 use App\Services\ImageServices\ImagePathService;
+use App\Services\OutsideRequestServices\OldRequestDeletion;
 
 class RefugeeObserver
 {
@@ -16,6 +18,9 @@ class RefugeeObserver
     {
         $countService = new CampRefugeeCreateAndDeleteCountService($refugee);
         $countService->updateCount('-');
+        
+        $deleteService = new OldRequestDeletion();
+        $deleteService->deleteOldRequest($refugee);
     }
 
     public function deleted(Refugee $refugee): void

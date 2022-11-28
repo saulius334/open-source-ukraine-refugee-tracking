@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\RefugeeCamp;
 use App\Models\OutsideRequest;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Services\ImageServices\ImagePathService;
 use App\Http\Requests\StoreOutsideRequestRequest;

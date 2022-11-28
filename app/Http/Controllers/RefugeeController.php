@@ -24,15 +24,10 @@ class RefugeeController extends Controller
     }
     public function create(RefugeeCamp $camp)
     {
-        if (!$camp->id) {
-            return redirect()->back()->with('message', 'Create a refugee camp first before adding refugees!');
-        } else {
-            return view('refugee.create', [
-                'camp' => $camp,
-                'camps' => RefugeeCamp::all(),
-                'campId' => $camp->id
-            ]);
-        }
+        return view('refugee.create', [
+            'camps' => RefugeeCamp::all(),
+            'campId' => $camp->id
+        ]);
     }
     public function store(StoreRefugeeRequest $request): RedirectResponse
     {
