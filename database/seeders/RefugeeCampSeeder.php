@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RefugeeCampSeeder extends Seeder
 {
@@ -14,6 +14,11 @@ class RefugeeCampSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('refugee_camps')->insert([
+            'name' => 'Sauliaus Camp',
+            'originalCapacity' => 1000,
+            'currentCapacity' => 1000,
+            'user_id' => '1',
+        ]);
     }
 }
