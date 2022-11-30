@@ -31,9 +31,6 @@ class UpdateRefugeeRequest extends FormRequest
             Rule::unique('refugees', 'IdNumber')->ignore($this->refugee->IdNumber),
             'bedsTaken' => 'required|min:0',
             'current_refugee_camp_id' => 'required',
-            // [
-
-            // ]
         ];
     }
     public function messages()

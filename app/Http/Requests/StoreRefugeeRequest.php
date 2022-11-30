@@ -30,9 +30,6 @@ class StoreRefugeeRequest extends FormRequest
                 'bedsTaken' => 'required|min:0',
                 'current_refugee_camp_id' => 'required',
                 'photo' => 'sometimes|required|mimes:jpg|max:3000',
-
-
-
         ];
     }
     public function messages()
