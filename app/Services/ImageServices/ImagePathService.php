@@ -15,10 +15,14 @@ class ImagePathService
         }
         return $this->saveImage($photo);
     }
-
-    public function updateImageAndGetPath(Model $subject, ?UploadedFile $photo = null): mixed
+ /**@fixme please */
+    public function updateImageAndGetPath(?Model $subject = null, $photo = null): mixed
     {
-        if (!$photo) {
+        if (!$subject && !$photo) {
+            return null;
+        }
+        
+        elseif (!$photo) {
             return $subject->photo;
         }
         return $this->saveImage($photo);
@@ -32,7 +36,7 @@ class ImagePathService
         return $imagePath;
     }
 
-    public function unlink(?UploadedFile $photo = null): void
+    public function unlink($photo = null): void
     {
         if ($photo) {
             unlink(public_path() . '/storage/' . $photo);

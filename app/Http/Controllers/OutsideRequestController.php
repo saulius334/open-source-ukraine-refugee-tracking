@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Refugee;
 use App\Models\RefugeeCamp;
+use Illuminate\Http\Request;
 use App\Models\OutsideRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Services\ImageServices\ImagePathService;
 use App\Http\Requests\StoreOutsideRequestRequest;
-use App\Models\Refugee;
 
 class OutsideRequestController extends Controller
 {
@@ -34,20 +35,7 @@ class OutsideRequestController extends Controller
 
     public function store(StoreOutsideRequestRequest $request): RedirectResponse
     {
-        $imagePath = $this->imagePathService->storeImageAndGetPath($request->photo);
-
-        OutsideRequest::create([
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'IdNumber' => $request->IdNumber,
-            'current_refugee_camp_id' => $request->current_refugee_camp_id,
-            'photo' => $imagePath,
-            'pets' => $request->pets,
-            'destination' => $request->destination,
-            'aidReceived' => $request->aidReceived,
-            'healthCondition' => $request->healthCondition,
-            'bedsTaken' => $request->bedsTaken,
-        ]);
+        OutsideRequest::create($request->validated());
         return redirect()->route('c_index')->with('message', 'Request sent');
     }
 
@@ -61,20 +49,11 @@ class OutsideRequestController extends Controller
 
     public function storeRefugeeAndDeleteRequest(OutsideRequest $outsideRequest, StoreOutsideRequestRequest $request): RedirectResponse
     {
-        $imagePath = $this->imagePathService->updateImageAndGetPath($outsideRequest, $request->photo);
-
-        DB::transaction(function () use ($request, $outsideRequest, $imagePath) {
-            Refugee::create([
-                'name' => $request->name,
-                'surname' => $request->surname,
-                'IdNumber' => $request->IdNumber,
-                'current_refugee_camp_id' => $request->current_refugee_camp_id,
-                'photo' => $imagePath,
-                'pets' => $request->pets,
-                'destination' => $request->destination,
-                'aidReceived' => $request->aidReceived,
-                'healthCondition' => $request->healthCondition,
-                'bedsTaken' => $request->bedsTaken,
+        // $imagePath = $this->imagePathService->updateImageAndGetPath($outsideRequest, $request->photo);
+        // dd($outsideRequest->photo);
+        DB::transaction(function () use ($request, $outsideRequest) {
+            Refugee::create($request->validated() + [
+                'photo' => $outsideRequest->photo
             ]);
 
             $outsideRequest->delete();
@@ -85,6 +64,7 @@ class OutsideRequestController extends Controller
 
     public function destroy(OutsideRequest $outsideRequest): RedirectResponse
     {
+        $this->imagePathService->unlink($outsideRequest->photo);
         $outsideRequest->delete();
         return redirect()->route('req_index');
     }

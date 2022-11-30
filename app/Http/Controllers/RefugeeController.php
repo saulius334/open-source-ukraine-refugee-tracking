@@ -29,31 +29,20 @@ class RefugeeController extends Controller
             'campId' => $camp->id
         ]);
     }
+    
     public function store(StoreRefugeeRequest $request): RedirectResponse
     {
-        $imagePath = $this->imagePathService->storeImageAndGetPath($request->photo);
-
-        Refugee::create([
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'IdNumber' => $request->IdNumber,
-            'current_refugee_camp_id' => $request->current_refugee_camp_id,
-            'photo' => $imagePath,
-            'pets' => $request->pets,
-            'destination' => $request->destination,
-            'aidReceived' => $request->aidReceived,
-            'healthCondition' => $request->healthCondition,
-            'bedsTaken' => $request->bedsTaken,
-        ]);
-
+        Refugee::create($request->validated());
         return redirect()->route('r_index')->with('message', 'Refugee created successfully!');
     }
+
     public function show(Refugee $refugee)
     {
         return view('refugee.show', [
             'refugee' => $refugee
         ]);
     }
+
     public function edit(Refugee $refugee)
     {
         return view('refugee.edit', [
@@ -62,6 +51,7 @@ class RefugeeController extends Controller
             'campID' => $refugee->current_refugee_camp_id
         ]);
     }
+
     public function update(UpdateRefugeeRequest $request, Refugee $refugee): RedirectResponse
     {
         $imagePath = $this->imagePathService->updateImageAndGetPath($refugee, $request->photo);

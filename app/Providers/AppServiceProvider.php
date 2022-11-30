@@ -29,7 +29,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Refugee::observe(RefugeeObserver::class);
-        OutsideRequest::observe(OutsideRequestObserver::class);
         Paginator::useBootstrapFive();
         Paginator::useBootstrapFour();
     }
