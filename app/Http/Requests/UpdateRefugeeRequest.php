@@ -32,12 +32,18 @@ class UpdateRefugeeRequest extends FormRequest
             'bedsTaken' => 'required|min:0',
             'current_refugee_camp_id' => 'required',
             // [
-            //     'name.required' => 'Please add name.',
-            //     'surname.required' => 'Please add surname.',
-            //     'IdNumber.required' => 'Please enter valid Ukrainian ID number',
-            //     'IdNumber.unique' => 'This ID number is already register. Check in with the camp you registered in.',
-            //     'bedsTaken' => 'Please specify how many beds will you take.'
+
             // ]
+        ];
+    }
+    public function messages()
+    {
+        return [
+                'name.required' => 'Please add name.',
+                'surname.required' => 'Please add surname.',
+                'IdNumber.required' => 'Please enter valid Ukrainian ID number',
+                'IdNumber.unique' => 'This ID number is already register. Check in with the camp you registered in.',
+                'bedsTaken' => 'Please specify how many beds will you take.'
         ];
     }
 }
