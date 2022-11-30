@@ -2,7 +2,7 @@
 
 namespace App\Services\ImageServices;
 
-use App\Models\Refugee;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\Facades\Image;
 
@@ -16,10 +16,10 @@ class ImagePathService
         return $this->saveImage($photo);
     }
 
-    public function updateImageAndGetPath(Refugee $refugee, ?UploadedFile $photo = null): mixed
+    public function updateImageAndGetPath(Model $subject, ?UploadedFile $photo = null): mixed
     {
         if (!$photo) {
-            return $refugee->photo;
+            return $subject->photo;
         }
         return $this->saveImage($photo);
     }

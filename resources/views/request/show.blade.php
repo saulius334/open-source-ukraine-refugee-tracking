@@ -8,7 +8,7 @@
                     <h2>{{$outsideRequest->name}} {{$outsideRequest->surname}}</h2>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('r_store')}}" method="post" enctype="multipart/form-data" class="--form">
+                    <form action="{{route('req_storeRefugeeAndDeleteRequest', $outsideRequest)}}" method="post" enctype="multipart/form-data" class="--form">
                         <div class="img-small-ch mb-3">
                             @if($outsideRequest->photo)
                             <div class="img">

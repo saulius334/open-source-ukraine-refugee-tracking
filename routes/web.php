@@ -41,6 +41,7 @@ Route::prefix('request')->name('req_')->group(function () {
     Route::get('/', [reqCon::class, 'index'])->name('index');
     Route::get('/create/{camp}', [reqCon::class, 'create'])->name('create');
     Route::post('/create', [reqCon::class, 'store'])->name('store');
+    Route::post('/storeRefugeeAndDeleteRequest/{outsideRequest}', [reqCon::class, 'storeRefugeeAndDeleteRequest'])->name('storeRefugeeAndDeleteRequest')->middleware('auth');
     Route::get('/show/{outsideRequest}', [reqCon::class, 'show'])->name('show')->middleware('auth');
     Route::delete('/delete/{outsideRequest}', [reqCon::class, 'destroy'])->name('delete')->middleware('auth');
 });

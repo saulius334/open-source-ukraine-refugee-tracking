@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\RefugeeCamp;
 use App\Models\OutsideRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Services\ImageServices\ImagePathService;
 use App\Http\Requests\StoreOutsideRequestRequest;
+use App\Models\Refugee;
 
 class OutsideRequestController extends Controller
 {
@@ -55,6 +57,30 @@ class OutsideRequestController extends Controller
             'outsideRequest' => $outsideRequest,
             'camps' => RefugeeCamp::all()
         ]);
+    }
+
+    public function storeRefugeeAndDeleteRequest(OutsideRequest $outsideRequest, StoreOutsideRequestRequest $request): RedirectResponse
+    {
+        $imagePath = $this->imagePathService->updateImageAndGetPath($outsideRequest, $request->photo);
+
+        DB::transaction(function () use ($request, $outsideRequest, $imagePath) {
+            Refugee::create([
+                'name' => $request->name,
+                'surname' => $request->surname,
+                'IdNumber' => $request->IdNumber,
+                'current_refugee_camp_id' => $request->current_refugee_camp_id,
+                'photo' => $imagePath,
+                'pets' => $request->pets,
+                'destination' => $request->destination,
+                'aidReceived' => $request->aidReceived,
+                'healthCondition' => $request->healthCondition,
+                'bedsTaken' => $request->bedsTaken,
+            ]);
+
+            $outsideRequest->delete();
+        });
+
+        return redirect()->route('r_index')->with('message', 'Refugee created successfully!');
     }
 
     public function destroy(OutsideRequest $outsideRequest): RedirectResponse

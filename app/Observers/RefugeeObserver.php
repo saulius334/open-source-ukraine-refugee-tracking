@@ -19,8 +19,8 @@ class RefugeeObserver
         $countService = new CampRefugeeCreateAndDeleteCountService($refugee);
         $countService->updateCount('-');
         
-        $deleteService = new OldRequestDeletion();
-        $deleteService->deleteOldRequest($refugee);
+        // $deleteService = new OldRequestDeletion();
+        // $deleteService->deleteOldRequest($refugee);
     }
 
     public function deleted(Refugee $refugee): void
