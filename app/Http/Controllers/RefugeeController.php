@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PaginateEnum;
 use App\Models\Refugee;
 use App\Models\RefugeeCamp;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +20,7 @@ class RefugeeController extends Controller
     public function index()
     {
         return view('refugee.index', [
-            'refugees' => Refugee::latest()->paginate(15)
+            'refugees' => Refugee::where('confirmed', 1)->paginate(PaginateEnum::Five)
         ]);
     }
     public function create(RefugeeCamp $camp)

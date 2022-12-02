@@ -71,15 +71,15 @@
                                 <a class="dropdown-item" href="{{ route('c_create') }}">
                                     Add new refugee camp
                                 </a>
-                                <a class="dropdown-item" href="{{ route('u_index') }}">
+                                <a class="dropdown-item" href="{{ route('u_myCamps') }}">
                                     Your camps [{{Auth::user()->getCamps()->count()}}]
                                 </a>
                                 @endif
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('req_index') }}">
-                                Requests [{{Auth::user()->getAllAssignedCampOutsideRequests()}}]
+                            <a class="nav-link" href="{{ route('u_unconfirmedRequests') }}">
+                                Requests [{{Auth::user()->getUnconfirmedRefugees->count()}}]
                             </a>
                         </li>
                         <li class="nav-item dropdown">

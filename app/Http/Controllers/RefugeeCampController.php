@@ -26,9 +26,9 @@ class RefugeeCampController extends Controller
     public function store(StoreRefugeeCampRequest $request)
     {
         RefugeeCamp::create($request->validated() + [
-            'user_id' => Auth::id()
+            'user_id' => Auth::id(),
+            'currentCapacity' => $request->originalCapacity
         ]);
-
         return redirect()->route('u_index')->with('message', 'Camp created successfully!');
     }
 

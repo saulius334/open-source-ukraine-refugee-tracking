@@ -25,13 +25,12 @@ class RefugeeCamp extends Model
         return $this->hasMany(Refugee::class, 'current_refugee_camp_id', 'id');
     }
 
-    public function getOutsideRequests(): HasMany
-    {
-        return $this->hasMany(OutsideRequest::class, 'current_refugee_camp_id', 'id');
-    }
     public function getUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
-
+    }
+    public function getUnconfirmedRefugees(): HasMany
+    {
+        return $this->getRefugees()->where('confirmed', 0);
     }
 }
