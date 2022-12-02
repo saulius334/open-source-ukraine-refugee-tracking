@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RefugeeCampSeeder::class,
             RefugeeSeeder::class,
-            OutsideRequestSeeder::class
         ]);
     }
 }

@@ -24,7 +24,8 @@ class Refugee extends Model
         'aidReceived',
         'healthCondition',
         'moodUponArrival',
-        'bedsTaken'
+        'bedsTaken',
+        'confirmed'
     ];
 
     public function getCamp(): BelongsTo

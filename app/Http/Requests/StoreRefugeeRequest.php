@@ -2,25 +2,16 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRefugeeRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
@@ -29,7 +20,8 @@ class StoreRefugeeRequest extends FormRequest
                 'IdNumber' => 'required|numeric|digits:10|unique:refugees,IdNumber',
                 'bedsTaken' => 'required|min:0',
                 'current_refugee_camp_id' => 'required',
-                'photo' => 'sometimes|required|mimes:jpg|max:3000',
+                'photo' => 'sometimes|required|mimes:jpg,png|max:3000',
+                'confirmed' => ''
         ];
     }
     public function messages()
@@ -42,5 +34,12 @@ class StoreRefugeeRequest extends FormRequest
             'bedsTaken' => 'Please specify how many beds will you take.',
             'photo.max' => 'file exceeds 3MB'
         ];
+    }
+    public function prepareForValidation()
+    {
+        $confirmed = Auth::id() === $this->current_refugee_camp_id ? true : false;
+        $this->merge([
+            'confirmed' => $confirmed
+        ]);
     }
 }

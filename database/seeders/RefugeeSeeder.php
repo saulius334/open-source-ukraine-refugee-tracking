@@ -20,6 +20,7 @@ class RefugeeSeeder extends Seeder
             'IdNumber' => '0955554321',
             'bedsTaken' => '5',
             'current_refugee_camp_id' => '1',
+            'confirmed' => true
         ]);
     }
 }

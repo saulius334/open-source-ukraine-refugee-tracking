@@ -11,19 +11,20 @@
                 <div class="card-body">
                     <form action="{{route('r_store')}}" method="post" enctype="multipart/form-data" class="--form">
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Name</span>
+                            <span class="input-group-text">Name*</span>
                             <input type="text" name="name" class="form-control" value="{{old('name')}}">
                         </div>
+                        <small class="requiredField"></small>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Surname</span>
+                            <span class="input-group-text">Surname*</span>
                             <input type="text" name="surname" class="form-control" value="{{old('surname')}}">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">ID number</span>
+                            <span class="input-group-text">ID number*</span>
                             <input type="text" name="IdNumber" class="form-control" value="{{old('IdNumber')}}">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Camp</span>
+                            <span class="input-group-text">Camp*</span>
                             <select class="form-select" name="current_refugee_camp_id">
                                 @foreach ($camps as $camp)
                                 <option value="{{$camp->id}}"@if($camp->id === $campId) selected @endif>{{$camp->name}}</option>
@@ -31,7 +32,7 @@
                             </select>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Beds taken</span>
+                            <span class="input-group-text">Beds taken*</span>
                             <input type="text" name="bedsTaken" class="form-control" value="{{old('bedsTaken')}}">
                         </div>
                         <div class="input-group mb-3">
@@ -66,10 +67,15 @@
                             </select>
                         </div>
                         @csrf
-                        <button type="submit" class="btn btn-secondary mt-4 --submit">Register refugee</button>
+                        @if($camp->user_id === Auth::id())
+                        <button type="submit" class="btn btn-secondary --submit">Register refugee</button>
+                        @else
+                        <button type="submit" class="btn btn-secondary --submit">Request</button>
+                        @endif
                     </form>
                 </div>
             </div>
+            <small>Fields with * are required</small>
         </div>
     </div>
 </div>

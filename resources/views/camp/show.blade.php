@@ -29,7 +29,7 @@
                             @if($camp->user_id === Auth::id())
                             <a href="{{route('r_create', $camp)}}" class="btn btn-info">Register refugee</a>
                             @else
-                            <a href="{{route('req_create', $camp)}}" class="btn btn-info">Request</a>
+                            <a href="{{route('r_create', $camp)}}" class="btn btn-info">Request</a>
                         </div>
                         @endif
                     </div>
