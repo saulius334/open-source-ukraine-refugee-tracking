@@ -19,9 +19,13 @@ class StoreRefugeeRequest extends FormRequest
                 'surname' => 'required|min:2|max:30',
                 'IdNumber' => 'required|numeric|digits:10|unique:refugees,IdNumber',
                 'bedsTaken' => 'required|min:0',
+                'confirmed' => '',
                 'current_refugee_camp_id' => 'required',
                 'photo' => 'sometimes|required|mimes:jpg,png|max:3000',
-                'confirmed' => ''
+                'pets' => '',
+                'destination' => '',
+                'aidReceived' => '',
+                'healthCondition' => '',
         ];
     }
     public function messages()
@@ -37,7 +41,7 @@ class StoreRefugeeRequest extends FormRequest
     }
     public function prepareForValidation()
     {
-        $confirmed = Auth::id() === $this->current_refugee_camp_id ? true : false;
+        $confirmed = Auth::user()->id == $this->current_refugee_camp_id ? true : false;
         $this->merge([
             'confirmed' => $confirmed
         ]);

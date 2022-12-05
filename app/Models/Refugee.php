@@ -15,17 +15,15 @@ class Refugee extends Model
     protected $fillable = [
         'name',
         'surname',
-        'photo',
         'IdNumber',
+        'bedsTaken',
+        'confirmed',
         'current_refugee_camp_id',
-        'family',
+        'photo',
         'pets',
         'destination',
         'aidReceived',
         'healthCondition',
-        'moodUponArrival',
-        'bedsTaken',
-        'confirmed'
     ];
 
     public function getCamp(): BelongsTo

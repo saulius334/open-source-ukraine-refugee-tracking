@@ -18,17 +18,15 @@ return new class extends Migration
             $table->string('name');
             $table->string('surname');
             $table->string('IdNumber');
-            $table->string('photo')->nullable();
-            $table->string('family')->nullable();
-            $table->string('pets')->nullable();
-            $table->string('destination')->nullable();
-            $table->string('aidReceived')->nullable();
-            $table->string('healthCondition')->nullable();
-            $table->string('moodUponArrival')->nullable();
             $table->unsignedBigInteger('bedsTaken');
             $table->boolean('confirmed');
             $table->unsignedBigInteger('current_refugee_camp_id');
             $table->foreign('current_refugee_camp_id')->references('id')->on('refugee_camps')->onDelete('cascade');
+            $table->string('photo')->nullable();
+            $table->string('pets')->nullable();
+            $table->string('destination')->nullable();
+            $table->string('aidReceived')->nullable();
+            $table->string('healthCondition')->nullable();
             $table->timestamps();
         });
     }

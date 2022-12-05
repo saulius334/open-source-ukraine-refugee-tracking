@@ -9,17 +9,16 @@
                 </div>
                 <div class="card-body">
                     <ul class="list-group">
-                        @forelse($unconfirmedRequests as $request)
-                        @if (Auth::user()->id == $request->getCamp->getUser->id)
+                        @forelse($unconfirmedRequests as $unconfirmedRequest)
                         <li class="list-group-item">
                             <div class="camp-list">
                                 <div class="content">
-                                    <h2>{{$request->name}} {{$request->surname}}</h2>
-                                    <h4><span>Request to camp: </span>{{$request->getCamp->name}}</h4>
+                                    <h2>{{$unconfirmedRequest->name}} {{$unconfirmedRequest->surname}}</h2>
+                                    <h4><span>Request to camp: </span>{{$unconfirmedRequest->getCamp->name}}</h4>
                                 </div>
                                 <div class="buttons">
-                                    <a href="{{route('req_show', $request)}}" class="btn btn-success">View</a>
-                                    <form action="{{route('req_delete', $request)}}" method="post">
+                                    <a href="{{route('unconf_create', $unconfirmedRequest)}}" class="btn btn-success">View</a>
+                                    <form action="{{route('r_delete', $unconfirmedRequest)}}" method="post">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger">Dismiss</button>
@@ -27,14 +26,13 @@
                                 </div>
                             </div>
                         </li>
-                        @endif
                         @empty
                         <li class="list-group-item">No requests</li>
                         @endforelse
                     </ul>
                 </div>
                 <div class="me-3 mx-3">
-                    {{ $outsideRequests->links() }}
+                    {{ $unconfirmedRequests->links() }}
                 </div>
             </div>
         </div>

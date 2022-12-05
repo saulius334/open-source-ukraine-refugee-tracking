@@ -27,7 +27,7 @@ class RefugeeController extends Controller
     {
         return view('refugee.create', [
             'camps' => RefugeeCamp::all(),
-            'campId' => $camp->id
+            'campId' => $camp->id,
         ]);
     }
     

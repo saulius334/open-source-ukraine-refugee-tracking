@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RefugeeCampController as campCon;
 use App\Http\Controllers\RefugeeController as refugeeCon;
 use App\Http\Controllers\UserController as userCon;
-use App\Http\Controllers\OutsideRequestController as reqCon;
+use App\Http\Controllers\UnconfirmedController as unconfCon;
 
 
 Route::view('/', 'welcome')->middleware('guest')->name('welcome');
@@ -16,7 +16,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware('auth')->prefix('user')->name('u_')->group(function () {
     Route::get('/', [userCon::class, 'myCamps'])->name('myCamps');
-    Route::get('/unconfirmedRequests', [userCon::class, 'unconfirmedRequests'])->name('unconfirmedRequests');
+    Route::get('/requests', [userCon::class, 'requests'])->name('requests');
 
 });
 Route::prefix('camp')->name('c_')->group(function () {
@@ -39,11 +39,6 @@ Route::prefix('refugee')->name('r_')->group(function () {
     Route::put('/edit/{refugee}', [refugeeCon::class, 'update'])->name('update')->middleware('auth');
 });
 
-Route::prefix('request')->name('req_')->group(function () {
-    Route::get('/', [reqCon::class, 'index'])->name('index');
-    Route::get('/create/{camp}', [reqCon::class, 'create'])->name('create');
-    Route::post('/create', [reqCon::class, 'store'])->name('store');
-    Route::post('/storeRefugeeAndDeleteRequest/{outsideRequest}', [reqCon::class, 'storeRefugeeAndDeleteRequest'])->name('storeRefugeeAndDeleteRequest')->middleware('auth');
-    Route::get('/show/{outsideRequest}', [reqCon::class, 'show'])->name('show')->middleware('auth');
-    Route::delete('/delete/{outsideRequest}', [reqCon::class, 'destroy'])->name('delete')->middleware('auth');
+Route::prefix('unconfirmed')->name('unconf_')->group(function () {
+    Route::get('/create/{unconfirmedRequest}', [unconfCon::class, 'create'])->name('create');
 });
