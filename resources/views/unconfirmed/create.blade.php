@@ -9,31 +9,31 @@
                     <h2>Request Registration</h2>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('r_store')}}" method="post" enctype="multipart/form-data" class="--form">
+                    <form action="{{route('r_update', $refugee)}}" method="post" enctype="multipart/form-data" class="--form">
                         <div class="input-group mb-3">
                             <span class="input-group-text">Name*</span>
-                            <input type="text" name="name" class="form-control" value="{{old('name', $unconfirmedRequest->name)}}">
+                            <input type="text" name="name" class="form-control" value="{{old('name', $refugee->name)}}">
                         </div>
                         <small class="requiredField"></small>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Surname*</span>
-                            <input type="text" name="surname" class="form-control" value="{{old('surname', $unconfirmedRequest->surname)}}">
+                            <input type="text" name="surname" class="form-control" value="{{old('surname', $refugee->surname)}}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">ID number*</span>
-                            <input type="text" name="IdNumber" class="form-control" value="{{old('IdNumber', $unconfirmedRequest->IdNumber)}}">
+                            <input type="text" name="IdNumber" class="form-control" value="{{old('IdNumber', $refugee->IdNumber)}}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Camp*</span>
                             <select class="form-select" name="current_refugee_camp_id">
                                 @foreach ($camps as $camp)
-                                <option value="{{$camp->id}}" @if($camp->id === $unconfirmedRequest->current_refugee_camp_id) selected @endif>{{$camp->name}}</option>
+                                <option value="{{$camp->id}}" @if($camp->id === $refugee->current_refugee_camp_id) selected @endif>{{$camp->name}}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Beds taken*</span>
-                            <input type="text" name="bedsTaken" class="form-control" value="{{old('bedsTaken', $unconfirmedRequest->bedsTaken)}}">
+                            <input type="text" name="bedsTaken" class="form-control" value="{{old('bedsTaken', $refugee->bedsTaken)}}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Photo</span>
@@ -41,16 +41,16 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Pets</span>
-                            <input type="text" name="pets" class="form-control" value="{{old('pets', $unconfirmedRequest->pets)}}">
+                            <input type="text" name="pets" class="form-control" value="{{old('pets', $refugee->pets)}}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Destination</span>
-                            <input type="text" name="destination" class="form-control" value="{{old('destination', $unconfirmedRequest->destination)}}">
+                            <input type="text" name="destination" class="form-control" value="{{old('destination', $refugee->destination)}}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Aid Received?</span>
                             <div class="form-check form-check-inline m-2">
-                                <input class="form-check-input" type="radio" name="aidReceived" id="aidReceived1" value="Yes" @if ($unconfirmedRequest->aidReceived == true) @checked(true) @endif>
+                                <input class="form-check-input" type="radio" name="aidReceived" id="aidReceived1" value="Yes" @if ($refugee->aidReceived == true) @checked(true) @endif>
                                 <label class="form-check-label" for="aidReceived1">Yes</label>
                             </div>
                             <div class="form-check form-check-inline m-2">
@@ -61,17 +61,14 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text">Health Condition</span>
                             <select class="form-select" name="healthCondition">
-                                <option value="Good" @if($unconfirmedRequest->healthCondition == 'Good') selected @endif>Good</option>
-                                <option value="Normal" @if($unconfirmedRequest->healthCondition == 'Normal') selected @endif>Normal</option>
-                                <option value="Bad"@if($unconfirmedRequest->healthCondition == 'Bad') selected @endif>Bad</option>
+                                <option value="Good" @if($refugee->healthCondition == 'Good') selected @endif>Good</option>
+                                <option value="Normal" @if($refugee->healthCondition == 'Normal') selected @endif>Normal</option>
+                                <option value="Bad"@if($refugee->healthCondition == 'Bad') selected @endif>Bad</option>
                             </select>
                         </div>
                         @csrf
-                        @if($camp->user_id === Auth::id())
-                        <button type="submit" class="btn btn-secondary --submit">Register to {{ $unconfirmedRequest->getCamp->name }}</button>
-                        @else
-                        <button type="submit" class="btn btn-secondary --submit">Request</button>
-                        @endif
+                        @method('put')
+                        <button type="submit" class="btn btn-secondary --submit">Register to {{ $refugee->getCamp->name }}</button>
                     </form>
                 </div>
             </div>

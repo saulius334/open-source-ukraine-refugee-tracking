@@ -10,7 +10,7 @@
                 </div>
                 <div class="card-body">
                     <form action="{{route('r_update', $refugee)}}" method="post" enctype="multipart/form-data" class="--form">
-                        <div class="img-small-ch mt-3">
+                        <div class="img-small-ch">
                             @if($refugee->photo)
                             <div class="img">
                                 <img class="w-25 mb-3" src="/storage/{{ $refugee->photo }}" alt="Refugee Photo" />
@@ -20,19 +20,19 @@
                             @endif
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Name</span>
+                            <span class="input-group-text">Name*</span>
                             <input type="text" name="name" class="form-control" value="{{old('name', $refugee->name)}}">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Surname</span>
+                            <span class="input-group-text">Surname*</span>
                             <input type="text" name="surname" class="form-control" value="{{old('surname', $refugee->surname)}}">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">ID number</span>
-                            <input type="text" name="IdNumber" class="form-control" value="{{old('IdNumber', $refugee->IdNumber)}}">
+                            <span class="input-group-text">ID number*</span>
+                            <input type="text" name="IdNumber" class="form-control" disabled value="{{ $refugee->IdNumber }}">
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Camp</span>
+                            <span class="input-group-text">Camp*</span>
                             <select class="form-select" name="current_refugee_camp_id">
                                 @foreach ($camps as $camp)
                                 <option value="{{$camp->id}}"@if($camp->id === $campID) selected @endif>{{$camp->name}}</option>
@@ -40,7 +40,7 @@
                             </select>
                         </div>
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Beds taken</span>
+                            <span class="input-group-text">Beds taken*</span>
                             <input type="text" name="bedsTaken" class="form-control" value="{{old('bedsTaken', $refugee->bedsTaken)}}">
                         </div>
                         <div class="input-group mb-3">
@@ -65,10 +65,11 @@
                         </div>
                         @csrf
                         @method('put')
-                        <button type="submit" class="btn btn-secondary mt-4 --submit">Save</button>
+                        <button type="submit" class="btn btn-secondary --submit">Save</button>
                     </form>
                 </div>
             </div>
+            <small>Fields with * are required</small>
         </div>
     </div>
 </div>

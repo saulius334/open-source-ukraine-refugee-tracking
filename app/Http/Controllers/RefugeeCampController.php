@@ -2,63 +2,48 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\PaginateEnum;
-use App\Models\Refugee;
 use App\Models\RefugeeCamp;
-use Illuminate\Support\Facades\Auth;
+use App\Repositories\RefugeeCampRepository;
 use App\Http\Requests\StoreRefugeeCampRequest;
 use App\Http\Requests\UpdateRefugeeCampRequest;
 
 class RefugeeCampController extends Controller
 {
+    public function __construct(private RefugeeCampRepository $campRepo)
+    {
+    }
     public function index()
     {
-        return view('camp.index', [
-            'camps' => RefugeeCamp::latest()->paginate(PaginateEnum::Five)
-        ]);
+        return $this->campRepo->index();
     }
 
     public function create()
     {
-        return view('camp.create');
+        return $this->campRepo->create();
     }
 
     public function store(StoreRefugeeCampRequest $request)
     {
-        RefugeeCamp::create($request->validated() + [
-            'user_id' => Auth::id(),
-            'currentCapacity' => $request->originalCapacity
-        ]);
-        return redirect()->route('u_index')->with('message', 'Camp created successfully!');
+        return $this->campRepo->store($request);
     }
 
     public function show(RefugeeCamp $camp)
     {
-        return view('camp.show', [
-            'camp' => $camp
-        ]);
+        return $this->campRepo->show($camp);
     }
 
     public function edit(RefugeeCamp $camp)
     {
-        return view('camp.edit', [
-            'camp' => $camp,
-            'refugees' => Refugee::all(),
-        ]);
+        return $this->campRepo->edit($camp);
     }
 
     public function update(UpdateRefugeeCampRequest $request, RefugeeCamp $camp)
     {
-        $camp->update($request->validated() + [
-            'currentCapacity' => $request->originalCapacity - $camp->originalCapacity + $camp->currentCapacity,
-        ]);
-
-        return redirect()->route('c_index')->with('message', 'Refugee updated successfully!');
+        return $this->campRepo->update($request, $camp);
     }
 
     public function destroy(RefugeeCamp $camp)
     {
-        $camp->delete();
-        return redirect()->route('c_index')->with('message', 'Camp deleted!');
+        return $this->campRepo->destroy($camp);
     }
 }

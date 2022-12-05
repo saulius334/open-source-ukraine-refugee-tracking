@@ -17,7 +17,7 @@ class RefugeeCampSeeder extends Seeder
         DB::table('refugee_camps')->insert([
             'name' => 'Sauliaus Camp',
             'originalCapacity' => 1000,
-            'currentCapacity' => 1000,
+            'currentCapacity' => 995,
             'user_id' => '1',
         ]);
     }

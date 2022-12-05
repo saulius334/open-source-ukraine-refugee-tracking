@@ -40,10 +40,19 @@ class StoreRefugeeRequest extends FormRequest
         ];
     }
     public function prepareForValidation()
-    {
-        $confirmed = Auth::user()->id == $this->current_refugee_camp_id ? true : false;
+    { 
         $this->merge([
-            'confirmed' => $confirmed
+            'confirmed' => $this->checkIfConfirmed()
         ]);
+    }
+    private function checkIfConfirmed(): bool
+    {
+        if (!Auth::user()) {
+            return false;
+        } elseif ($this->current_refugee_camp_id == Auth::user()->id) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

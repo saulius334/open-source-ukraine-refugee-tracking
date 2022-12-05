@@ -11,7 +11,7 @@ class UnconfirmedController extends Controller
     {
         return view('unconfirmed.create', [
             'camps' => RefugeeCamp::all(),
-            'unconfirmedRequest' => $unconfirmedRequest,
+            'refugee' => $unconfirmedRequest,
         ]);
     }
 }

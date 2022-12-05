@@ -2,25 +2,26 @@
 
 namespace App\Observers;
 
-use App\Models\OutsideRequest;
 use App\Models\Refugee;
-use App\Services\CampRefugeeCount\CampRefugeeCreateAndDeleteCountService;
+use App\Services\CampRefugeeCount\RefugeeCampCountService;
 use App\Services\ImageServices\ImagePathService;
-use App\Services\OutsideRequestServices\OldRequestDeletion;
 
 class RefugeeObserver
 {
-    public function __construct()
+    public function __construct(private RefugeeCampCountService $countService)
     {
-        
     }
+
     public function created(Refugee $refugee): void
     {
-        $countService = new CampRefugeeCreateAndDeleteCountService($refugee);
-        $countService->updateCount('-');
-        
-        // $deleteService = new OldRequestDeletion();
-        // $deleteService->deleteOldRequest($refugee);
+        if ($refugee->confirmed) {
+            $this->countService->updateCampCount($refugee->getCamp);
+        }
+    }
+
+    public function updated(Refugee $refugee): void
+    {
+        $this->countService->updateCampCount($refugee->getCamp);
     }
 
     public function deleted(Refugee $refugee): void
@@ -29,8 +30,6 @@ class RefugeeObserver
             $unlinkService = new ImagePathService();
             $unlinkService->unlink($refugee->photo);
         }
-
-        $countService = new CampRefugeeCreateAndDeleteCountService($refugee);
-        $countService->updateCount('+');
+        $this->countService->updateCampCount($refugee->getCamp);
     }
 }

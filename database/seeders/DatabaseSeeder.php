@@ -16,6 +16,12 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123'),
             'role' => 1
         ]);
+        DB::table('users')->insert([
+            'name' => 'paulius',
+            'email' => 'paulius@gmail.com',
+            'password' => Hash::make('123'),
+            'role' => 1
+        ]);
         $this->call([
             RefugeeCampSeeder::class,
             RefugeeSeeder::class,
