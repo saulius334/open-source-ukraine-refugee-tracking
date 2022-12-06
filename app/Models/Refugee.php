@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Requests\UpdateRefugeeRequest;
+use Laravel\Scout\Searchable;
 use App\Services\ImageServices\ImagePathService;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Refugee extends Model
 {
-    use HasFactory;
+    use HasFactory, Searchable;
 
     protected $fillable = [
         'name',
@@ -38,5 +38,12 @@ class Refugee extends Model
         return Attribute::make(
             set: fn ($photo) => $imagePathService->updateImageAndGetPath($this, $photo)
         );
+    }
+    public function toSearchableArray()
+    {
+        return [
+            'name' => $this->name,
+            'surname' => $this->surname
+        ];
     }
 }

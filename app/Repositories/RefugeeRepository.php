@@ -5,24 +5,24 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Models\Refugee;
-use App\Enums\PaginateEnum;
 use App\Models\RefugeeCamp;
 use Illuminate\Http\RedirectResponse;
 use App\Repositories\RepositoryInterface;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
+use App\Services\SearchServices\RefugeeSearch;
 use App\Services\MessageServices\RefugeeMessageService;
 
 class RefugeeRepository implements RepositoryInterface
 {
-    public function __construct(private RefugeeMessageService $messageService)
+    public function __construct(private RefugeeMessageService $messageService, private RefugeeSearch $searchService)
     {  
     }
 
     public function index()
     {
         return view('refugee.index', [
-                'refugees' => Refugee::where('confirmed', 1)->paginate(PaginateEnum::Five)
+                'refugees' => $this->searchService->filter(request('search'))
             ]);
     }
     

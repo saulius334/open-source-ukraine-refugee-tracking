@@ -11,19 +11,20 @@ use Illuminate\Support\Facades\Auth;
 use App\Repositories\RepositoryInterface;
 use App\Http\Requests\StoreRefugeeCampRequest;
 use App\Http\Requests\UpdateRefugeeCampRequest;
+use App\Services\SearchServices\RefugeeCampSearch;
 use App\Services\MessageServices\CampMessageService;
 
 
 class RefugeeCampRepository implements RepositoryInterface
 {
-    public function __construct(private CampMessageService $messageService)
+    public function __construct(private CampMessageService $messageService, private RefugeeCampSearch $searchService)
     {  
     }
 
     public function index()
     {
         return view('camp.index', [
-            'camps' => RefugeeCamp::latest()->paginate(PaginateEnum::Five)
+            'camps' => $this->searchService->filter(request('search'))
         ]);
     }
 
