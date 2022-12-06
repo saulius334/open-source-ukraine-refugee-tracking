@@ -39,11 +39,15 @@ class Refugee extends Model
             set: fn ($photo) => $imagePathService->updateImageAndGetPath($this, $photo)
         );
     }
-    public function toSearchableArray()
+    public function toSearchableArray(): array
     {
         return [
             'name' => $this->name,
             'surname' => $this->surname
         ];
+    }
+    public function getTodayRefugees()
+    {
+
     }
 }

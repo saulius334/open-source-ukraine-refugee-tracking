@@ -27,7 +27,7 @@
                             <span class="input-group-text">Camp*</span>
                             <select class="form-select" name="current_refugee_camp_id">
                                 @foreach ($camps as $camp)
-                                <option value="{{$camp->id}}"@if($camp->id === $campId) selected @endif>{{$camp->name}}</option>
+                                <option value="{{$camp->id}}"@if($camp->id === $selectedCamp->id) selected @endif>{{$camp->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -67,7 +67,7 @@
                             </select>
                         </div>
                         @csrf
-                        @if($camp->user_id === Auth::id())
+                        @if($selectedCamp->user_id === Auth::id())
                         <button type="submit" class="btn btn-secondary --submit">Register refugee</button>
                         @else
                         <button type="submit" class="btn btn-secondary --submit">Request</button>

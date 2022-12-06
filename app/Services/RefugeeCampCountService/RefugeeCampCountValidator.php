@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\CampRefugeeCountService;
+namespace App\Services\RefugeeCampCountService;
 
 use App\Models\RefugeeCamp;
 

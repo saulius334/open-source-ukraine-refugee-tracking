@@ -30,7 +30,7 @@ class RefugeeRepository implements RepositoryInterface
     {
         return view('refugee.create', [
             'camps' => RefugeeCamp::all(),
-            'campId' => $camp->id,
+            'selectedCamp' => $camp,
         ]);
     }
     

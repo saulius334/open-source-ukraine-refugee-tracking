@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Services\CampRefugeeCountService\RefugeeCampCountService;
+use App\Services\RefugeeCampCountService\RefugeeCampCountService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
