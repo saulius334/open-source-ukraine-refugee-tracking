@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Services\SearchServices;
+namespace App\Services\SearchService;
 
 use App\Models\Refugee;
 use App\Enums\PaginateEnum;
-use App\Services\SearchServices\SearchServiceInterface;
+use App\Services\SearchService\SearchServiceInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class RefugeeSearch implements SearchServiceInterface

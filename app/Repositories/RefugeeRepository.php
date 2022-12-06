@@ -10,8 +10,8 @@ use Illuminate\Http\RedirectResponse;
 use App\Repositories\RepositoryInterface;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
-use App\Services\SearchServices\RefugeeSearch;
-use App\Services\MessageServices\RefugeeMessageService;
+use App\Services\SearchService\RefugeeSearch;
+use App\Services\MessageService\RefugeeMessageService;
 
 class RefugeeRepository implements RepositoryInterface
 {

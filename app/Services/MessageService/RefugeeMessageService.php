@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\MessageServices;
+namespace App\Services\MessageService;
 
 use App\Enums\MessageEnum;
 

@@ -5,14 +5,13 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Models\Refugee;
-use App\Enums\PaginateEnum;
 use App\Models\RefugeeCamp;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\RepositoryInterface;
 use App\Http\Requests\StoreRefugeeCampRequest;
 use App\Http\Requests\UpdateRefugeeCampRequest;
-use App\Services\SearchServices\RefugeeCampSearch;
-use App\Services\MessageServices\CampMessageService;
+use App\Services\SearchService\RefugeeCampSearch;
+use App\Services\MessageService\CampMessageService;
 
 
 class RefugeeCampRepository implements RepositoryInterface
