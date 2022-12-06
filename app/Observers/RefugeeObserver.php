@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Refugee;
-use App\Services\CampRefugeeCount\RefugeeCampCountService;
+use App\Services\CampRefugeeCountService\RefugeeCampCountService;
 use App\Services\ImageServices\ImagePathService;
 
 class RefugeeObserver
@@ -15,13 +15,13 @@ class RefugeeObserver
     public function created(Refugee $refugee): void
     {
         if ($refugee->confirmed) {
-            $this->countService->updateCampCount($refugee->getCamp);
+            $this->countService->update($refugee->getCamp);
         }
     }
 
     public function updated(Refugee $refugee): void
     {
-        $this->countService->updateCampCount($refugee->getCamp);
+        $this->countService->update($refugee->getCamp);
     }
 
     public function deleted(Refugee $refugee): void
@@ -30,6 +30,6 @@ class RefugeeObserver
             $unlinkService = new ImagePathService();
             $unlinkService->unlink($refugee->photo);
         }
-        $this->countService->updateCampCount($refugee->getCamp);
+        $this->countService->update($refugee->getCamp);
     }
 }

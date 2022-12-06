@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\CampRefugeeCountService;
 
 use App\Models\RefugeeCamp;
-use App\Services\CampRefugeeCount\RefugeeCampCountServiceInterface;
+use App\Services\CampRefugeeCountService\RefugeeCampCountServiceInterface;
 
 class RefugeeCampCountService implements RefugeeCampCountServiceInterface
 {
@@ -15,21 +15,19 @@ class RefugeeCampCountService implements RefugeeCampCountServiceInterface
         $this->validator = new RefugeeCampCountValidator();
     }
 
-    public function updateCampCount(RefugeeCamp $camp): void
+    public function update(RefugeeCamp $camp): void
     {
         $refugeeCapacity = 0;
         foreach ($camp->getRefugees()->get() as $refugee) {
             $refugeeCapacity += $refugee->bedsTaken;
         }
+        $actual = $this->validator->validate($refugeeCapacity, $camp) ? 
+        $camp->originalCapacity - $refugeeCapacity : $camp->originalCapacity;
 
-        if ($this->validator->validate($refugeeCapacity, $camp)) {
-            $this->updateCamp($camp, $camp->originalCapacity - $refugeeCapacity);
-        } else {
-            $this->updateCamp($camp, $camp->originalCapacity);
-        }
+        $this->updateCamp($camp, $actual);
     }
 
-    private function updateCamp(RefugeeCamp $camp, int $actual)
+    private function updateCamp(RefugeeCamp $camp, int $actual): void
     {
         $camp->update([
             'currentCapacity' => $actual

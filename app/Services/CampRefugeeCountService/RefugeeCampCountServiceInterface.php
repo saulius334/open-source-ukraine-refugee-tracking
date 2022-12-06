@@ -8,5 +8,5 @@ use App\Models\RefugeeCamp;
 
 interface RefugeeCampCountServiceInterface
 {
-    public function updateCampCount(RefugeeCamp $camp): void;
+    public function update(RefugeeCamp $camp): void;
 }
