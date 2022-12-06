@@ -33,4 +33,10 @@ class RefugeeCampCountService implements RefugeeCampCountServiceInterface
             'currentCapacity' => $actual
         ]);
     }
+    public function updateAll(): void
+    {
+        foreach (RefugeeCamp::all() as $camp) {
+            $this->update($camp);
+        }
+    }
 }

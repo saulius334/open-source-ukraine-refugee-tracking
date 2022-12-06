@@ -2,13 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Services\CampRefugeeCountService\RefugeeCampCountService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         DB::table('users')->insert([
             'name' => 'saulius',
@@ -26,5 +27,7 @@ class DatabaseSeeder extends Seeder
             RefugeeCampSeeder::class,
             RefugeeSeeder::class,
         ]);
+        $countService = new RefugeeCampCountService();
+        $countService->updateAll();
     }
 }
