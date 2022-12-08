@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Services\ImageService\ImagePathService;
 use App\Services\RefugeeService\ConfirmedCheckService;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRefugeeRequest extends FormRequest
@@ -22,7 +22,7 @@ class StoreRefugeeRequest extends FormRequest
                 'bedsTaken' => 'required|min:0',
                 'confirmed' => '',
                 'current_refugee_camp_id' => 'required',
-                'photo' => 'sometimes|required|mimes:jpg,png,jpg|max:2048',
+                'photo' => 'sometimes|image|mimes:jpg,png|max:2048',
                 'pets' => '',
                 'destination' => '',
                 'aidReceived' => '',
@@ -37,24 +37,14 @@ class StoreRefugeeRequest extends FormRequest
             'IdNumber.required' => 'Please enter valid Ukrainian ID number',
             'IdNumber.unique' => 'This ID number is already register. Check in with the camp you registered in.',
             'bedsTaken' => 'Please specify how many beds will you take.',
-            'photo.max' => 'file exceeds 3MB'
+            'photo.max' => 'file exceeds 2MB'
         ];
     }
     public function prepareForValidation()
     { 
         $checkIfConfirmedService = new ConfirmedCheckService();
         $this->merge([
-            'confirmed' => $checkIfConfirmedService->checkIfConfirmed($this->current_refugee_camp_id)
+            'confirmed' => $checkIfConfirmedService->checkIfConfirmed($this->current_refugee_camp_id),
         ]);
     }
-    // private function checkIfConfirmed(): bool
-    // {
-    //     if (!Auth::user()) {
-    //         return false;
-    //     } elseif ($this->current_refugee_camp_id == Auth::user()->id) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
 }

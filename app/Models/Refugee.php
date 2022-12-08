@@ -33,14 +33,6 @@ class Refugee extends Model
     {
         return $this->belongsTo(RefugeeCamp::class, 'current_refugee_camp_id', 'id');
     }
-    protected function photo(): Attribute
-    {
-        $imagePathService = new ImagePathService();
-
-        return Attribute::make(
-            set: fn ($photo) => $imagePathService->updateImageAndGetPath($this, $photo)
-        );
-    }
     public function toSearchableArray(): array
     {
         return [

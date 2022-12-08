@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\ImageServices;
+namespace App\Services\ImageService;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
@@ -31,8 +31,8 @@ class ImagePathService
     private function saveImage(UploadedFile $photo): string
     {
         $imagePath = $photo->store('uploads', 'public');
-        $image = Image::make(public_path("storage/{$imagePath}"))->fit(600, 600);
-        $image->save();
+        // $image = Image::make(public_path("storage/{$imagePath}"))->fit(600, 600);
+        // $image->save();
         return $imagePath;
     }
 

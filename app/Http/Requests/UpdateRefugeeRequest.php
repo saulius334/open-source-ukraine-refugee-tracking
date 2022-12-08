@@ -20,7 +20,7 @@ class UpdateRefugeeRequest extends FormRequest
             'bedsTaken' => 'required|min:0',
             'current_refugee_camp_id' => 'required',
             'confirmed' => '',
-            'photo' => 'sometimes|required|mimes:jpg,png|max:3000',
+            'photo' => 'sometimes|required|mimes:jpg,png|max:2048',
             'pets' => '',
             'destination' => '',
             'aidReceived' => '',
