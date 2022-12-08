@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Services\RefugeeService\ConfirmedCheckService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -21,7 +22,7 @@ class StoreRefugeeRequest extends FormRequest
                 'bedsTaken' => 'required|min:0',
                 'confirmed' => '',
                 'current_refugee_camp_id' => 'required',
-                'photo' => 'sometimes|required|mimes:jpg,png|max:3000',
+                'photo' => 'sometimes|required|mimes:jpg,png,jpg|max:2048',
                 'pets' => '',
                 'destination' => '',
                 'aidReceived' => '',
@@ -41,18 +42,19 @@ class StoreRefugeeRequest extends FormRequest
     }
     public function prepareForValidation()
     { 
+        $checkIfConfirmedService = new ConfirmedCheckService();
         $this->merge([
-            'confirmed' => $this->checkIfConfirmed()
+            'confirmed' => $checkIfConfirmedService->checkIfConfirmed($this->current_refugee_camp_id)
         ]);
     }
-    private function checkIfConfirmed(): bool
-    {
-        if (!Auth::user()) {
-            return false;
-        } elseif ($this->current_refugee_camp_id == Auth::user()->id) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    // private function checkIfConfirmed(): bool
+    // {
+    //     if (!Auth::user()) {
+    //         return false;
+    //     } elseif ($this->current_refugee_camp_id == Auth::user()->id) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 }
