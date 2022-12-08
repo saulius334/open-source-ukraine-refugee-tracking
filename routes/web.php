@@ -14,7 +14,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::middleware('auth')->prefix('user')->name('u_')->group(function () {
+Route::prefix('user')->name('u_')->group(['middleware' => 'auth'], function () {
     Route::get('/', [userCon::class, 'myCamps'])->name('myCamps');
     Route::get('/requests', [userCon::class, 'requests'])->name('requests');
 
