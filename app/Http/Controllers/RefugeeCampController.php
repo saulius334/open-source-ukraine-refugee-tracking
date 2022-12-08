@@ -2,48 +2,67 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Refugee;
 use App\Models\RefugeeCamp;
-use App\Repositories\RefugeeCampRepository;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreRefugeeCampRequest;
 use App\Http\Requests\UpdateRefugeeCampRequest;
+use App\Services\SearchService\RefugeeCampSearch;
+use App\Services\MessageService\CampMessageService;
 
 class RefugeeCampController extends Controller
 {
-    public function __construct(private RefugeeCampRepository $campRepo)
+    public function __construct(private CampMessageService $messageService, private RefugeeCampSearch $searchService)
     {
     }
     public function index()
     {
-        return $this->campRepo->index();
+        return view('camp.index', [
+            'camps' => $this->searchService->filter(request('search'))
+        ]);
     }
 
     public function create()
     {
-        return $this->campRepo->create();
+        return view('camp.create');
     }
 
     public function store(StoreRefugeeCampRequest $request)
     {
-        return $this->campRepo->store($request);
+        RefugeeCamp::create($request->validated() + [
+            'user_id' => Auth::id(),
+            'currentCapacity' => $request->originalCapacity
+        ]);
+        return redirect()->route('u_index')->with('message', $this->messageService->storeMessage());
     }
 
     public function show(RefugeeCamp $camp)
     {
-        return $this->campRepo->show($camp);
+        return view('camp.show', [
+            'camp' => $camp
+        ]);
     }
 
     public function edit(RefugeeCamp $camp)
     {
-        return $this->campRepo->edit($camp);
+        return view('camp.edit', [
+            'camp' => $camp,
+            'refugees' => Refugee::all(),
+        ]);
     }
 
     public function update(UpdateRefugeeCampRequest $request, RefugeeCamp $camp)
     {
-        return $this->campRepo->update($request, $camp);
+        $camp->update($request->validated() + [
+            'currentCapacity' => $request->originalCapacity - $camp->originalCapacity + $camp->currentCapacity,
+        ]);
+
+        return redirect()->route('c_index')->with('message', $this->messageService->updateMessage());
     }
 
     public function destroy(RefugeeCamp $camp)
     {
-        return $this->campRepo->destroy($camp);
+        $camp->delete();
+        return redirect()->route('c_index')->with('message', $this->messageService->deleteMessage());
     }
 }

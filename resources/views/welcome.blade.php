@@ -29,7 +29,7 @@
                 <p>If you are someone who can needs shelter, please search and register to your closest Refugee Camp.</p>
                 <ul class="list-group mb-4">
                     <li class="list-group-item active">Statistics</li>
-                    <li class="list-group-item">New Refugees Today: {{  }} </li>
+                    <li class="list-group-item">New Refugees Today: </li>
                     <li class="list-group-item">New Refugees This Week: </li>
                     <li class="list-group-item">New Refugees This Month: </li>
                     <li class="list-group-item">Total refugees registered: </li>

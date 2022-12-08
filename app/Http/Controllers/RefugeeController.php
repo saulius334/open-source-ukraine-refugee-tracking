@@ -3,28 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Models\Refugee;
-use App\Enums\PaginateEnum;
 use App\Models\RefugeeCamp;
 use Illuminate\Http\RedirectResponse;
+use App\Repositories\RefugeeRepository;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
-use App\Repositories\RefugeeRepository;
+use App\Services\SearchService\RefugeeSearch;
 
 class RefugeeController extends Controller
 {
-    public function __construct(private RefugeeRepository $refugeeRepo)
+    public function __construct(private RefugeeRepository $refugeeRepo, private RefugeeSearch $searchService)
     {
     }
 
     public function index()
     {
-            return $this->refugeeRepo->index();
+        return view('refugee.index', [
+            'refugees' => $this->searchService->filter(request('search'))
+        ]);
     }
 
     public function create(RefugeeCamp $camp)
     {
         return $this->refugeeRepo->create($camp);
-
     }
 
     public function store(StoreRefugeeRequest $request): RedirectResponse
@@ -34,7 +35,9 @@ class RefugeeController extends Controller
 
     public function show(Refugee $refugee)
     {
-        return $this->refugeeRepo->show($refugee);
+        return view('refugee.show', [
+            'refugee' => $refugee
+        ]);
     }
 
     public function edit(Refugee $refugee)

@@ -10,20 +10,12 @@ use Illuminate\Http\RedirectResponse;
 use App\Repositories\RepositoryInterface;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
-use App\Services\SearchService\RefugeeSearch;
 use App\Services\MessageService\RefugeeMessageService;
 
 class RefugeeRepository implements RepositoryInterface
 {
-    public function __construct(private RefugeeMessageService $messageService, private RefugeeSearch $searchService)
+    public function __construct(private RefugeeMessageService $messageService)
     {  
-    }
-
-    public function index()
-    {
-        return view('refugee.index', [
-                'refugees' => $this->searchService->filter(request('search'))
-            ]);
     }
     
     public function create(RefugeeCamp $camp)
@@ -38,13 +30,6 @@ class RefugeeRepository implements RepositoryInterface
     {
         Refugee::create($request->validated());
         return redirect()->route('r_index')->with('message', $this->messageService->storeMessage($request->confirmed));
-    }
-
-    public function show(Refugee $refugee)
-    {
-        return view('refugee.show', [
-            'refugee' => $refugee
-        ]);
     }
 
     public function edit(Refugee $refugee)
