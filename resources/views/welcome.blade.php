@@ -24,6 +24,16 @@
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
                 <div class="welcomeText"><h4>Hello!</h4></div> 
+                <p>This project is dedicated to Ukrainian Refugees fleeing from war.</p>
+                <p>If you are someone who can give shelter to refugees, please register and post your camp.</p>
+                <p>If you are someone who can needs shelter, please search and register to your closest Refugee Camp.</p>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item active">Statistics</li>
+                    <li class="list-group-item">New Refugees Today: </li>
+                    <li class="list-group-item">New Refugees This Week: </li>
+                    <li class="list-group-item">New Refugees This Month: </li>
+                    <li class="list-group-item">Total refugees registered: </li>
+                  </ul>
                 <div class="welcomeLinks">
                     <a href="{{ route('c_index')}}">View All Refugee Camps</a>
                     <a href="{{ route('r_index')}}">View All Refugees</a>

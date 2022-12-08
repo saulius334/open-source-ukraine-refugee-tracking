@@ -5,35 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\Refugee;
 use App\Models\RefugeeCamp;
 use Illuminate\Http\RedirectResponse;
+use App\Repositories\RefugeeRepository;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
-use App\Services\ImageServices\ImagePathService;
-use App\Services\CampRefugeeCount\CampRefugeeUpdateCountService;
+use App\Services\SearchService\RefugeeSearch;
 
 class RefugeeController extends Controller
 {
-    public function __construct(private ImagePathService $imagePathService)
+    public function __construct(private RefugeeRepository $refugeeRepo, private RefugeeSearch $searchService)
     {
     }
 
     public function index()
     {
         return view('refugee.index', [
-            'refugees' => Refugee::latest()->paginate(15)
+            'refugees' => $this->searchService->filter(request('search'))
         ]);
     }
+
     public function create(RefugeeCamp $camp)
     {
-        return view('refugee.create', [
-            'camps' => RefugeeCamp::all(),
-            'campId' => $camp->id
-        ]);
+        return $this->refugeeRepo->create($camp);
     }
-    
+
     public function store(StoreRefugeeRequest $request): RedirectResponse
     {
-        Refugee::create($request->validated());
-        return redirect()->route('r_index')->with('message', 'Refugee created successfully!');
+        return $this->refugeeRepo->store($request);
     }
 
     public function show(Refugee $refugee)
@@ -45,35 +42,15 @@ class RefugeeController extends Controller
 
     public function edit(Refugee $refugee)
     {
-        return view('refugee.edit', [
-            'refugee' => $refugee,
-            'camps' => RefugeeCamp::all(),
-            'campID' => $refugee->current_refugee_camp_id
-        ]);
+        return $this->refugeeRepo->edit($refugee);
     }
 
     public function update(UpdateRefugeeRequest $request, Refugee $refugee): RedirectResponse
     {
-        $imagePath = $this->imagePathService->updateImageAndGetPath($refugee, $request->photo);
-        $countService = new CampRefugeeUpdateCountService($refugee);
-        $countService->updateCount($request);
-        $refugee->update([
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'IdNumber' => $request->IdNumber,
-            'current_refugee_camp_id' => $request->current_refugee_camp_id,
-            'photo' => $imagePath,
-            'pets' => $request->pets,
-            'destination' => $request->destination,
-            'aidReceived' => $request->aidReceived,
-            'healthCondition' => $request->healthCondition,
-            'bedsTaken' => $request->bedsTaken,
-        ]);
-        return redirect()->route('r_index')->with('message', 'Refugee updated successfully!');
+        return $this->refugeeRepo->update($request, $refugee);
     }
     public function destroy(Refugee $refugee)
     {
-        $refugee->delete();
-        return redirect()->route('r_index')->with('message', 'Deleted Successfully');
+        return $this->refugeeRepo->destroy($refugee);
     }
 }

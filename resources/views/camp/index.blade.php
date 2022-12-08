@@ -4,9 +4,15 @@
     <div class="row justify-content-center">
         <div class="col-9">
             <div class="card">
-                <div class="card-header">
-                    <h2>Refugee Camps</h2>
-                </div>
+                <form action="" method="get">
+                    <div class="card-header search-card">
+                        <h2>Camps</h2>
+                        <div class="input-group rounded search-div">
+                                <input type="search" name="search" class="form-control" placeholder="Search"/>
+                                <button type="submit" class="btn btn-primary search-btn"><span>Go</span></button>
+                            </div>
+                        </div>
+                    </form>
                 <div class="card-body">
                     <ul class="list-group">
                         @forelse($camps as $camp)

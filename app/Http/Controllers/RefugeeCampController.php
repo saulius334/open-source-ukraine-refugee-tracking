@@ -4,17 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Refugee;
 use App\Models\RefugeeCamp;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreRefugeeCampRequest;
 use App\Http\Requests\UpdateRefugeeCampRequest;
+use App\Services\SearchService\RefugeeCampSearch;
+use App\Services\MessageService\CampMessageService;
 
 class RefugeeCampController extends Controller
 {
+    public function __construct(private CampMessageService $messageService, private RefugeeCampSearch $searchService)
+    {
+    }
     public function index()
     {
         return view('camp.index', [
-            'camps' => RefugeeCamp::latest()->paginate(15)
+            'camps' => $this->searchService->filter(request('search'))
         ]);
     }
 
@@ -26,10 +30,10 @@ class RefugeeCampController extends Controller
     public function store(StoreRefugeeCampRequest $request)
     {
         RefugeeCamp::create($request->validated() + [
-            'user_id' => Auth::id()
+            'user_id' => Auth::id(),
+            'currentCapacity' => $request->originalCapacity
         ]);
-
-        return redirect()->route('u_index')->with('message', 'Camp created successfully!');
+        return redirect()->route('u_index')->with('message', $this->messageService->storeMessage());
     }
 
     public function show(RefugeeCamp $camp)
@@ -53,12 +57,12 @@ class RefugeeCampController extends Controller
             'currentCapacity' => $request->originalCapacity - $camp->originalCapacity + $camp->currentCapacity,
         ]);
 
-        return redirect()->route('c_index')->with('message', 'Refugee updated successfully!');
+        return redirect()->route('c_index')->with('message', $this->messageService->updateMessage());
     }
 
     public function destroy(RefugeeCamp $camp)
     {
         $camp->delete();
-        return redirect()->route('c_index')->with('message', 'Camp deleted!');
+        return redirect()->route('c_index')->with('message', $this->messageService->deleteMessage());
     }
 }

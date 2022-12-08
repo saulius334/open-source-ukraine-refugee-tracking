@@ -7,18 +7,19 @@ use Illuminate\Support\Facades\DB;
 
 class RefugeeCampSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
         DB::table('refugee_camps')->insert([
             'name' => 'Sauliaus Camp',
             'originalCapacity' => 1000,
-            'currentCapacity' => 1000,
+            'currentCapacity' => 995,
             'user_id' => '1',
+        ]);
+        DB::table('refugee_camps')->insert([
+            'name' => 'Pauliaus Camp',
+            'originalCapacity' => 200,
+            'currentCapacity' => 199,
+            'user_id' => '2',
         ]);
     }
 }

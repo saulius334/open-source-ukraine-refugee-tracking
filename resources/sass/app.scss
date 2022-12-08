@@ -119,3 +119,15 @@
         background-color: #0057B7;
     }
 }
+.search-card {
+    display: flex;
+    justify-content: space-between;
+}
+.search-div {
+    width: 30%;
+    max-height: 40px;
+}
+.search-btn {
+    width: 20%;
+    max-height: 40px;
+}

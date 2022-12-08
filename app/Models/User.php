@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -35,13 +36,17 @@ class User extends Authenticatable
         return $this->hasMany(RefugeeCamp::class, 'user_id', 'id');
     }
 
-    public function getAllAssignedCampOutsideRequests(): int
+    public function getRefugees(): HasManyThrough
     {
-        $camps = $this->getCamps()->get();
-        $count = 0;
-        foreach ($camps as $camp) {
-            $count += $camp->getOutsideRequests()->count();
-        }
-        return $count;
+        return $this->hasManyThrough(
+            Refugee::class,
+            RefugeeCamp::class,
+            'user_id',
+            'current_refugee_camp_id'
+        );
+    }
+    public function getUnconfirmedRefugees()
+    {
+        return $this->getRefugees()->where('confirmed', 0);
     }
 }
