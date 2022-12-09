@@ -4,19 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Refugee;
 use App\Models\RefugeeCamp;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Services\Refugee\DTO\RefugeeDTO;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
 use App\Services\Refugee\RefugeeMessageService;
 use App\Repositories\Interfaces\RefugeeRepositoryInterface;
-use App\Services\Shared\Transformers\Request\RefugeeRequestTransformer;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Contracts\View\View;
+use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
+use App\Services\Refugee\Transformers\RefugeeRequestTransformer;
 
 class RefugeeController extends Controller
 {
     public function __construct(
         private RefugeeRepositoryInterface $refugeeRepo,
+        private RefugeeCampRepositoryInterface $campRepo,
         private RefugeeRequestTransformer $transformer,
         private RefugeeMessageService $messageService
         )
@@ -33,7 +35,7 @@ class RefugeeController extends Controller
     public function create(RefugeeCamp $camp): View
     {
         return view('refugee.create', [
-            'camps' => $this->refugeeRepo->getAllCamps(),
+            'camps' => $this->campRepo->getAllCamps(),
             'selectedCamp' => $camp,
         ]);
     }
@@ -56,7 +58,7 @@ class RefugeeController extends Controller
     {
         return view('refugee.edit', [
             'refugee' => $refugee,
-            'camps' => $this->refugeeRepo->getAllCamps(),
+            'camps' => $this->campRepo->getAllCamps(),
             'campID' => $refugee->current_refugee_camp_id
         ]);
     }

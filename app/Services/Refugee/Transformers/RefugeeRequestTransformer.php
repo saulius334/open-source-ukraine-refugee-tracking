@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Shared\Transformers\Request;
+namespace App\Services\Refugee\Transformers;
 
 use Illuminate\Foundation\Http\FormRequest;
 

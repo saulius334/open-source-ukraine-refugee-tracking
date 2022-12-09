@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\Enums\PaginateEnum;
 use App\Models\Refugee;
-use App\Models\RefugeeCamp;
-use Illuminate\Database\Eloquent\Collection;
+use App\Enums\PaginateEnum;
+use Illuminate\Support\Collection;
 use Illuminate\Contracts\Pagination\Paginator;
 use App\Repositories\Interfaces\RefugeeRepositoryInterface;
 
@@ -18,10 +17,11 @@ class RefugeeRepository extends BaseRepository implements RefugeeRepositoryInter
         parent::__construct(Refugee::class);
     }
 
-    public function getAllCamps(): Collection
+    public function getAllRefugees(): Collection
     {
-        return RefugeeCamp::all();
+        return Refugee::all();
     }
+
     public function getConfirmedRefugees(): Paginator
     {
         return Refugee::where('confirmed', 1)->orderBy('created_at', 'desc')->paginate(PaginateEnum::Fifteen);

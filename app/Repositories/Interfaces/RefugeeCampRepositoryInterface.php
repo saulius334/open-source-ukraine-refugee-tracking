@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace App\Repositories\Interfaces;
 
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Collection;
 use App\Services\Shared\Interfaces\RequestDTOInterface;
 
-interface RefugeeRepositoryInterface
+interface RefugeeCampRepositoryInterface
 {
     public function __construct();
-    public function store(RequestDTOInterface $requestDTO): void;
+    public function store(RequestDTOInterface $refugeeCampDTO): void;
     public function update(RequestDTOInterface $requestDTO, Model $subject): void;
     public function destroy(Model $subject): void;
-    public function getAllRefugees(): Collection;
-    public function getConfirmedRefugees(): Paginator;
+    public function getAllCamps(): Collection;
 }
