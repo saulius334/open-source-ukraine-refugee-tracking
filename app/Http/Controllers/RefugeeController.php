@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Refugee;
 use App\Models\RefugeeCamp;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
+use App\Services\Shared\DTO\SearchDTO;
 use App\Services\Refugee\DTO\RefugeeDTO;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
@@ -25,10 +27,11 @@ class RefugeeController extends Controller
     {
     }
 
-    public function index(): View
+    public function index(Request $request): View
     {
+        $searchDTO = new SearchDTO($request->search);
         return view('refugee.index', [
-            'refugees' => $this->refugeeRepo->getConfirmedRefugees()
+            'refugees' => $this->refugeeRepo->getSearched($this->refugeeRepo->getConfirmedRefugees(), $searchDTO)
         ]);
     }
 

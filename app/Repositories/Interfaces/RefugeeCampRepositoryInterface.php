@@ -11,6 +11,7 @@ use App\Services\Shared\Interfaces\RequestDTOInterface;
 interface RefugeeCampRepositoryInterface
 {
     public function __construct();
+    public function getAll(): Collection;
     public function store(RequestDTOInterface $refugeeCampDTO): void;
     public function update(RequestDTOInterface $requestDTO, Model $subject): void;
     public function destroy(Model $subject): void;
