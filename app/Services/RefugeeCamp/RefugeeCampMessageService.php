@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Services\MessageService;
+namespace App\Services\RefugeeCamp;
 
 use App\Enums\MessageEnum;
 
-class CampMessageService
+class RefugeeCampMessageService
 {
     private const TEXT = 'Camp ';
     public function StoreMessage(): string

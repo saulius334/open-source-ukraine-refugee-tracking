@@ -7,11 +7,11 @@ namespace App\Services\SearchService;
 use App\Enums\PaginateEnum;
 use App\Models\RefugeeCamp;
 use App\Services\SearchService\SearchServiceInterface;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\Paginator;
 
 class RefugeeCampSearch implements SearchServiceInterface
 {
-    public function filter(?string $request): LengthAwarePaginator
+    public function filter(?string $request): Paginator
     {
         return RefugeeCamp::search($request)->paginate(PaginateEnum::Five);
     }

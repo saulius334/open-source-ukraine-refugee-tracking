@@ -7,13 +7,13 @@ namespace App\Repositories;
 use App\Models\Refugee;
 use App\Models\RefugeeCamp;
 use Illuminate\Http\RedirectResponse;
-use App\Repositories\RepositoryInterface;
+use App\Repositories\Interfaces\RefugeeRepositoryInterface;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
 use App\Services\ImageService\ImagePathService;
 use App\Services\MessageService\RefugeeMessageService;
 
-class RefugeeRepository implements RepositoryInterface
+class RefugeeRepository implements RefugeeRepositoryInterface
 {
     public function __construct(private RefugeeMessageService $messageService, private ImagePathService $imageService)
     {  
@@ -29,10 +29,9 @@ class RefugeeRepository implements RepositoryInterface
     
     public function store(StoreRefugeeRequest $request): RedirectResponse
     {
-        $filepath = ($request->photo)->store('uploads', 'public');
-        Refugee::create($request->validated() + [
-            'photo' => $filepath
-        ]);
+        $data = $request->validated();
+        $data['photo'] = ($request->photo)->store('uploads', 'public');
+        Refugee::create($data);
         return redirect()->route('r_index')->with('message', $this->messageService->storeMessage($request->confirmed));
     }
 

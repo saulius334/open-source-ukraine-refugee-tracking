@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
-use App\Services\ImageService\ImagePathService;
-use App\Services\RefugeeService\ConfirmedCheckService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Services\RefugeeService\ConfirmedCheckService;
 
 class StoreRefugeeRequest extends FormRequest
 {
@@ -23,10 +25,10 @@ class StoreRefugeeRequest extends FormRequest
                 'confirmed' => '',
                 'current_refugee_camp_id' => 'required',
                 'photo' => 'sometimes|image|mimes:jpg,png|max:2048',
-                'pets' => '',
-                'destination' => '',
-                'aidReceived' => '',
-                'healthCondition' => '',
+                'pets' => 'sometimes',
+                'destination' => 'sometimes',
+                'aidReceived' => 'sometimes',
+                'healthCondition' => 'sometimes',
         ];
     }
     public function messages()
@@ -44,7 +46,7 @@ class StoreRefugeeRequest extends FormRequest
     { 
         $checkIfConfirmedService = new ConfirmedCheckService();
         $this->merge([
-            'confirmed' => $checkIfConfirmedService->checkIfConfirmed($this->current_refugee_camp_id),
+            'confirmed' => $checkIfConfirmedService->checkIfConfirmed($this->current_refugee_camp_id, Auth::user()?->id),
         ]);
     }
 }
