@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Refugee;
 use App\Models\RefugeeCamp;
 use Illuminate\Http\RedirectResponse;
-use App\Repositories\RefugeeRepository;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
 use App\Services\SearchService\RefugeeSearch;
+use App\Repositories\Interfaces\RefugeeRepositoryInterface;
 
 class RefugeeController extends Controller
 {
-    public function __construct(private RefugeeRepository $refugeeRepo, private RefugeeSearch $searchService)
+    public function __construct(private RefugeeRepositoryInterface $refugeeRepo, private RefugeeSearch $searchService)
     {
     }
 
@@ -25,6 +25,7 @@ class RefugeeController extends Controller
 
     public function create(RefugeeCamp $camp)
     {
+        //TODO DTO
         return $this->refugeeRepo->create($camp);
     }
 

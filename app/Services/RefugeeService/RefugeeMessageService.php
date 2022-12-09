@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Services\MessageService;
+namespace App\Services\RefugeeService;
 
 use App\Enums\MessageEnum;
 
 class RefugeeMessageService
 {
     private const TEXT = 'Refugee ';
-    public function StoreMessage(bool $confirmed): string
+    public function storeMessage(bool $confirmed): string
     {
         return $confirmed ? $this::TEXT . MessageEnum::Created : MessageEnum::RequestSent;
     }
 
-    public function UpdateMessage(int $request, int $refugee): string
+    public function updateMessage(int $request, int $refugee): string
     {
         return $this::TEXT . ($request === $refugee ? MessageEnum::Updated : MessageEnum::Added); 
     }

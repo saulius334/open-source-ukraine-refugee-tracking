@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Services\RefugeeService\ConfirmedCheckService;
 
 class StoreRefugeeRequest extends FormRequest
 {
@@ -21,11 +24,11 @@ class StoreRefugeeRequest extends FormRequest
                 'bedsTaken' => 'required|min:0',
                 'confirmed' => '',
                 'current_refugee_camp_id' => 'required',
-                'photo' => 'sometimes|required|mimes:jpg,png|max:3000',
-                'pets' => '',
-                'destination' => '',
-                'aidReceived' => '',
-                'healthCondition' => '',
+                'photo' => 'sometimes|image|mimes:jpg,png|max:2048',
+                'pets' => 'sometimes',
+                'destination' => 'sometimes',
+                'aidReceived' => 'sometimes',
+                'healthCondition' => 'sometimes',
         ];
     }
     public function messages()
@@ -36,23 +39,14 @@ class StoreRefugeeRequest extends FormRequest
             'IdNumber.required' => 'Please enter valid Ukrainian ID number',
             'IdNumber.unique' => 'This ID number is already register. Check in with the camp you registered in.',
             'bedsTaken' => 'Please specify how many beds will you take.',
-            'photo.max' => 'file exceeds 3MB'
+            'photo.max' => 'file exceeds 2MB'
         ];
     }
     public function prepareForValidation()
     { 
+        $checkIfConfirmedService = new ConfirmedCheckService();
         $this->merge([
-            'confirmed' => $this->checkIfConfirmed()
+            'confirmed' => $checkIfConfirmedService->checkIfConfirmed($this->current_refugee_camp_id, Auth::user()?->id),
         ]);
-    }
-    private function checkIfConfirmed(): bool
-    {
-        if (!Auth::user()) {
-            return false;
-        } elseif ($this->current_refugee_camp_id == Auth::user()->id) {
-            return true;
-        } else {
-            return false;
-        }
     }
 }

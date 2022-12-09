@@ -10,8 +10,7 @@ class RefugeeCampCountValidator
     {
         if ($refugeeCapacity > $camp->originalCapacity) {
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 }
