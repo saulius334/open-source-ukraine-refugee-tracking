@@ -22,7 +22,7 @@ class StoreRefugeeRequest extends FormRequest
                 'surname' => 'required|min:2|max:30',
                 'IdNumber' => 'required|numeric|digits:10|unique:refugees,IdNumber',
                 'bedsTaken' => 'required|min:0',
-                'confirmed' => '',
+                'confirmed' => 'boolean',
                 'current_refugee_camp_id' => 'required',
                 'photo' => 'sometimes|image|mimes:jpg,png|max:2048',
                 'pets' => 'sometimes',

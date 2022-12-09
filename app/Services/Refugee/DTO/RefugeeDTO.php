@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\Refugee\DTO;
 
-class RefugeeDTO
+use App\Services\Shared\Interfaces\RequestDTOInterface;
+
+class RefugeeDTO implements RequestDTOInterface
 {
     public function __construct(private array $refugeeInfo)
     {
@@ -15,7 +17,7 @@ class RefugeeDTO
     }
     public function getConfirmed(): bool
     {
-        return $this->refugeeInfo['confirmed'];
+        return $this->refugeeInfo['confirmed'] ? true : false;
     }
 
 }

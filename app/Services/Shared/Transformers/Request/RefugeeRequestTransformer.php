@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services\Shared\Transformers\Request;
 
-use App\Http\Requests\StoreRefugeeRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
 class RefugeeRequestTransformer
 {
-    public function transform(StoreRefugeeRequest $request)
+    public function transform(FormRequest $request)
     {
         return [
             'name' => $request->name,

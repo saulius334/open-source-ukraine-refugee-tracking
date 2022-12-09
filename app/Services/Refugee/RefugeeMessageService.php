@@ -14,9 +14,9 @@ class RefugeeMessageService
         return $confirmed ? $this::TEXT . MessageEnum::Created : MessageEnum::RequestSent;
     }
 
-    public function updateMessage(int $request, int $refugee): string
+    public function updateMessage(bool $confirmed): string
     {
-        return $this::TEXT . ($request === $refugee ? MessageEnum::Updated : MessageEnum::Added); 
+        return $this::TEXT . ($confirmed ? MessageEnum::Updated : MessageEnum::Added); 
     }
 
     public function deleteMessage(): string

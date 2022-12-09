@@ -29,7 +29,7 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">ID number*</span>
-                            <input type="text" name="IdNumber" class="form-control" disabled value="{{ $refugee->IdNumber }}">
+                            <input type="text" name="IdNumber" class="form-control" readonly value="{{ $refugee->IdNumber }}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Camp*</span>
