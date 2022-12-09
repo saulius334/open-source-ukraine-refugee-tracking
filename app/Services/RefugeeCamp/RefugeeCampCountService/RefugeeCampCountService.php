@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Services\RefugeeCampCountService;
+namespace App\Services\RefugeeCamp\RefugeeCampCountService;
 
 use App\Models\RefugeeCamp;
-use App\Services\RefugeeCampCountService\RefugeeCampCountServiceInterface;
+use App\Services\RefugeeCamp\RefugeeCampCountService\RefugeeCampCountServiceInterface;
 
 class RefugeeCampCountService implements RefugeeCampCountServiceInterface
 {

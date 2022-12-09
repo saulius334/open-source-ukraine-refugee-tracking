@@ -41,7 +41,7 @@
                     </ul>
                 </div>
                 <div class="me-3 mx-3">
-                    {{ $refugees->links() }}
+                    {{-- {{ $refugees->links() }} --}}
                 </div>
             </div>
         </div>

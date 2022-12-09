@@ -5,33 +5,37 @@ namespace App\Http\Controllers;
 use App\Models\Refugee;
 use App\Models\RefugeeCamp;
 use Illuminate\Http\RedirectResponse;
+use App\Services\Refugee\DTO\RefugeeDTO;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
-use App\Services\SearchService\RefugeeSearch;
 use App\Repositories\Interfaces\RefugeeRepositoryInterface;
+use App\Services\Shared\Transformers\Request\RefugeeRequestTransformer;
 
 class RefugeeController extends Controller
 {
-    public function __construct(private RefugeeRepositoryInterface $refugeeRepo, private RefugeeSearch $searchService)
+    public function __construct(private RefugeeRepositoryInterface $refugeeRepo)
     {
     }
 
     public function index()
     {
         return view('refugee.index', [
-            'refugees' => $this->searchService->filter(request('search'))
+            'refugees' => Refugee::all()->where('confirmed', 1)
         ]);
     }
 
     public function create(RefugeeCamp $camp)
     {
-        //TODO DTO
-        return $this->refugeeRepo->create($camp);
+        return view('refugee.create', [
+            'camps' => $this->refugeeRepo->getAllCamps(),
+            'selectedCamp' => $camp,
+        ]);
     }
 
     public function store(StoreRefugeeRequest $request): RedirectResponse
     {
-        return $this->refugeeRepo->store($request);
+        $refugeeDTO = new RefugeeDTO((new RefugeeRequestTransformer())->transform($request));
+        return $this->refugeeRepo->store($refugeeDTO);
     }
 
     public function show(Refugee $refugee)
@@ -43,7 +47,11 @@ class RefugeeController extends Controller
 
     public function edit(Refugee $refugee)
     {
-        return $this->refugeeRepo->edit($refugee);
+        return view('refugee.edit', [
+            'refugee' => $refugee,
+            'camps' => $this->refugeeRepo->getAllCamps(),
+            'campID' => $refugee->current_refugee_camp_id
+        ]);
     }
 
     public function update(UpdateRefugeeRequest $request, Refugee $refugee): RedirectResponse

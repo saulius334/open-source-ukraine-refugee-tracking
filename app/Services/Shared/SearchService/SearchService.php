@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Services\SearchService;
+namespace App\Services\Shared\SearchService;
 
 use App\Models\Refugee;
 use App\Enums\PaginateEnum;
-use App\Services\SearchService\SearchServiceInterface;
 use Illuminate\Contracts\Pagination\Paginator;
+use App\Services\Shared\SearchService\SearchServiceInterface;
 
-class RefugeeSearch implements SearchServiceInterface
+class SearchService implements SearchServiceInterface
 {
     public function filter(?string $request): Paginator
     {

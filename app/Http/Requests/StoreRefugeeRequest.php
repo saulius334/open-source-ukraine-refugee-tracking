@@ -6,7 +6,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Services\RefugeeService\ConfirmedCheckService;
+use App\Services\Refugee\ConfirmedCheckService;
 
 class StoreRefugeeRequest extends FormRequest
 {

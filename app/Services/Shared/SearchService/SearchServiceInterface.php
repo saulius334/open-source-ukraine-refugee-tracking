@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\SearchService;
+namespace App\Services\Shared\SearchService;
 
 use Illuminate\Contracts\Pagination\Paginator;
 

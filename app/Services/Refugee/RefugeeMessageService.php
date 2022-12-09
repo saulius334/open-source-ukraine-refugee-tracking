@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\RefugeeService;
+namespace App\Services\Refugee;
 
 use App\Enums\MessageEnum;
 

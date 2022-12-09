@@ -4,7 +4,7 @@ namespace App\Observers;
 
 use App\Models\Refugee;
 use App\Services\ImageService\ImagePathService;
-use App\Services\RefugeeCampCountService\RefugeeCampCountService;
+use App\Services\RefugeeCamp\RefugeeCampCountService\RefugeeCampCountService;
 
 class RefugeeObserver
 {
@@ -26,10 +26,6 @@ class RefugeeObserver
 
     public function deleted(Refugee $refugee): void
     {
-        if ($refugee->photo) {
-            $unlinkService = new ImagePathService();
-            $unlinkService->unlink($refugee->photo);
-        }
         $this->countService->update($refugee->getCamp);
     }
 }

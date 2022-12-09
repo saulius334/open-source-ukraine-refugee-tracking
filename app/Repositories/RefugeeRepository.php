@@ -7,32 +7,22 @@ namespace App\Repositories;
 use App\Models\Refugee;
 use App\Models\RefugeeCamp;
 use Illuminate\Http\RedirectResponse;
-use App\Repositories\Interfaces\RefugeeRepositoryInterface;
-use App\Http\Requests\StoreRefugeeRequest;
+use App\Services\Refugee\DTO\RefugeeDTO;
 use App\Http\Requests\UpdateRefugeeRequest;
-use App\Services\ImageService\ImagePathService;
-use App\Services\MessageService\RefugeeMessageService;
+use Illuminate\Database\Eloquent\Collection;
+use App\Services\Refugee\RefugeeMessageService;
+use App\Repositories\Interfaces\RefugeeRepositoryInterface;
 
 class RefugeeRepository implements RefugeeRepositoryInterface
 {
-    public function __construct(private RefugeeMessageService $messageService, private ImagePathService $imageService)
+    public function __construct(private RefugeeMessageService $messageService)
     {  
     }
     
-    public function create(RefugeeCamp $camp)
+    public function store(RefugeeDTO $refugeeDTO): RedirectResponse
     {
-        return view('refugee.create', [
-            'camps' => RefugeeCamp::all(),
-            'selectedCamp' => $camp,
-        ]);
-    }
-    
-    public function store(StoreRefugeeRequest $request): RedirectResponse
-    {
-        $data = $request->validated();
-        $data['photo'] = ($request->photo)->store('uploads', 'public');
-        Refugee::create($data);
-        return redirect()->route('r_index')->with('message', $this->messageService->storeMessage($request->confirmed));
+        Refugee::create($refugeeDTO->getAllData());
+        return redirect()->route('r_index')->with('message', $this->messageService->storeMessage($refugeeDTO->getConfirmed()));
     }
 
     public function edit(Refugee $refugee)
@@ -55,5 +45,9 @@ class RefugeeRepository implements RefugeeRepositoryInterface
     {
         $refugee->delete();
         return redirect()->route('r_index')->with('message', $this->messageService->deleteMessage());
+    }
+    public function getAllCamps(): Collection
+    {
+        return RefugeeCamp::all();
     }
 }

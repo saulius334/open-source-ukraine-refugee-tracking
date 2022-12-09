@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\RefugeeCampCountService;
+namespace App\Services\RefugeeCamp\RefugeeCampCountService;
 
 use App\Models\RefugeeCamp;
 
