@@ -6,9 +6,8 @@ namespace App\Repositories;
 
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
-use App\Services\Shared\Interfaces\RequestDTOInterface;
 
-class BaseRepository
+abstract class BaseRepository
 {
     public function __construct(protected Model $model)
     {
@@ -19,14 +18,14 @@ class BaseRepository
         return $this->model->all();
     }
 
-    public function store(RequestDTOInterface $requestDTO): void
+    public function store(array $data): void
     {
-        $this->model->create($requestDTO->getAllData());
+        $this->model->create($data);
     }
 
-    public function update(RequestDTOInterface $requestDTO, Model $model): void
+    public function update(array $data, Model $model): void
     {
-        $model->update($requestDTO->getAllData());
+        $model->update($data);
     }
 
     public function destroy(Model $model): void

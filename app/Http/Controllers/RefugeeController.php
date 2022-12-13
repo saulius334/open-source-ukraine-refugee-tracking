@@ -42,7 +42,9 @@ class RefugeeController extends Controller
     public function store(StoreRefugeeRequest $request): RedirectResponse
     {
         $refugeeDTO = RefugeeDTO::fromRequest($request);
-        $this->refugeeRepo->store($refugeeDTO);
+
+        $this->refugeeRepo->store($refugeeDTO->getAllData());
+
         return redirect()->route('r_index')->with('message', 'Success');
     }
 
@@ -67,7 +69,7 @@ class RefugeeController extends Controller
         $refugeeDTO = RefugeeDTO::fromRequest($request);
         $message = $refugeeDTO->isConfirmed() ? MessageEnum::Updated : MessageEnum::Created;
 
-        $this->refugeeRepo->update($refugeeDTO, $refugee);
+        $this->refugeeRepo->update($refugeeDTO->getAllData(), $refugee);
         return redirect()->route('r_index')->with('message', $message);
     }
 
