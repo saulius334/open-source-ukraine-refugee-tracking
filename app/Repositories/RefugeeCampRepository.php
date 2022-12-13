@@ -6,26 +6,20 @@ namespace App\Repositories;
 
 use App\Models\RefugeeCamp;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Collection;
 use App\Services\Shared\Interfaces\RequestDTOInterface;
 use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
 
 class RefugeeCampRepository extends BaseRepository implements RefugeeCampRepositoryInterface
-{   
-    public function __construct()
+{
+    public function __construct(RefugeeCamp $camp)
     {
-        parent::__construct(RefugeeCamp::class);
+        parent::__construct($camp);
     }
 
-    public function store(RequestDTOInterface $refugeeCampDTO): void
+    public function store(RequestDTOInterface $requestDTO): void
     {
-        RefugeeCamp::create($refugeeCampDTO->getAllData() + [
+        RefugeeCamp::create($requestDTO->getAllData() + [
             'user_id' => Auth::id(),
         ]);
-    }
-
-    public function getAllCamps(): Collection
-    {
-        return RefugeeCamp::all();
     }
 }

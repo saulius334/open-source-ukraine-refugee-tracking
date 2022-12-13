@@ -9,9 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Refugee extends Model
 {
-    use HasFactory, Searchable;
-
-    const ROUTE_PREFIX = 'r_';
+    use HasFactory;
+    use Searchable;
 
     protected $fillable = [
         'name',
@@ -26,16 +25,11 @@ class Refugee extends Model
         'aidReceived',
         'healthCondition',
     ];
-
+    /**
+     * @return BelongsTo
+     */
     public function getCamp(): BelongsTo
     {
         return $this->belongsTo(RefugeeCamp::class, 'current_refugee_camp_id', 'id');
-    }
-    public function toSearchableArray(): array
-    {
-        return [
-            'name' => $this->name,
-            'surname' => $this->surname
-        ];
     }
 }

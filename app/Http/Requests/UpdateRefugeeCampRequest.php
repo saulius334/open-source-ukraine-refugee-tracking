@@ -6,12 +6,12 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRefugeeCampRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|min:3|max:30',
@@ -20,7 +20,7 @@ class UpdateRefugeeCampRequest extends FormRequest
             'volunteers' => '',
         ];
     }
-    public function messages()
+    public function messages(): array
     {
         return [
                 'name.required' => 'Please add a name of the camp.',

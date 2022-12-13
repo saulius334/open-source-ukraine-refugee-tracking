@@ -9,19 +9,14 @@ use Illuminate\Support\Collection;
 use App\Repositories\Interfaces\RefugeeRepositoryInterface;
 
 class RefugeeRepository extends BaseRepository implements RefugeeRepositoryInterface
-{   
-    public function __construct()
+{
+    public function __construct(Refugee $refugee)
     {
-        parent::__construct(Refugee::class);
-    }
-
-    public function getAllRefugees(): Collection
-    {
-        return Refugee::all();
+        parent::__construct($refugee);
     }
 
     public function getConfirmedRefugees(): Collection
     {
-        return Refugee::where('confirmed', 1)->orderBy('created_at', 'desc');
+        return Refugee::where('confirmed', 1)->orderBy('created_at', 'desc')->get();
     }
 }

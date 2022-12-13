@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Refugee;
-use App\Services\ImageService\ImagePathService;
 use App\Services\RefugeeCamp\RefugeeCampCountService\RefugeeCampCountService;
 
 class RefugeeObserver

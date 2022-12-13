@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Auth\EloquentUserProvider;
 use App\Repositories\BaseRepository;
 use App\Repositories\RefugeeRepository;
-use Illuminate\Support\ServiceProvider;
+use App\Repositories\RefugeeCampRepository;
 use App\Repositories\Interfaces\RefugeeRepositoryInterface;
-use Illuminate\Auth\EloquentUserProvider;
+use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -19,5 +21,6 @@ class RepositoryServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+
     }
 }

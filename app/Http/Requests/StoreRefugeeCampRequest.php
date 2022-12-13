@@ -6,22 +6,22 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRefugeeCampRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
-            'name' => 'required|min:3|max:30',
+            'name' => 'required|min:3|max:30|unique:refugee_camps,name',
             'originalCapacity' => 'required|numeric|min:1|max:10000',
             'currentCapacity' => '',
             'rooms' => '',
             'volunteers' => '',
         ];
     }
-    public function messages()
+    public function messages(): array
     {
         return [
                 'name.required' => 'Please add a name of the camp.',

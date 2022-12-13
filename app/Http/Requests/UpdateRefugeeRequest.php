@@ -7,12 +7,12 @@ use Illuminate\Foundation\Http\FormRequest;
 class UpdateRefugeeRequest extends FormRequest
 {
 
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|min:3|max:30',
@@ -27,7 +27,7 @@ class UpdateRefugeeRequest extends FormRequest
             'healthCondition' => '',
         ];
     }
-    public function messages()
+    public function messages(): array
     {
         return [
                 'name.required' => 'Please add name.',
@@ -36,8 +36,8 @@ class UpdateRefugeeRequest extends FormRequest
                 'current_refugee_camp_id.required' => 'Please select your camp',
         ];
     }
-    public function prepareForValidation()
-    { 
+    public function prepareForValidation(): void
+    {
         $this->merge([
             'confirmed' => 1
         ]);

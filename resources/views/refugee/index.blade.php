@@ -36,12 +36,12 @@
                             </div>
                         </li>
                         @empty
-                        <li class="list-group-item">No refugees</li>
+                        <li class="list-group-item">No refugees found.</li>
                         @endforelse
                     </ul>
                 </div>
                 <div class="me-3 mx-3">
-                    {{ $refugees->links() }}
+                    {{-- {{ $refugees->links() }} --}}
                 </div>
             </div>
         </div>
