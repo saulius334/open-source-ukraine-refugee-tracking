@@ -14,10 +14,10 @@ class UserController extends Controller
             'camps' => RefugeeCamp::where('user_id', Auth::id())->paginate(PaginateEnum::Five)
         ]);
     }
-    public function requests()
+    public function myRequests()
     {
         return view('user.requests', [
-            'unconfirmedRequests' => Auth::user()->getUnconfirmedRefugees()->paginate(PaginateEnum::Five)
+            'unconfirmedRequests' => Auth::user()->getUnconfirmedRefugees()->get()
         ]);
     }
 }

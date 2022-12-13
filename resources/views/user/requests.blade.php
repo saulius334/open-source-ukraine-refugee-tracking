@@ -32,7 +32,7 @@
                     </ul>
                 </div>
                 <div class="me-3 mx-3">
-                    {{ $unconfirmedRequests->links() }}
+                    {{-- {{ $unconfirmedRequests->links() }} --}}
                 </div>
             </div>
         </div>

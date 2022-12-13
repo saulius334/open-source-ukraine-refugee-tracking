@@ -16,4 +16,5 @@ interface RefugeeRepositoryInterface
     public function update(array $data, Model $refugee): void;
     public function destroy(Model $refugee): void;
     public function getConfirmedRefugees(): Collection;
+    public function getUnconfirmedRefugees(): Collection;
 }

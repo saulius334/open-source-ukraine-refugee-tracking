@@ -78,7 +78,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('u_requests') }}">
+                            <a class="nav-link" href="{{ route('u_myRequests') }}">
                                 Requests [{{Auth::user()->getUnconfirmedRefugees->count()}}]
                             </a>
                         </li>

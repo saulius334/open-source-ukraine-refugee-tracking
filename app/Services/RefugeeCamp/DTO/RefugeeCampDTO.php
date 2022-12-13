@@ -32,6 +32,7 @@ class RefugeeCampDTO implements RequestDTOInterface
     {
         return new self([
             'name' => $request->name,
+            'user_id' => $request->user()->id,
             'originalCapacity' => $request->originalCapacity,
             'currentCapacity' => $request->originalCapacity,
             'rooms' => $request->rooms,

@@ -11,11 +11,15 @@
                 <div class="card-body">
                     <form action="{{route('c_store')}}" method="post" class="--form">
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Camp name</span>
+                            <span class="input-group-text">Camp name*</span>
                             <input type="text" name="name" class="form-control" value="{{old('name')}}">
                         </div>
+                        {{-- <div class="input-group mb-3">
+                            <span class="input-group-text">Admin*</span>
+                            <input type="text" name="user_id" readonly class="form-control" value="{{ Auth::user()->name }}">
+                        </div> --}}
                         <div class="input-group mb-3">
-                            <span class="input-group-text">Capacity</span>
+                            <span class="input-group-text">Capacity*</span>
                             <input type="text" name="originalCapacity" class="form-control" value="{{old('originalCapacity')}}">
                         </div>
                         <div class="input-group mb-3">
@@ -27,11 +31,11 @@
                             <input type="text" name="volunteers" class="form-control" value="{{old('volunteers')}}">
                         </div>
                         @csrf
-                        <button type="submit" class="btn btn-secondary mt-4 --submit">Create camp</button>
+                        <button type="submit" class="btn btn-secondary --submit">Create camp</button>
                     </form>
-
                 </div>
             </div>
+            <small>Fields with * are required</small>
         </div>
     </div>
 </div>

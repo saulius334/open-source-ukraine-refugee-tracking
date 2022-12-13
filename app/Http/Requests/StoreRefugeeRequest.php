@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Services\Refugee\ConfirmedCheckService;
 
@@ -47,7 +46,7 @@ class StoreRefugeeRequest extends FormRequest
         $checkIfConfirmedService = new ConfirmedCheckService();
         $this->merge([
             'confirmed' =>
-                $checkIfConfirmedService->checkIfConfirmed($this->current_refugee_camp_id, Auth::user()?->id),
+                $checkIfConfirmedService->checkIfConfirmed($this->current_refugee_camp_id, $this->user()?->id),
         ]);
     }
 }
