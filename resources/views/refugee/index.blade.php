@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="buttons">
                                     <a href="{{route('r_show', $refugee)}}" class="btn btn-info">Show</a>
-                                    @if(!Auth::user() == null && $refugee->getCamp->id == Auth::user()->id)
+                                    @if(!Auth::user() == null && $refugee->getCamp->user_id == Auth::user()->id)
                                     <a href="{{route('r_edit', $refugee)}}" class="btn btn-success">Edit</a>
                                     <form action="{{route('r_delete', $refugee)}}" method="post">
                                         @csrf
