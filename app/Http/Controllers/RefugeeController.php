@@ -7,11 +7,13 @@ use App\Enums\MessageEnum;
 use App\Models\RefugeeCamp;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Services\Refugee\DTO\RefugeeDTO;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
 use App\Services\Refugee\RefugeeSearchService;
+use App\Services\Refugee\UpdateAllRefugeesService;
 use App\Repositories\Interfaces\RefugeeRepositoryInterface;
 use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
 
@@ -21,6 +23,7 @@ class RefugeeController extends Controller
         private RefugeeRepositoryInterface $refugeeRepo,
         private RefugeeCampRepositoryInterface $campRepo,
         private RefugeeSearchService $searchService,
+        private UpdateAllRefugeesService $updateService,
     ) {
     }
 
@@ -77,5 +80,10 @@ class RefugeeController extends Controller
     {
         $this->refugeeRepo->destroy($refugee);
         return redirect()->back()->with('message', 'Successfully deleted');
+    }
+    public function acceptAll(): RedirectResponse
+    {
+        $this->updateService->acceptAllUnconfirmed(Auth::user()->id);
+        return redirect()->back()->with('message', 'Success');
     }
 }

@@ -2,13 +2,17 @@
 
 namespace Database\Seeders;
 
+use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Services\RefugeeCamp\RefugeeCampCountService\RefugeeCampCountService;
 
 class DatabaseSeeder extends Seeder
 {
+    public function __construct(private RefugeeCampRepositoryInterface $campRepo)
+    {
+        
+    }
     public function run(): void
     {
         DB::table('users')->insert([
@@ -27,8 +31,16 @@ class DatabaseSeeder extends Seeder
             RefugeeCampSeeder::class,
             RefugeeSeeder::class,
         ]);
-
-        $countService = new RefugeeCampCountService();
-        $countService->updateAll();
+        $camps = $this->campRepo->getAll();
+        $camps->each(function ($camp) {
+            $refugeeCapacity = 0;
+            foreach ($camp->getRefugees()->get() as $refugee) {
+                if ($refugee->confirmed) {
+                    $refugeeCapacity += $refugee->bedsTaken;
+                }
+            }
+            $actual = $camp->originalCapacity - $refugeeCapacity;
+            $this->campRepo->update(['currentCapacity' => $actual], $camp);
+        });
     }
 }
