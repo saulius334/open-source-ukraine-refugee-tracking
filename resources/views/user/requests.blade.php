@@ -4,9 +4,18 @@
     <div class="row justify-content-center">
         <div class="col-9">
             <div class="card">
-                <div class="card-header">
-                    <h2>All Your Requests</h2>
-                </div>
+                <form action="{{route('r_acceptAll')}}" method="post">
+                    <div class="card-header search-card">
+                        <h2>All your Requests</h2>
+                        <div class="input-group rounded search-div">
+                            @if(Auth::user()->getUnconfirmedRefugees()->count() != 0)
+                                <button type="submit" class="btn btn-primary"><span>Accept All</span></button>
+                                @endif
+                            </div>
+                        </div>
+                        @csrf
+                        @method('put')
+                    </form>
                 <div class="card-body">
                     <ul class="list-group">
                         @forelse($unconfirmedRequests as $unconfirmedRequest)

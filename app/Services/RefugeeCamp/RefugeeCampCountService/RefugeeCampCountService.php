@@ -24,16 +24,8 @@ class RefugeeCampCountService implements RefugeeCampCountServiceInterface
             $refugeeCapacity += $refugee->bedsTaken;
         }
         $actual = $this->validator->validate($refugeeCapacity, $camp) ?
-        $camp->originalCapacity - $refugeeCapacity : $camp->originalCapacity;
+            $camp->originalCapacity - $refugeeCapacity : $camp->originalCapacity;
 
         $this->campRepo->update(['currentCapacity' => $actual], $camp);
-    }
-
-    // used only by DB Seeder
-    public function updateAll(): void
-    {
-        foreach (RefugeeCamp::all() as $camp) {
-            $this->update($camp);
-        }
     }
 }

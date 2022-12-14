@@ -38,6 +38,7 @@ Route::prefix('refugee')->name('r_')->group(function () {
     Route::delete('/delete/{refugee}', [refugeeCon::class, 'destroy'])->name('delete')->middleware('auth');
     Route::get('/edit/{refugee}', [refugeeCon::class, 'edit'])->name('edit')->middleware('auth');
     Route::put('/edit/{refugee}', [refugeeCon::class, 'update'])->name('update')->middleware('auth');
+    Route::put('/acceptAll', [RefugeeCon::class, 'acceptAll'])->name('acceptAll')->middleware('auth');
 });
 
 Route::prefix('unconfirmed')->name('unconf_')->group(function () {
