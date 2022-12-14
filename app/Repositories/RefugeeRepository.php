@@ -19,9 +19,8 @@ class RefugeeRepository extends BaseRepository implements RefugeeRepositoryInter
     {
         return Refugee::where('confirmed', 1)->orderBy('created_at', 'desc')->get();
     }
-
-    public function getUnconfirmedRefugees(): Collection
+    public function getRefugeesByCampId(int $campId): Collection
     {
-        return Refugee::where('confirmed', 0)->orderBy('created_at', 'desc')->get();
+        return Refugee::where('current_refugee_camp_id', $campId)->get();
     }
 }

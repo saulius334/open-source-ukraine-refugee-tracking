@@ -76,6 +76,6 @@ class RefugeeController extends Controller
     public function destroy(Refugee $refugee): RedirectResponse
     {
         $this->refugeeRepo->destroy($refugee);
-        return redirect()->route('r_index')->with('message', 'Success');
+        return redirect()->back()->with('message', 'Successfully deleted');
     }
 }

@@ -49,4 +49,8 @@ class User extends Authenticatable
     {
         return $this->getRefugees()->where('confirmed', 0);
     }
+    public function getConfirmedRefugees(): HasManyThrough
+    {
+        return $this->getRefugees()->where('confirmed', 1);
+    }
 }

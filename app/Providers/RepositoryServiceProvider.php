@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Auth\EloquentUserProvider;
 use App\Repositories\BaseRepository;
 use App\Repositories\RefugeeRepository;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Auth\EloquentUserProvider;
 use App\Repositories\RefugeeCampRepository;
 use App\Repositories\Interfaces\RefugeeRepositoryInterface;
 use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
