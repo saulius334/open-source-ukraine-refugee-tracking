@@ -41,7 +41,7 @@
                     </ul>
                 </div>
                 <div class="me-3 mx-3">
-                    {{ $camps->links() }}
+                    {{-- {{ $camps->links() }} --}}
                 </div>
             </div>
         </div>

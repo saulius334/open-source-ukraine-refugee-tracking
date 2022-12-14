@@ -45,8 +45,12 @@ class User extends Authenticatable
             'current_refugee_camp_id'
         );
     }
-    public function getUnconfirmedRefugees()
+    public function getUnconfirmedRefugees(): HasManyThrough
     {
         return $this->getRefugees()->where('confirmed', 0);
+    }
+    public function getConfirmedRefugees(): HasManyThrough
+    {
+        return $this->getRefugees()->where('confirmed', 1);
     }
 }

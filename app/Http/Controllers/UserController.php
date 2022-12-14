@@ -2,22 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\PaginateEnum;
-use App\Models\RefugeeCamp;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
+use App\Services\User\UserRefugeesService;
+use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
 
 class UserController extends Controller
 {
-    public function myCamps()
+    public function __construct(
+        private UserRefugeesService $userRefugeesService,
+        private RefugeeCampRepositoryInterface $campRepo,
+        )
+    {
+        
+    }
+    public function myCamps(): View
     {
         return view('user.camps', [
-            'camps' => RefugeeCamp::where('user_id', Auth::id())->paginate(PaginateEnum::Five)
+            'camps' => $this->campRepo->getCampsByUserId(Auth::user()->id)
         ]);
     }
-    public function requests()
+    public function myRequests(): View
     {
         return view('user.requests', [
-            'unconfirmedRequests' => Auth::user()->getUnconfirmedRefugees()->paginate(PaginateEnum::Five)
+            'unconfirmedRequests' => $this->userRefugeesService->getRefugeesByUserId(Auth::user()->id, 0)
+        ]);
+    }
+    public function myRefugees(): View
+    {
+        return view('user.refugees',[
+            'refugees' => $this->userRefugeesService->getRefugeesByUserId(Auth::user()->id, 1)
         ]);
     }
 }

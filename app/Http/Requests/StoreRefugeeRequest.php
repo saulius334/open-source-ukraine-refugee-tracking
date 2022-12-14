@@ -4,25 +4,24 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Services\RefugeeService\ConfirmedCheckService;
+use App\Services\Refugee\ConfirmedCheckService;
 
 class StoreRefugeeRequest extends FormRequest
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
                 'name' => 'required|min:3|max:30',
                 'surname' => 'required|min:2|max:30',
                 'IdNumber' => 'required|numeric|digits:10|unique:refugees,IdNumber',
                 'bedsTaken' => 'required|min:0',
-                'confirmed' => '',
+                'confirmed' => 'boolean',
                 'current_refugee_camp_id' => 'required',
                 'photo' => 'sometimes|image|mimes:jpg,png|max:2048',
                 'pets' => 'sometimes',
@@ -31,7 +30,7 @@ class StoreRefugeeRequest extends FormRequest
                 'healthCondition' => 'sometimes',
         ];
     }
-    public function messages()
+    public function messages(): array
     {
         return [
             'name.required' => 'Please add your name.',
@@ -42,11 +41,12 @@ class StoreRefugeeRequest extends FormRequest
             'photo.max' => 'file exceeds 2MB'
         ];
     }
-    public function prepareForValidation()
-    { 
+    public function prepareForValidation(): void
+    {
         $checkIfConfirmedService = new ConfirmedCheckService();
         $this->merge([
-            'confirmed' => $checkIfConfirmedService->checkIfConfirmed($this->current_refugee_camp_id, Auth::user()?->id),
+            'confirmed' =>
+                $checkIfConfirmedService->checkIfConfirmed($this->current_refugee_camp_id, $this->user()?->id),
         ]);
     }
 }

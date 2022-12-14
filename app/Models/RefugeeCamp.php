@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RefugeeCamp extends Model
 {
-    use HasFactory, Searchable;
+    use HasFactory;
+    use Searchable;
 
     protected $fillable = [
         'name',
@@ -29,15 +30,5 @@ class RefugeeCamp extends Model
     public function getUser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
-    }
-    public function getUnconfirmedRefugees(): HasMany
-    {
-        return $this->getRefugees()->where('confirmed', 0);
-    }
-    public function toSearchableArray()
-    {
-        return [
-            'name' => $this->name,
-        ];
     }
 }

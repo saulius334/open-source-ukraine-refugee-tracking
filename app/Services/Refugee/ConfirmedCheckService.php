@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Services\RefugeeService;
+namespace App\Services\Refugee;
 
 class ConfirmedCheckService
 {
-    public function checkIfConfirmed(int $refugeeCampId, ?int $userId): bool
+    public function checkIfConfirmed(string $refugeeCampId, ?int $userId): bool
     {
         if (!$refugeeCampId == $userId) {
             return false;

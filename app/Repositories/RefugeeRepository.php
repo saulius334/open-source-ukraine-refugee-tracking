@@ -5,55 +5,22 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Models\Refugee;
-use App\Models\RefugeeCamp;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Collection;
 use App\Repositories\Interfaces\RefugeeRepositoryInterface;
-use App\Http\Requests\StoreRefugeeRequest;
-use App\Http\Requests\UpdateRefugeeRequest;
-use App\Services\ImageService\ImagePathService;
-use App\Services\MessageService\RefugeeMessageService;
 
-class RefugeeRepository implements RefugeeRepositoryInterface
+class RefugeeRepository extends BaseRepository implements RefugeeRepositoryInterface
 {
-    public function __construct(private RefugeeMessageService $messageService, private ImagePathService $imageService)
-    {  
-    }
-    
-    public function create(RefugeeCamp $camp)
+    public function __construct(Refugee $refugee)
     {
-        return view('refugee.create', [
-            'camps' => RefugeeCamp::all(),
-            'selectedCamp' => $camp,
-        ]);
-    }
-    
-    public function store(StoreRefugeeRequest $request): RedirectResponse
-    {
-        $data = $request->validated();
-        $data['photo'] = ($request->photo)->store('uploads', 'public');
-        Refugee::create($data);
-        return redirect()->route('r_index')->with('message', $this->messageService->storeMessage($request->confirmed));
+        parent::__construct($refugee);
     }
 
-    public function edit(Refugee $refugee)
+    public function getConfirmedRefugees(): Collection
     {
-        return view('refugee.edit', [
-            'refugee' => $refugee,
-            'camps' => RefugeeCamp::all(),
-            'campID' => $refugee->current_refugee_camp_id
-        ]);
+        return Refugee::where('confirmed', 1)->orderBy('created_at', 'desc')->get();
     }
-
-    public function update(UpdateRefugeeRequest $request, Refugee $refugee): RedirectResponse
+    public function getRefugeesByCampId(int $campId): Collection
     {
-        $message = $this->messageService->updateMessage($request->confirmed, $refugee->confirmed);
-        $refugee->update($request->validated());
-        return redirect()->route('r_index')->with('message', $message);
-    }
-
-    public function destroy(Refugee $refugee)
-    {
-        $refugee->delete();
-        return redirect()->route('r_index')->with('message', $this->messageService->deleteMessage());
+        return Refugee::where('current_refugee_camp_id', $campId)->get();
     }
 }

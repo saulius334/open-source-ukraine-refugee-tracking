@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Services\RefugeeCampCountService\RefugeeCampCountService;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Services\RefugeeCamp\RefugeeCampCountService\RefugeeCampCountService;
 
 class DatabaseSeeder extends Seeder
 {
@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             RefugeeCampSeeder::class,
             RefugeeSeeder::class,
         ]);
+
         $countService = new RefugeeCampCountService();
         $countService->updateAll();
     }

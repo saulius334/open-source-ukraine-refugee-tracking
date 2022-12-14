@@ -2,15 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Services\RefugeeCampCountService;
+namespace App\Services\RefugeeCamp\RefugeeCampCountService;
 
 use App\Models\RefugeeCamp;
-use App\Services\RefugeeCampCountService\RefugeeCampCountServiceInterface;
+use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
+use App\Services\RefugeeCamp\RefugeeCampCountService\RefugeeCampCountServiceInterface;
 
 class RefugeeCampCountService implements RefugeeCampCountServiceInterface
 {
     private RefugeeCampCountValidator $validator;
-    public function __construct()
+
+    public function __construct(private RefugeeCampRepositoryInterface $campRepo)
     {
         $this->validator = new RefugeeCampCountValidator();
     }
@@ -21,18 +23,13 @@ class RefugeeCampCountService implements RefugeeCampCountServiceInterface
         foreach ($camp->getRefugees()->get() as $refugee) {
             $refugeeCapacity += $refugee->bedsTaken;
         }
-        $actual = $this->validator->validate($refugeeCapacity, $camp) ? 
+        $actual = $this->validator->validate($refugeeCapacity, $camp) ?
         $camp->originalCapacity - $refugeeCapacity : $camp->originalCapacity;
 
-        $this->updateCamp($camp, $actual);
+        $this->campRepo->update(['currentCapacity' => $actual], $camp);
     }
 
-    private function updateCamp(RefugeeCamp $camp, int $actual): void
-    {
-        $camp->update([
-            'currentCapacity' => $actual
-        ]);
-    }
+    // used only by DB Seeder
     public function updateAll(): void
     {
         foreach (RefugeeCamp::all() as $camp) {

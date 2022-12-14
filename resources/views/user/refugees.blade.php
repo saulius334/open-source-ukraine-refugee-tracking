@@ -6,7 +6,7 @@
             <div class="card">
                 <form action="" method="get">
                 <div class="card-header search-card">
-                    <h2>Refugees</h2>
+                    <h2>My Refugees</h2>
                     <div class="input-group rounded search-div">
                             <input type="search" name="search" class="form-control" placeholder="Search"/>
                             <button type="submit" class="btn btn-primary search-btn"><span>Go</span></button>
@@ -24,14 +24,12 @@
                                 </div>
                                 <div class="buttons">
                                     <a href="{{route('r_show', $refugee)}}" class="btn btn-info">Show</a>
-                                    @if(!Auth::user() == null && $refugee->getCamp->user_id == Auth::user()->id)
                                     <a href="{{route('r_edit', $refugee)}}" class="btn btn-success">Edit</a>
                                     <form action="{{route('r_delete', $refugee)}}" method="post">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
-                                    @endif
                                 </div>
                             </div>
                         </li>

@@ -10,6 +10,15 @@
                 </div>
                 <div class="card-body">
                     <form action="{{route('r_update', $refugee)}}" method="post" enctype="multipart/form-data" class="--form">
+                        <div class="img-small-ch mb-3">
+                            @if($refugee->photo)
+                                <div class="img">
+                                    <img class="w-25 mb-3" src="/storage/{{ $refugee->photo }}" alt="Refugee Photo" />
+                                </div>
+                            @else
+                                <h2>No photo</h2>
+                            @endif
+                        </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Name*</span>
                             <input type="text" name="name" class="form-control" value="{{old('name', $refugee->name)}}">
@@ -21,7 +30,7 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">ID number*</span>
-                            <input type="text" name="IdNumber" class="form-control" value="{{old('IdNumber', $refugee->IdNumber)}}">
+                            <input type="text" name="IdNumber" class="form-control" readonly value="{{old('IdNumber', $refugee->IdNumber)}}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Camp*</span>

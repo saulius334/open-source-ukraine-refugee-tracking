@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace App\Repositories\Interfaces;
 
 use App\Models\Refugee;
-use App\Models\RefugeeCamp;
-use Illuminate\Http\RedirectResponse;
-use App\Http\Requests\StoreRefugeeRequest;
-use App\Http\Requests\UpdateRefugeeRequest;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 interface RefugeeRepositoryInterface
 {
-    public function create(RefugeeCamp $camp);
-    public function store(StoreRefugeeRequest $request): RedirectResponse;
-    public function edit(Refugee $refugee);
-    public function update(UpdateRefugeeRequest $request, Refugee $refugee): RedirectResponse;
-    public function destroy(Refugee $refugee);
+    public function __construct(Refugee $refugee);
+    public function getAll(): Collection;
+    public function store(array $data): void;
+    public function update(array $data, Model $refugee): void;
+    public function destroy(Model $refugee): void;
+    public function getConfirmedRefugees(): Collection;
+    public function getRefugeesByCampId(int $campId): Collection;
 }

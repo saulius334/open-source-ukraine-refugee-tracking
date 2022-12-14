@@ -2,67 +2,70 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Refugee;
 use App\Models\RefugeeCamp;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\View\Factory;
 use App\Http\Requests\StoreRefugeeCampRequest;
 use App\Http\Requests\UpdateRefugeeCampRequest;
-use App\Services\SearchService\RefugeeCampSearch;
-use App\Services\MessageService\CampMessageService;
+use App\Services\RefugeeCamp\DTO\RefugeeCampDTO;
+use App\Services\RefugeeCamp\RefugeeCampSearchService;
+use App\Repositories\Interfaces\RefugeeRepositoryInterface;
+use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
 
 class RefugeeCampController extends Controller
 {
-    public function __construct(private CampMessageService $messageService, private RefugeeCampSearch $searchService)
-    {
+    public function __construct(
+        private RefugeeCampRepositoryInterface $campRepo,
+        private RefugeeRepositoryInterface $refugeeRepo,
+        private RefugeeCampSearchService $searchService
+    ) {
     }
-    public function index()
+    public function index(Request $request): View|Factory
     {
         return view('camp.index', [
-            'camps' => $this->searchService->filter(request('search'))
+            'camps' => $this->searchService->search($request->search)
         ]);
     }
 
-    public function create()
+    public function create(): View
     {
         return view('camp.create');
     }
 
-    public function store(StoreRefugeeCampRequest $request)
+    public function store(StoreRefugeeCampRequest $request): RedirectResponse
     {
-        RefugeeCamp::create($request->validated() + [
-            'user_id' => Auth::id(),
-            'currentCapacity' => $request->originalCapacity
-        ]);
-        return redirect()->route('u_index')->with('message', $this->messageService->storeMessage());
+        $refugeeCampDTO = RefugeeCampDTO::fromRequest($request);
+        $this->campRepo->store($refugeeCampDTO->getAllData());
+        return redirect()->route('u_myCamps')->with('message', 'Success');
     }
 
-    public function show(RefugeeCamp $camp)
+    public function show(RefugeeCamp $camp): View
     {
         return view('camp.show', [
             'camp' => $camp
         ]);
     }
 
-    public function edit(RefugeeCamp $camp)
+    public function edit(RefugeeCamp $camp): View|Factory
     {
         return view('camp.edit', [
             'camp' => $camp,
-            'refugees' => Refugee::all(),
+            'refugees' => $this->refugeeRepo->getAll(),
         ]);
     }
 
-    public function update(UpdateRefugeeCampRequest $request, RefugeeCamp $camp)
+    public function update(UpdateRefugeeCampRequest $request, RefugeeCamp $camp): RedirectResponse
     {
-        $camp->update($request->validated() + [
-            'currentCapacity' => $request->originalCapacity - $camp->originalCapacity + $camp->currentCapacity,
-        ]);
-
-        return redirect()->route('c_index')->with('message', $this->messageService->updateMessage());
+        $refugeeCampDTO = RefugeeCampDTO::fromRequest($request);    
+        $this->campRepo->update($refugeeCampDTO->getAllData(), $camp);
+        return redirect()->route('u_myCamps')->with('message', 'Success');
     }
 
-    public function destroy(RefugeeCamp $camp)
+    public function destroy(RefugeeCamp $camp): RedirectResponse
     {
-        $camp->delete();
-        return redirect()->route('c_index')->with('message', $this->messageService->deleteMessage());
+        $this->campRepo->destroy($camp);
+        return redirect()->route('u_myCamps')->with('message', 'Success');
     }
 }

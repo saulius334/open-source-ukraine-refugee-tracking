@@ -3,30 +3,17 @@
 namespace App\Providers;
 
 use App\Models\Refugee;
-use App\Models\OutsideRequest;
 use App\Observers\RefugeeObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
-use App\Observers\OutsideRequestObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
+    public function register(): void
     {
-        //
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
         Refugee::observe(RefugeeObserver::class);
         Paginator::useBootstrapFive();
