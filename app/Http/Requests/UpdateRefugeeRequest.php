@@ -21,10 +21,10 @@ class UpdateRefugeeRequest extends FormRequest
             'current_refugee_camp_id' => 'required',
             'confirmed' => '',
             'photo' => 'sometimes|required|mimes:jpg,png|max:2048',
-            'pets' => '',
-            'destination' => '',
-            'aidReceived' => '',
-            'healthCondition' => '',
+            'pets' => 'sometimes|max:30',
+            'destination' => 'sometimes|max:30',
+            'aidReceived' => 'sometimes',
+            'healthCondition' => 'sometimes',
         ];
     }
 
