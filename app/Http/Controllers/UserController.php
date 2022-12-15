@@ -12,9 +12,7 @@ class UserController extends Controller
     public function __construct(
         private UserRefugeesService $userRefugeesService,
         private RefugeeCampRepositoryInterface $campRepo,
-        )
-    {
-        
+    ) {
     }
     public function myCamps(): View
     {
@@ -30,7 +28,7 @@ class UserController extends Controller
     }
     public function myRefugees(): View
     {
-        return view('user.refugees',[
+        return view('user.refugees', [
             'refugees' => $this->userRefugeesService->getRefugeesByUserId(Auth::user()->id, 1)
         ]);
     }

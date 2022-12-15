@@ -21,11 +21,12 @@ class StoreRefugeeCampRequest extends FormRequest
             'volunteers' => '',
         ];
     }
+    
     public function messages(): array
     {
         return [
-                'name.required' => 'Please add a name of the camp.',
-                'capacity.required' => 'Please enter how many people you can take in.',
+            'name.required' => 'Please add a name of the camp.',
+            'capacity.required' => 'Please enter how many people you can take in.',
         ];
     }
 }

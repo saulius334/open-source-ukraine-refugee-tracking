@@ -27,15 +27,17 @@ class UpdateRefugeeRequest extends FormRequest
             'healthCondition' => '',
         ];
     }
+
     public function messages(): array
     {
         return [
-                'name.required' => 'Please add name.',
-                'surname.required' => 'Please add surname.',
-                'bedsTaken' => 'Please specify how many beds will you take.',
-                'current_refugee_camp_id.required' => 'Please select your camp',
+            'name.required' => 'Please add name.',
+            'surname.required' => 'Please add surname.',
+            'bedsTaken' => 'Please specify how many beds will you take.',
+            'current_refugee_camp_id.required' => 'Please select your camp',
         ];
     }
+
     public function prepareForValidation(): void
     {
         $this->merge([

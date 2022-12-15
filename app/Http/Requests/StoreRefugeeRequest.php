@@ -17,19 +17,20 @@ class StoreRefugeeRequest extends FormRequest
     public function rules(): array
     {
         return [
-                'name' => 'required|min:3|max:30',
-                'surname' => 'required|min:2|max:30',
-                'IdNumber' => 'required|numeric|digits:10|unique:refugees,IdNumber',
-                'bedsTaken' => 'required|min:0',
-                'confirmed' => 'boolean',
-                'current_refugee_camp_id' => 'required',
-                'photo' => 'sometimes|image|mimes:jpg,png|max:2048',
-                'pets' => 'sometimes',
-                'destination' => 'sometimes',
-                'aidReceived' => 'sometimes',
-                'healthCondition' => 'sometimes',
+            'name' => 'required|min:3|max:30',
+            'surname' => 'required|min:2|max:30',
+            'IdNumber' => 'required|numeric|digits:10|unique:refugees,IdNumber',
+            'bedsTaken' => 'required|min:0',
+            'confirmed' => 'boolean',
+            'current_refugee_camp_id' => 'required',
+            'photo' => 'sometimes|image|mimes:jpg,png|max:2048',
+            'pets' => 'sometimes',
+            'destination' => 'sometimes',
+            'aidReceived' => 'sometimes',
+            'healthCondition' => 'sometimes',
         ];
     }
+
     public function messages(): array
     {
         return [
@@ -41,12 +42,13 @@ class StoreRefugeeRequest extends FormRequest
             'photo.max' => 'file exceeds 2MB'
         ];
     }
+
     public function prepareForValidation(): void
     {
         $checkIfConfirmedService = new ConfirmedCheckService();
         $this->merge([
             'confirmed' =>
-                $checkIfConfirmedService->checkIfConfirmed($this->current_refugee_camp_id, $this->user()?->id),
+            $checkIfConfirmedService->checkIfConfirmed($this->current_refugee_camp_id, $this->user()?->id),
         ]);
     }
 }

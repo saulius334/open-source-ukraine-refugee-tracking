@@ -21,6 +21,5 @@ class UpdateAllRefugeesService
         $unconfirmed->each(function ($refugee) {
             $this->refugeeRepo->update(['confirmed' => true], $refugee);
         });
-
     }
 }

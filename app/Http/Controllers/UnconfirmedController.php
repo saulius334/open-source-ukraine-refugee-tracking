@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Refugee;
-use App\Models\RefugeeCamp;
+use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
+use Illuminate\Contracts\View\View;
 
 class UnconfirmedController extends Controller
 {
-    public function create(Refugee $unconfirmedRequest)
+    public function __construct(private RefugeeCampRepositoryInterface $campRepo)
+    {
+    }
+    public function create(Refugee $unconfirmedRequest): View
     {
         return view('unconfirmed.create', [
-            'camps' => RefugeeCamp::all(),
+            'camps' => $this->campRepo->getAll(),
             'refugee' => $unconfirmedRequest,
         ]);
     }

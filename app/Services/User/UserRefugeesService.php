@@ -10,7 +10,6 @@ use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
 
 class UserRefugeesService
 {
-
     public function __construct(
         private RefugeeRepositoryInterface $refugeeRepo,
         private RefugeeCampRepositoryInterface $campRepo,

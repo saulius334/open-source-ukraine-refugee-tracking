@@ -58,7 +58,7 @@ class RefugeeCampController extends Controller
 
     public function update(UpdateRefugeeCampRequest $request, RefugeeCamp $camp): RedirectResponse
     {
-        $refugeeCampDTO = RefugeeCampDTO::fromRequest($request);    
+        $refugeeCampDTO = RefugeeCampDTO::fromRequest($request);
         $this->campRepo->update($refugeeCampDTO->getAllData(), $camp);
         return redirect()->route('u_myCamps')->with('message', 'Success');
     }

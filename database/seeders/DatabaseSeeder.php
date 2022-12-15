@@ -11,7 +11,6 @@ class DatabaseSeeder extends Seeder
 {
     public function __construct(private RefugeeCampRepositoryInterface $campRepo)
     {
-        
     }
     public function run(): void
     {

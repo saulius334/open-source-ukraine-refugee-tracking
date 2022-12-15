@@ -37,8 +37,7 @@ class RefugeeController extends Controller
     public function create(RefugeeCamp $camp): View
     {
         return view('refugee.create', [
-            'camps' => $this->campRepo->getAll(),
-            'selectedCamp' => $camp,
+            'camp' => $camp,
         ]);
     }
 
