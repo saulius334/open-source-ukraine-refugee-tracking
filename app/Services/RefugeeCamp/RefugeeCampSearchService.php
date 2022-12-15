@@ -19,9 +19,8 @@ class RefugeeCampSearchService
         if (!$query) {
             return $this->searchable;
         }
-        $searchResult = $this->searchable->filter(function($value) use ($query) {
+        return $this->searchable->filter(function ($value) use ($query) {
             return stripos($value->name, $query) !== false;
         });
-        return $searchResult;
     }
 }
