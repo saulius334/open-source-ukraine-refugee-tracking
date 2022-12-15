@@ -30,8 +30,14 @@
                             <a href="{{route('r_create', $camp)}}" class="btn btn-info">Register refugee</a>
                             @else
                             <a href="{{route('r_create', $camp)}}" class="btn btn-info">Request</a>
+                            @endif
                         </div>
-                        @endif
+                        <input type="text" class="form-control" placeholder="lat" name="lat" id="lat">
+                        <input type="text" class="form-control" placeholder="lng" name="lng" id="lng">
+                        <div id="map"></div>
+                        <script defer
+                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD_StI2EFQ0q_t62Y3bqMFFOmN_wmg9Bc&callback=initMap&v=weekly"
+                        ></script>
                     </div>
                 </div>
             </div>
