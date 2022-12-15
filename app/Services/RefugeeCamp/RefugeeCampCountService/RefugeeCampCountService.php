@@ -6,9 +6,8 @@ namespace App\Services\RefugeeCamp\RefugeeCampCountService;
 
 use App\Models\RefugeeCamp;
 use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
-use App\Services\RefugeeCamp\RefugeeCampCountService\RefugeeCampCountServiceInterface;
 
-class RefugeeCampCountService implements RefugeeCampCountServiceInterface
+class RefugeeCampCountService
 {
     private RefugeeCampCountValidator $validator;
 
@@ -24,7 +23,7 @@ class RefugeeCampCountService implements RefugeeCampCountServiceInterface
             $refugeeCapacity += $refugee->bedsTaken;
         }
         $actual = $this->validator->validate($refugeeCapacity, $camp) ?
-            $camp->originalCapacity - $refugeeCapacity : $camp->originalCapacity;
+            $camp->getOriginalCapacity() - $refugeeCapacity : $camp->getOriginalCapacity();
 
         $this->campRepo->update(['currentCapacity' => $actual], $camp);
     }

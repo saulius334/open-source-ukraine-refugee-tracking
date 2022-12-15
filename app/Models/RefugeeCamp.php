@@ -31,4 +31,8 @@ class RefugeeCamp extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+    public function getOriginalCapacity(): int
+    {
+        return $this->originalCapacity;
+    }
 }

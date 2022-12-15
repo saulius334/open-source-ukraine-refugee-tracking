@@ -20,7 +20,7 @@ class RefugeeDTO implements RequestDTOInterface
 
     public function isConfirmed(): bool
     {
-        return $this->refugeeInfo['confirmed'] ? true : false;
+        return (bool)$this->refugeeInfo['confirmed'];
     }
 
     public static function fromRequest(Request $request): self

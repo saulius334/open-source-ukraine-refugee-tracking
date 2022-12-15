@@ -18,16 +18,6 @@ class RefugeeCampDTO implements RequestDTOInterface
         return $this->refugeeCampInfo;
     }
 
-    public function setCurrentCapacity(int $capacity): void
-    {
-        $this->refugeeCampInfo['currentCapacity'] = $capacity;
-    }
-
-    public function getCurrentCapacity(): int
-    {
-        return $this->refugeeCampInfo['currentCapacity'];
-    }
-
     public static function fromRequest(Request $request): self
     {
         return new self([

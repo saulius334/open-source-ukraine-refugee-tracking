@@ -9,12 +9,10 @@ use App\Services\User\UserRefugeesService;
 
 class UpdateAllRefugeesService
 {
-
     public function __construct(
         private UserRefugeesService $userRefugeeService,
         private RefugeeRepositoryInterface $refugeeRepo,
-        )
-    {
+    ) {
     }
 
     public function acceptAllUnconfirmed(int $userId): void
@@ -23,5 +21,6 @@ class UpdateAllRefugeesService
         $unconfirmed->each(function ($refugee) {
             $this->refugeeRepo->update(['confirmed' => true], $refugee);
         });
+
     }
 }
