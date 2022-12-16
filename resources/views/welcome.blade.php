@@ -39,6 +39,7 @@
                     <a href="{{ route('r_index')}}">View All Refugees</a>
                     <a href="{{ route('login')}}">Login</a>
                     <a href="{{ route('register')}}">Register</a>
+                    <a href="{{ route('statistics')}}">Statistics</a>
                 </div>
             </div>
         </div>
