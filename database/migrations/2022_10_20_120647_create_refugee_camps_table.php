@@ -10,9 +10,11 @@ return new class extends Migration
     {
         Schema::create('refugee_camps', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name', 255);
             $table->unsignedBigInteger('originalCapacity');
             $table->unsignedbigInteger('currentCapacity');
+            $table->decimal('coords_lat', 8, 6);
+            $table->decimal('coords_lng', 9, 6);
             $table->unsignedbigInteger('rooms')->nullable();
             $table->unsignedbigInteger('volunteers')->default(0)->nullable();
             $table->unsignedBigInteger('user_id');

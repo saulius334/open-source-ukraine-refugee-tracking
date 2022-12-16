@@ -135,3 +135,12 @@ div#map {
     height: 400px;
     width: 400px;
 }
+.campCard-show {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+.campInfo {
+    display: flex;
+    flex-direction: column;
+}

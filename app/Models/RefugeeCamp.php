@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -11,12 +10,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class RefugeeCamp extends Model
 {
     use HasFactory;
-    use Searchable;
 
     protected $fillable = [
         'name',
         'originalCapacity',
         'currentCapacity',
+        'coords_lat',
+        'coords_lng',
         'rooms',
         'volunteers',
         'user_id'
