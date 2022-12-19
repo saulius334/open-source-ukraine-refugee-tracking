@@ -13,15 +13,21 @@ class HomeController extends Controller
 
     public function index(): View
     {
-        return view('home');
+        return view('home.home');
     }
-    public function statistics(): View
+    public function welcome(): View
     {
-        return view('statistics', [
+        return view('home.welcome', [
             'statisticTotal' => $this->refugeeStatistics->total(),
             'statisticToday' => $this->refugeeStatistics->todayRegistered(),
             'statisticWeek' => $this->refugeeStatistics->weekRegistered(),
             'statisticMonth' => $this->refugeeStatistics->monthRegistered(),
+        ]);
+    }
+    public function maps(): View
+    {
+        return view('home.maps',[
+
         ]);
     }
 }
