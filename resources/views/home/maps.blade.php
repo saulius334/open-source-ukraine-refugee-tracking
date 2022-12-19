@@ -42,9 +42,8 @@
                 title: val.name
             });
 
-            const content = val.name + 
-            'Capacity: ' + val.currentCapacity + '/' + val.originalCapacity +
-            '<a href="'+route+'">' + 'register' ;
+            const content = val.name + "<br>" +
+            'Capacity: ' + val.currentCapacity + '/' + val.originalCapacity;
 
             attachInfo(marker, content);
         });

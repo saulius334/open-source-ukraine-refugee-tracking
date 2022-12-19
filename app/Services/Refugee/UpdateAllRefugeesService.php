@@ -17,7 +17,7 @@ class UpdateAllRefugeesService
 
     public function acceptAllUnconfirmed(int $userId): void
     {
-        $unconfirmed = $this->userRefugeeService->getRefugeesByUserId($userId, 0);
+        $unconfirmed = $this->userRefugeeService->getRefugeesByUserId($userId, false);
         $unconfirmed->each(function ($refugee) {
             $this->refugeeRepo->update(['confirmed' => true], $refugee);
         });

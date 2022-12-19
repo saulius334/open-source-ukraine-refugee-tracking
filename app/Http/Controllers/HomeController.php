@@ -32,10 +32,8 @@ class HomeController extends Controller
     }
     public function maps(): View
     {
-        //dd($this->locationService->getAllLocations());
         return view('home.maps',[
             'camps' => $this->campRepo->getAll(),
-            'locations' => json_encode($this->locationService->getAllLocations())
         ]);
     }
 }
