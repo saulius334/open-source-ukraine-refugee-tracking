@@ -11,7 +11,8 @@ class HomeController extends Controller
 {
     public function __construct(
         private RefugeeStatistics $refugeeStatistics,
-        private RefugeeCampLocationService $locationService
+        private RefugeeCampLocationService $locationService,
+        private RefugeeCampRepositoryInterface $campRepo
         )
     {
     }
@@ -31,9 +32,10 @@ class HomeController extends Controller
     }
     public function maps(): View
     {
-        dd($this->locationService->getAllLocations());
+        //dd($this->locationService->getAllLocations());
         return view('home.maps',[
-            'locations' => $this->locationService->getAllLocations()
+            'camps' => $this->campRepo->getAll(),
+            'locations' => json_encode($this->locationService->getAllLocations())
         ]);
     }
 }

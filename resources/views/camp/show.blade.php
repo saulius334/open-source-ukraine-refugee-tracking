@@ -8,8 +8,8 @@
                     <h2>{{$camp->name}}</h2>
                 </div>
                 <div class="card-body">
-                    <div class="campCard-show">
-                        <div id="map" class="showMap"></div>
+                    <div class="campCard">
+                        <div id="map"></div>
                         <div class="campInfo">
                             <div class="line"><small>Capacity:</small>
                                 <h5>{{ $camp->currentCapacity }}/{{ $camp->originalCapacity }}</h5>
@@ -40,7 +40,31 @@
             </div>
         </div>
     </div>
-    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD_StI2EFQ0q_t62Y3bqMFFOmN_wmg9Bc&callback=initMap&v=weekly">
-    </script>
 </div>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAD_StI2EFQ0q_t62Y3bqMFFOmN_wmg9Bc&callback=initMap&v=weekly">
+</script>
+<script>
+    let map;
+    const camp = JSON.parse('{{$camp}}'.replaceAll('&quot;', '"'));
+    const coordinates = [+camp.coords_lat, +camp.coords_lng];
+
+    function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 5, 
+            center: {
+                lat: coordinates[0], lng: coordinates[1]
+            }, 
+            scrollWheel: true
+        });
+        new google.maps.Marker({
+                position: {
+                    lat: coordinates[0], 
+                    lng: coordinates[1]
+                }, 
+                map: map,
+                title: camp.name
+    })
+}
+window.initMap = initMap;
+</script>
 @endsection

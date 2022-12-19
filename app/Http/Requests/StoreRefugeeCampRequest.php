@@ -17,8 +17,10 @@ class StoreRefugeeCampRequest extends FormRequest
             'name' => 'required|min:3|max:30|unique:refugee_camps,name',
             'originalCapacity' => 'required|numeric|min:1|max:10000',
             'currentCapacity' => '',
-            'rooms' => '',
-            'volunteers' => '',
+            'coords_lat' => 'required',
+            'coords_lng' => 'required',
+            'rooms' => 'sometimes',
+            'volunteers' => 'sometimes',
         ];
     }
     
