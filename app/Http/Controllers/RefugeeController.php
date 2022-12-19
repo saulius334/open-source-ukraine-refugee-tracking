@@ -30,7 +30,7 @@ class RefugeeController extends Controller
     public function index(Request $request): View
     {
         return view('refugee.index', [
-            'refugees' => $this->searchService->search($request->search)
+            'refugees' => $this->searchService->search($request->search),
         ]);
     }
 

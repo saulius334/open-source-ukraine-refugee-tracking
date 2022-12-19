@@ -8,11 +8,12 @@ use App\Http\Controllers\UserController as userCon;
 use App\Http\Controllers\UnconfirmedController as unconfCon;
 
 
-Route::view('/', 'welcome')->middleware('guest')->name('welcome');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'welcome'])->middleware('guest')->name('welcome');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/maps', [App\Http\Controllers\HomeController::class, 'maps'])->name('maps');
 
 Route::middleware('auth')->prefix('user')->name('u_')->group(function () {
     Route::get('/camps', [userCon::class, 'myCamps'])->name('myCamps');

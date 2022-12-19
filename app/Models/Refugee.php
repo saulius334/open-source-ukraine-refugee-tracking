@@ -3,14 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Refugee extends Model
 {
     use HasFactory;
-    use Searchable;
 
     protected $fillable = [
         'name',
