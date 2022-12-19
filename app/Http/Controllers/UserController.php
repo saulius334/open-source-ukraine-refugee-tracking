@@ -23,13 +23,13 @@ class UserController extends Controller
     public function myRequests(): View
     {
         return view('user.requests', [
-            'unconfirmedRequests' => $this->userRefugeesService->getRefugeesByUserId(Auth::user()->id, 0)
+            'unconfirmedRequests' => $this->userRefugeesService->getRefugeesByUserId(Auth::user()->id, false)
         ]);
     }
     public function myRefugees(): View
     {
         return view('user.refugees', [
-            'refugees' => $this->userRefugeesService->getRefugeesByUserId(Auth::user()->id, 1)
+            'refugees' => $this->userRefugeesService->getRefugeesByUserId(Auth::user()->id, true)
         ]);
     }
 }
