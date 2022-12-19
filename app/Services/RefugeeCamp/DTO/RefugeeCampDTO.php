@@ -25,6 +25,8 @@ class RefugeeCampDTO implements RequestDTOInterface
             'user_id' => $request->user()->id,
             'originalCapacity' => $request->originalCapacity,
             'currentCapacity' => $request->originalCapacity,
+            'coords_lat' => $request->coords_lat,
+            'coords_lng' => $request->coords_lng,
             'rooms' => $request->rooms,
             'volunteers' => $request->volunteers,
             'current_refugee_camp_id' => $request->current_refugee_camp_id,

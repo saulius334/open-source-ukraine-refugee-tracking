@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
+use App\Services\RefugeeCamp\RefugeeCampLocationService;
 use Illuminate\Contracts\View\View;
 use App\Services\Shared\Statistics\RefugeeStatistics;
 
@@ -10,6 +11,7 @@ class HomeController extends Controller
 {
     public function __construct(
         private RefugeeStatistics $refugeeStatistics,
+        private RefugeeCampLocationService $locationService,
         private RefugeeCampRepositoryInterface $campRepo
         )
     {
@@ -30,8 +32,10 @@ class HomeController extends Controller
     }
     public function maps(): View
     {
+        //dd($this->locationService->getAllLocations());
         return view('home.maps',[
-            'locations' => $this->campRepo->getAllLocations()
+            'camps' => $this->campRepo->getAll(),
+            'locations' => json_encode($this->locationService->getAllLocations())
         ]);
     }
 }
