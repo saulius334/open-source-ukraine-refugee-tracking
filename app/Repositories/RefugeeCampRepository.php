@@ -10,12 +10,12 @@ use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
 
 class RefugeeCampRepository extends BaseRepository implements RefugeeCampRepositoryInterface
 {
-    public function __construct(RefugeeCamp $camp)
+    public function __construct(RefugeeCamp $model)
     {
-        parent::__construct($camp);
+        parent::__construct($model);
     }
     public function getCampsByUserId(int $userId): Collection
     {
-        return RefugeeCamp::where('user_id', $userId)->get();
+        return $this->model->where('user_id', $userId)->get();
     }
 }

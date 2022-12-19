@@ -17,4 +17,9 @@ interface RefugeeRepositoryInterface
     public function destroy(Model $refugee): void;
     public function getConfirmedRefugees(): Collection;
     public function getRefugeesByCampId(int $campId): Collection;
+    public function todayRegistered(): int;
+    public function weekRegistered(): int;
+    public function monthRegistered(): int;
+    public function refugeeCount(): int;
+    public function getRefugeesByUserId(int $userId, bool $confirmed): Collection;
 }

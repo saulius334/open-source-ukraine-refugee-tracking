@@ -3,18 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
-use App\Services\RefugeeCamp\RefugeeCampLocationService;
+use App\Repositories\Interfaces\RefugeeRepositoryInterface;
 use Illuminate\Contracts\View\View;
-use App\Services\Shared\Statistics\RefugeeStatistics;
 
 class HomeController extends Controller
 {
     public function __construct(
-        private RefugeeStatistics $refugeeStatistics,
-        private RefugeeCampLocationService $locationService,
+        private RefugeeRepositoryInterface $refugeeRepo,
         private RefugeeCampRepositoryInterface $campRepo
-        )
-    {
+    ) {
     }
 
     public function index(): View
@@ -24,15 +21,15 @@ class HomeController extends Controller
     public function welcome(): View
     {
         return view('home.welcome', [
-            'statisticTotal' => $this->refugeeStatistics->total(),
-            'statisticToday' => $this->refugeeStatistics->todayRegistered(),
-            'statisticWeek' => $this->refugeeStatistics->weekRegistered(),
-            'statisticMonth' => $this->refugeeStatistics->monthRegistered(),
+            'statisticTotal' => $this->refugeeRepo->refugeeCount(),
+            'statisticToday' => $this->refugeeRepo->todayRegistered(),
+            'statisticWeek' => $this->refugeeRepo->weekRegistered(),
+            'statisticMonth' => $this->refugeeRepo->monthRegistered(),
         ]);
     }
     public function maps(): View
     {
-        return view('home.maps',[
+        return view('home.maps', [
             'camps' => $this->campRepo->getAll(),
         ]);
     }

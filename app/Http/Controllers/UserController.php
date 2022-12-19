@@ -6,11 +6,13 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use App\Services\User\UserRefugeesService;
 use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
+use App\Repositories\Interfaces\RefugeeRepositoryInterface;
 
 class UserController extends Controller
 {
     public function __construct(
         private UserRefugeesService $userRefugeesService,
+        private RefugeeRepositoryInterface $refugeeRepo,
         private RefugeeCampRepositoryInterface $campRepo,
     ) {
     }
@@ -23,13 +25,13 @@ class UserController extends Controller
     public function myRequests(): View
     {
         return view('user.requests', [
-            'unconfirmedRequests' => $this->userRefugeesService->getRefugeesByUserId(Auth::user()->id, false)
+            'unconfirmedRequests' => $this->refugeeRepo->getRefugeesByUserId(Auth::user()->id, false)
         ]);
     }
     public function myRefugees(): View
     {
         return view('user.refugees', [
-            'refugees' => $this->userRefugeesService->getRefugeesByUserId(Auth::user()->id, true)
+            'refugees' => $this->refugeeRepo->getRefugeesByUserId(Auth::user()->id, true)
         ]);
     }
 }

@@ -9,11 +9,10 @@ use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
 
 class RefugeeCampCountService
 {
-    private RefugeeCampCountValidator $validator;
-
-    public function __construct(private RefugeeCampRepositoryInterface $campRepo)
-    {
-        $this->validator = new RefugeeCampCountValidator();
+    public function __construct(
+        private RefugeeCampRepositoryInterface $campRepo,
+        private RefugeeCampCountValidator $validator,
+    ) {
     }
 
     public function update(RefugeeCamp $camp): void

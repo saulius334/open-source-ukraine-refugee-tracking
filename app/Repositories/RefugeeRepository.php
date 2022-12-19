@@ -6,38 +6,44 @@ namespace App\Repositories;
 
 use DateTime;
 use App\Models\Refugee;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use App\Repositories\Interfaces\RefugeeRepositoryInterface;
 
 class RefugeeRepository extends BaseRepository implements RefugeeRepositoryInterface
 {
-    public function __construct(Refugee $refugee)
+    public function __construct(Refugee $model)
     {
-        parent::__construct($refugee);
+        parent::__construct($model);
     }
-
     public function getConfirmedRefugees(): Collection
     {
-        return parent::getAll()->where('confirmed', 1);
+        return $this->model->where('confirmed', 1)->get();
     }
     public function getRefugeesByCampId(int $campId): Collection
     {
-        return parent::getAll()->where('current_refugee_camp_id', $campId);
+        return $this->model->where('current_refugee_camp_id', $campId)->get();
     }
     public function todayRegistered(): int
     {
-        return parent::getAll()->where('created_at', '>', new DateTime('yesterday'))->count();
+        return $this->model->where('created_at', '>', new DateTime('yesterday'))->count();
     }
     public function weekRegistered(): int
     {
-        return parent::getAll()->where('created_at', '>', (new DateTime())->modify('-7 day'))->count();
+        return $this->model->where('created_at', '>', (new DateTime())->modify('-7 day'))->count();
     }
     public function monthRegistered(): int
     {
-        return parent::getAll()->where('created_at', '>', (new DateTime())->modify('-1 month'))->count();
+        return $this->model->where('created_at', '>', (new DateTime())->modify('-1 month'))->count();
     }
     public function refugeeCount(): int
     {
-        return parent::getAll()->count();
+        return $this->model->count();
+    }
+    public function getRefugeesByUserId(int $userId, bool $confirmed): Collection
+    {
+        return $this->model->whereHas('getCamp', function (Builder $query) use ($userId) {
+            $query->where('user_id', $userId);
+        })->where('confirmed', $confirmed)->get();
     }
 }
