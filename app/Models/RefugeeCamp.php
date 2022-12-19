@@ -15,6 +15,8 @@ class RefugeeCamp extends Model
         'name',
         'originalCapacity',
         'currentCapacity',
+        'coords_lat',
+        'coords_lng',
         'rooms',
         'volunteers',
         'user_id'

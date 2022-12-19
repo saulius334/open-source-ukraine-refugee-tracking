@@ -14,10 +14,6 @@
                             <span class="input-group-text">Camp name*</span>
                             <input type="text" name="name" class="form-control" value="{{old('name')}}">
                         </div>
-                        {{-- <div class="input-group mb-3">
-                            <span class="input-group-text">Admin*</span>
-                            <input type="text" name="user_id" readonly class="form-control" value="{{ Auth::user()->name }}">
-                        </div> --}}
                         <div class="input-group mb-3">
                             <span class="input-group-text">Capacity*</span>
                             <input type="text" name="originalCapacity" class="form-control" value="{{old('originalCapacity')}}">
@@ -30,6 +26,7 @@
                             <span class="input-group-text">Number of volunteers</span>
                             <input type="text" name="volunteers" class="form-control" value="{{old('volunteers')}}">
                         </div>
+                        <div id="map" class="showMap"></div>
                         @csrf
                         <button type="submit" class="btn btn-secondary --submit">Create camp</button>
                     </form>
