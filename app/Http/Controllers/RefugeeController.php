@@ -69,10 +69,8 @@ class RefugeeController extends Controller
     public function update(UpdateRefugeeRequest $request, Refugee $refugee): RedirectResponse
     {
         $refugeeDTO = RefugeeDTO::fromRequest($request);
-        $message = $refugeeDTO->isConfirmed() ? MessageEnum::Updated : MessageEnum::Created;
-
         $this->refugeeRepo->update($refugeeDTO->getAllData(), $refugee);
-        return redirect()->route('r_index')->with('message', $message);
+        return redirect()->route('r_index')->with('message', 'Success');
     }
 
     public function destroy(Refugee $refugee): RedirectResponse
