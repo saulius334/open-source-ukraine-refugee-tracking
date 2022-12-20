@@ -10,7 +10,6 @@ use Illuminate\Contracts\View\Factory;
 use App\Http\Requests\StoreRefugeeCampRequest;
 use App\Http\Requests\UpdateRefugeeCampRequest;
 use App\Services\RefugeeCamp\DTO\RefugeeCampDTO;
-use App\Services\RefugeeCamp\RefugeeCampSearchService;
 use App\Repositories\Interfaces\RefugeeRepositoryInterface;
 use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
 
@@ -19,13 +18,12 @@ class RefugeeCampController extends Controller
     public function __construct(
         private RefugeeCampRepositoryInterface $campRepo,
         private RefugeeRepositoryInterface $refugeeRepo,
-        private RefugeeCampSearchService $searchService
     ) {
     }
     public function index(Request $request): View|Factory
     {
         return view('camp.index', [
-            'camps' => $this->searchService->search($request->search)
+            'camps' => $this->campRepo->search($request->get('search'))
         ]);
     }
 

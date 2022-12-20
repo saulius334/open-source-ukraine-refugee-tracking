@@ -3,12 +3,15 @@
 namespace App\Observers;
 
 use App\Models\Refugee;
+use App\Services\Refugee\ImageService;
 use App\Services\RefugeeCamp\RefugeeCampCountService\RefugeeCampCountService;
 
 class RefugeeObserver
 {
-    public function __construct(private RefugeeCampCountService $countService)
-    {
+    public function __construct(
+        private RefugeeCampCountService $countService,
+        private ImageService $imageService,
+    ) {
     }
 
     public function created(Refugee $refugee): void
@@ -26,5 +29,6 @@ class RefugeeObserver
     public function deleted(Refugee $refugee): void
     {
         $this->countService->update($refugee->getCamp);
+        $this->imageService->unlink($refugee->getPhoto);
     }
 }

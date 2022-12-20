@@ -6,9 +6,9 @@ use App\Models\RefugeeCamp;
 
 class RefugeeCampCountValidator
 {
-    public function validate(int $refugeeCapacity, RefugeeCamp $camp): int
+    public function validate(int $refugeeCapacity, int $originalCapacity): bool
     {
-        if ($refugeeCapacity > $camp->originalCapacity) {
+        if ($refugeeCapacity > $originalCapacity) {
             return false;
         }
         return true;

@@ -33,11 +33,8 @@
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Camp*</span>
-                            <select class="form-select" name="current_refugee_camp_id">
-                                @foreach ($camps as $camp)
-                                <option value="{{$camp->id}}"@if($camp->id === $campID) selected @endif>{{$camp->name}}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" name="current_refugee_camp_id" class="form-control" readonly value="{{$camp->id}}">
+                            <input type="text" name="" class="form-control" readonly value="{{$camp->name}}">
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Beds taken*</span>

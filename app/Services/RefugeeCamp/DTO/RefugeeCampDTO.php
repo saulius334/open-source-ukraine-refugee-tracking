@@ -21,15 +21,15 @@ class RefugeeCampDTO implements RequestDTOInterface
     public static function fromRequest(Request $request): self
     {
         return new self([
-            'name' => $request->name,
+            'name' => $request->get('name'),
             'user_id' => $request->user()->id,
-            'originalCapacity' => $request->originalCapacity,
-            'currentCapacity' => $request->originalCapacity,
-            'coords_lat' => $request->coords_lat,
-            'coords_lng' => $request->coords_lng,
-            'rooms' => $request->rooms,
-            'volunteers' => $request->volunteers,
-            'current_refugee_camp_id' => $request->current_refugee_camp_id,
+            'originalCapacity' => $request->get('originalCapacity'),
+            'currentCapacity' => $request->get('originalCapacity'),
+            'coords_lat' => $request->get('coords_lat'),
+            'coords_lng' => $request->get('coords_lng'),
+            'rooms' => $request->get('rooms'),
+            'volunteers' => $request->get('volunteers'),
+            'current_refugee_camp_id' => $request->get('current_refugee_camp_id'),
         ]);
     }
 }

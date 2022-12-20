@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Refugee\DTO;
 
-use App\Services\Refugee\ImageService;
 use Illuminate\Http\Request;
 use App\Services\Shared\Interfaces\RequestDTOInterface;
 
@@ -24,22 +23,25 @@ class RefugeeDTO implements RequestDTOInterface
         return (bool)$this->refugeeInfo['confirmed'];
     }
 
+    public function setImage($path): void
+    {
+        $this->refugeeInfo['photo'] = $path;
+    }
+
     public static function fromRequest(Request $request, ?string $imagePath = null): self
     {
-        $imagePath = (new ImageService())->saveAndGetPath($request->file('photo'), $imagePath);
-
         return new self([
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'IdNumber' => $request->IdNumber,
-            'bedsTaken' => $request->bedsTaken,
-            'confirmed' => $request->confirmed,
-            'current_refugee_camp_id' => $request->current_refugee_camp_id,
+            'name' => $request->get('name'),
+            'surname' => $request->get('surname'),
+            'IdNumber' => $request->get('IdNumber'),
+            'bedsTaken' => $request->get('bedsTaken'),
+            'confirmed' => $request->get('confirmed'),
+            'current_refugee_camp_id' => $request->get('current_refugee_camp_id'),
             'photo' => $imagePath,
-            'pets' => $request->pets,
-            'destination' => $request->destination,
-            'aidReceived' => $request->aidReceived,
-            'healthCondition' => $request->healthCondition
+            'pets' => $request->get('pets'),
+            'destination' => $request->get('destination'),
+            'aidReceived' => $request->get('aidReceived'),
+            'healthCondition' => $request->get('healthCondition')
         ]);
     }
 }

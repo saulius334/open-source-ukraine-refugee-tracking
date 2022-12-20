@@ -16,6 +16,10 @@ class RefugeeRepository extends BaseRepository implements RefugeeRepositoryInter
     {
         parent::__construct($model);
     }
+    public function searchConfirmed(?string $query): Collection
+    {
+        return $this->model->where('name', 'like', "%{$query}%")->where('confirmed', 1)->get();
+    }
     public function getConfirmedRefugees(): Collection
     {
         return $this->model->where('confirmed', 1)->get();

@@ -23,7 +23,7 @@ class StoreRefugeeCampRequest extends FormRequest
             'volunteers' => 'sometimes',
         ];
     }
-    
+
     public function messages(): array
     {
         return [

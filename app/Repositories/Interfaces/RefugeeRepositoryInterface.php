@@ -21,5 +21,6 @@ interface RefugeeRepositoryInterface
     public function weekRegistered(): int;
     public function monthRegistered(): int;
     public function refugeeCount(): int;
+    public function searchConfirmed(?string $query): Collection;
     public function getRefugeesByUserId(int $userId, bool $confirmed): Collection;
 }

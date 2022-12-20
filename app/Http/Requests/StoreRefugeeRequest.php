@@ -48,7 +48,7 @@ class StoreRefugeeRequest extends FormRequest
         $checkIfConfirmedService = new ConfirmedCheckService();
         $this->merge([
             'confirmed' =>
-            $checkIfConfirmedService->checkIfConfirmed($this->current_refugee_camp_id, $this->user()?->id),
+            $checkIfConfirmedService->checkIfConfirmed($this->get('current_refugee_camp_id'), $this->user()?->id),
         ]);
     }
 }

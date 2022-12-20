@@ -8,14 +8,18 @@ use Illuminate\Http\UploadedFile;
 
 class ImageService
 {
-    public function saveAndGetPath(?UploadedFile $photo, ?string $subject): string
+    public function saveAndGetPath(?UploadedFile $photo, ?string $subject = null): ?string
     {
         if (!$photo && !$subject) {
-            return '';
-        } elseif (!$photo && $subject) {
+            return null;
+        } elseif (!$photo) {
             return $subject;
         } else {
             return $photo->store('uploads', 'public');
         }
+    }
+    public function unlink(string $photo): void
+    {
+        unlink(public_path() . '/storage/' . $photo);
     }
 }

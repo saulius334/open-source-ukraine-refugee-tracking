@@ -11,25 +11,23 @@ use Illuminate\Http\RedirectResponse;
 use App\Services\Refugee\DTO\RefugeeDTO;
 use App\Http\Requests\StoreRefugeeRequest;
 use App\Http\Requests\UpdateRefugeeRequest;
-use App\Services\Refugee\RefugeeSearchService;
 use App\Services\Refugee\UpdateAllRefugeesService;
 use App\Repositories\Interfaces\RefugeeRepositoryInterface;
-use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
+use App\Services\Refugee\ImageService;
 
 class RefugeeController extends Controller
 {
     public function __construct(
         private RefugeeRepositoryInterface $refugeeRepo,
-        private RefugeeCampRepositoryInterface $campRepo,
-        private RefugeeSearchService $searchService,
         private UpdateAllRefugeesService $updateService,
+        private ImageService $imageService,
     ) {
     }
 
     public function index(Request $request): View
     {
         return view('refugee.index', [
-            'refugees' => $this->searchService->search($request->search),
+            'refugees' => $this->refugeeRepo->searchConfirmed($request->get('search')),
         ]);
     }
 
@@ -43,6 +41,7 @@ class RefugeeController extends Controller
     public function store(StoreRefugeeRequest $request): RedirectResponse
     {
         $refugeeDTO = RefugeeDTO::fromRequest($request);
+        $refugeeDTO->setImage($this->imageService->saveAndGetPath($request->file('photo')));
         $this->refugeeRepo->store($refugeeDTO->getAllData());
         return redirect()->route('r_index')->with('message', 'Success');
     }
@@ -58,14 +57,14 @@ class RefugeeController extends Controller
     {
         return view('refugee.edit', [
             'refugee' => $refugee,
-            'camps' => $this->campRepo->getAll(),
-            'campID' => $refugee->current_refugee_camp_id
+            'camp' => $refugee->getCamp(),
         ]);
     }
 
     public function update(UpdateRefugeeRequest $request, Refugee $refugee): RedirectResponse
     {
-        $refugeeDTO = RefugeeDTO::fromRequest($request, $refugee->photo);
+        $refugeeDTO = RefugeeDTO::fromRequest($request);
+        $refugeeDTO->setImage($this->imageService->saveAndGetPath($request->file('photo'), $refugee->getPhoto()));
         $this->refugeeRepo->update($refugeeDTO->getAllData(), $refugee);
         return redirect()->route('r_index')->with('message', 'Success');
     }

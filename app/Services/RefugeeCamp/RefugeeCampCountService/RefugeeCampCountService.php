@@ -21,8 +21,12 @@ class RefugeeCampCountService
         foreach ($camp->getRefugees()->get() as $refugee) {
             $refugeeCapacity += $refugee->bedsTaken;
         }
-        $actual = $this->validator->validate($refugeeCapacity, $camp) ?
-            $camp->getOriginalCapacity() - $refugeeCapacity : $camp->getOriginalCapacity();
+
+        if ($this->validator->validate($refugeeCapacity, $camp->getOriginalCapacity())) {
+            $actual = $camp->getOriginalCapacity() - $refugeeCapacity;
+        } else {
+            $actual = $camp->getOriginalCapacity();
+        }
 
         $this->campRepo->update(['currentCapacity' => $actual], $camp);
     }

@@ -15,5 +15,6 @@ interface RefugeeCampRepositoryInterface
     public function store(array $data): void;
     public function update(array $data, Model $camp): void;
     public function destroy(Model $camp): void;
+    public function search(?string $query): Collection;
     public function getCampsByUserId(int $userId): Collection;
 }
