@@ -2,27 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
+use App\Repositories\Interfaces\RefugeeRepositoryInterface;
+use Illuminate\Contracts\View\View;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
+    public function __construct(
+        private RefugeeRepositoryInterface $refugeeRepo,
+        private RefugeeCampRepositoryInterface $campRepo
+    ) {
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
+    public function index(): View
     {
-        return view('home');
+        return view('home.home');
+    }
+    public function welcome(): View
+    {
+        return view('home.welcome', [
+            'statisticTotal' => $this->refugeeRepo->refugeeCount(),
+            'statisticToday' => $this->refugeeRepo->todayRegistered(),
+            'statisticWeek' => $this->refugeeRepo->weekRegistered(),
+            'statisticMonth' => $this->refugeeRepo->monthRegistered(),
+        ]);
+    }
+    public function maps(): View
+    {
+        return view('home.maps', [
+            'camps' => $this->campRepo->getAll(),
+        ]);
     }
 }
