@@ -28,7 +28,7 @@ class RefugeeDTO implements RequestDTOInterface
         $this->refugeeInfo['photo'] = $path;
     }
 
-    public static function fromRequest(Request $request, ?string $imagePath = null): self
+    public static function fromRequest(Request $request): self
     {
         return new self([
             'name' => $request->get('name'),
@@ -37,7 +37,7 @@ class RefugeeDTO implements RequestDTOInterface
             'bedsTaken' => $request->get('bedsTaken'),
             'confirmed' => $request->get('confirmed'),
             'current_refugee_camp_id' => $request->get('current_refugee_camp_id'),
-            'photo' => $imagePath,
+            'photo' => $request->get('photo'),
             'pets' => $request->get('pets'),
             'destination' => $request->get('destination'),
             'aidReceived' => $request->get('aidReceived'),

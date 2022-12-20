@@ -29,6 +29,6 @@ class RefugeeObserver
     public function deleted(Refugee $refugee): void
     {
         $this->countService->update($refugee->getCamp);
-        $this->imageService->unlink($refugee->getPhoto);
+        $this->imageService->unlink($refugee->photo);
     }
 }

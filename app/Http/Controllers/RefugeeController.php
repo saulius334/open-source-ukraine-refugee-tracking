@@ -57,14 +57,14 @@ class RefugeeController extends Controller
     {
         return view('refugee.edit', [
             'refugee' => $refugee,
-            'camp' => $refugee->getCamp(),
+            'camp' => $refugee->getCamp,
         ]);
     }
 
     public function update(UpdateRefugeeRequest $request, Refugee $refugee): RedirectResponse
     {
         $refugeeDTO = RefugeeDTO::fromRequest($request);
-        $refugeeDTO->setImage($this->imageService->saveAndGetPath($request->file('photo'), $refugee->getPhoto()));
+        $refugeeDTO->setImage($this->imageService->saveAndGetPath($request->file('photo'), $refugee->photo));
         $this->refugeeRepo->update($refugeeDTO->getAllData(), $refugee);
         return redirect()->route('r_index')->with('message', 'Success');
     }
