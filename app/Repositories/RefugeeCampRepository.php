@@ -14,6 +14,7 @@ class RefugeeCampRepository extends BaseRepository implements RefugeeCampReposit
     {
         parent::__construct($model);
     }
+
     public function search(?string $query): Collection
     {
         return $this->model->where('name', 'like', "%{$query}%")->get();

@@ -28,8 +28,4 @@ class Refugee extends Model
     {
         return $this->belongsTo(RefugeeCamp::class, 'current_refugee_camp_id', 'id');
     }
-    public function getPhoto(): string
-    {
-        return $this->photo;
-    }
 }

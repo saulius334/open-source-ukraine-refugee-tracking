@@ -18,6 +18,7 @@ class ImageService
             return $photo->store('uploads', 'public');
         }
     }
+
     public function unlink(string $photo): void
     {
         unlink(public_path() . '/storage/' . $photo);
