@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Refugee;
-use App\Enums\MessageEnum;
 use App\Models\RefugeeCamp;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
@@ -44,9 +43,7 @@ class RefugeeController extends Controller
     public function store(StoreRefugeeRequest $request): RedirectResponse
     {
         $refugeeDTO = RefugeeDTO::fromRequest($request);
-
         $this->refugeeRepo->store($refugeeDTO->getAllData());
-
         return redirect()->route('r_index')->with('message', 'Success');
     }
 
@@ -68,7 +65,7 @@ class RefugeeController extends Controller
 
     public function update(UpdateRefugeeRequest $request, Refugee $refugee): RedirectResponse
     {
-        $refugeeDTO = RefugeeDTO::fromRequest($request);
+        $refugeeDTO = RefugeeDTO::fromRequest($request, $refugee->photo);
         $this->refugeeRepo->update($refugeeDTO->getAllData(), $refugee);
         return redirect()->route('r_index')->with('message', 'Success');
     }
@@ -78,6 +75,7 @@ class RefugeeController extends Controller
         $this->refugeeRepo->destroy($refugee);
         return redirect()->back()->with('message', 'Successfully deleted');
     }
+
     public function acceptAll(): RedirectResponse
     {
         $this->updateService->acceptAllUnconfirmed(Auth::user()->id);

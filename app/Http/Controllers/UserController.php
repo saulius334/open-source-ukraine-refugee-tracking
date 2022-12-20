@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
-use App\Services\User\UserRefugeesService;
 use App\Repositories\Interfaces\RefugeeCampRepositoryInterface;
 use App\Repositories\Interfaces\RefugeeRepositoryInterface;
 
 class UserController extends Controller
 {
     public function __construct(
-        private UserRefugeesService $userRefugeesService,
         private RefugeeRepositoryInterface $refugeeRepo,
         private RefugeeCampRepositoryInterface $campRepo,
     ) {

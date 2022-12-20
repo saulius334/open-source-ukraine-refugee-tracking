@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Refugee\DTO;
 
+use App\Services\Refugee\ImageService;
 use Illuminate\Http\Request;
 use App\Services\Shared\Interfaces\RequestDTOInterface;
 
@@ -23,8 +24,10 @@ class RefugeeDTO implements RequestDTOInterface
         return (bool)$this->refugeeInfo['confirmed'];
     }
 
-    public static function fromRequest(Request $request): self
+    public static function fromRequest(Request $request, ?string $imagePath = null): self
     {
+        $imagePath = (new ImageService())->saveAndGetPath($request->file('photo'), $imagePath);
+
         return new self([
             'name' => $request->name,
             'surname' => $request->surname,
@@ -32,7 +35,7 @@ class RefugeeDTO implements RequestDTOInterface
             'bedsTaken' => $request->bedsTaken,
             'confirmed' => $request->confirmed,
             'current_refugee_camp_id' => $request->current_refugee_camp_id,
-            'photo' => $request->photo,
+            'photo' => $imagePath,
             'pets' => $request->pets,
             'destination' => $request->destination,
             'aidReceived' => $request->aidReceived,
